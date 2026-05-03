@@ -90,7 +90,7 @@ const LoginPage = () => {
                     {/* Password */}
                     <div>
                         <div className="flex items-center justify-between mb-1.5">
-                            <label className="form-label !mb-0" htmlFor="password">Password</label>
+                            <label className="form-label mb-0!" htmlFor="password">Password</label>
                             <Link to="/forgot-password"
                                 className="text-xs hover:underline"
                                 style={{ color: "var(--color-primary)" }}>

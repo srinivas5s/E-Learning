@@ -6,8 +6,8 @@ import ThemeToggle from "../ui/ThemeToggle.jsx";
 // ── Icons ─────────────────────────────────────────────────────────────────────
 const MenuIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <line x1="3" y1="6"  x2="21" y2="6" />
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <line x1="3" y1="6" x2="21" y2="6" />
     <line x1="3" y1="12" x2="21" y2="12" />
     <line x1="3" y1="18" x2="21" y2="18" />
   </svg>
@@ -15,25 +15,25 @@ const MenuIcon = () => (
 
 const CloseIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <line x1="18" y1="6"  x2="6"  y2="18" />
-    <line x1="6"  y1="6"  x2="18" y2="18" />
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
 
 const ChevronDown = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
     <polyline points="6 9 12 15 18 9" />
   </svg>
 );
 
 // ── Nav links config ──────────────────────────────────────────────────────────
 const NAV_LINKS = [
-  { label: "Home",    to: "/"         },
-  { label: "Courses", to: "/courses"  },
-  { label: "About",   to: "/about"    },
-  { label: "Contact", to: "/contact"  },
+  { label: "Home", to: "/" },
+  { label: "Courses", to: "/courses" },
+  { label: "About", to: "/about" },
+  { label: "Contact", to: "/contact" },
 ];
 
 // ── Avatar initials helper ────────────────────────────────────────────────────
@@ -45,8 +45,8 @@ const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
-  const [menuOpen,    setMenuOpen]    = useState(false);
-  const [dropOpen,    setDropOpen]    = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropOpen, setDropOpen] = useState(false);
 
   const dropRef = useRef(null);
 
@@ -80,7 +80,7 @@ const Navbar = () => {
       className="sticky top-0 z-50 w-full backdrop-blur-md"
       style={{
         backgroundColor: "var(--color-bg-nav)",
-        borderBottom:    "1px solid var(--color-border)",
+        borderBottom: "1px solid var(--color-border)",
       }}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -88,11 +88,11 @@ const Navbar = () => {
         {/* ── Logo ─────────────────────────────────────────────────────────── */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold"
-               style={{ backgroundColor: "var(--color-primary)" }}>
+            style={{ backgroundColor: "var(--color-primary)" }}>
             L
           </div>
           <span className="font-bold text-lg hidden sm:block"
-                style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}>
+            style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}>
             LearnFlow
           </span>
         </Link>
@@ -106,11 +106,11 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `nav-link px-3 py-2 rounded-lg block transition-colors duration-150
                    ${isActive
-                     ? "font-semibold"
-                     : "hover:bg-opacity-10"}`
+                    ? "font-semibold"
+                    : "hover:bg-opacity-10"}`
                 }
                 style={({ isActive }) => ({
-                  color:           isActive ? "var(--color-primary)" : "var(--color-text-muted)",
+                  color: isActive ? "var(--color-primary)" : "var(--color-text-muted)",
                   backgroundColor: isActive ? "rgba(99,102,241,0.08)" : "transparent",
                 })}
               >
@@ -145,22 +145,22 @@ const Navbar = () => {
                 onClick={() => setDropOpen(!dropOpen)}
                 className="flex items-center gap-2 px-2 py-1.5 rounded-lg transition-all duration-150"
                 style={{
-                  border:          "1px solid var(--color-border)",
+                  border: "1px solid var(--color-border)",
                   backgroundColor: dropOpen ? "var(--color-bg-card)" : "transparent",
                 }}
               >
                 {/* Avatar circle */}
                 <div className="w-7 h-7 rounded-full flex items-center justify-center
                                 text-xs font-bold text-white shrink-0"
-                     style={{ backgroundColor: "var(--color-primary)" }}>
+                  style={{ backgroundColor: "var(--color-primary)" }}>
                   {getInitials(user?.name)}
                 </div>
                 <span className="text-sm font-medium max-w-25 truncate"
-                      style={{ color: "var(--color-text)" }}>
+                  style={{ color: "var(--color-text)" }}>
                   {user?.name?.split(" ")[0]}
                 </span>
                 <span style={{ color: "var(--color-text-muted)" }}
-                      className={`transition-transform duration-200 ${dropOpen ? "rotate-180" : ""}`}>
+                  className={`transition-transform duration-200 ${dropOpen ? "rotate-180" : ""}`}>
                   <ChevronDown />
                 </span>
               </button>
@@ -172,7 +172,7 @@ const Navbar = () => {
                              animate-[fadeIn_0.15s_ease]"
                   style={{
                     backgroundColor: "var(--color-bg-card)",
-                    border:          "1px solid var(--color-border)",
+                    border: "1px solid var(--color-border)",
                   }}
                 >
                   {/* User info */}
@@ -184,7 +184,7 @@ const Navbar = () => {
                       {user?.email}
                     </p>
                     <span className="inline-block mt-1.5 text-xs px-2 py-0.5 rounded-full font-medium capitalize"
-                          style={{ backgroundColor: "rgba(99,102,241,0.12)", color: "var(--color-primary)" }}>
+                      style={{ backgroundColor: "rgba(99,102,241,0.12)", color: "var(--color-primary)" }}>
                       {user?.role}
                     </span>
                   </div>
@@ -193,8 +193,8 @@ const Navbar = () => {
                   {[
                     { label: "Dashboard", to: "/dashboard" },
                     { label: "My Courses", to: "/my-courses" },
-                    { label: "Profile",    to: "/profile"   },
-                    { label: "Settings",   to: "/settings"  },
+                    { label: "Profile", to: "/profile" },
+                    { label: "Settings", to: "/settings" },
                   ].map((item) => (
                     <Link
                       key={item.to}
@@ -238,9 +238,9 @@ const Navbar = () => {
             className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg
                        transition-colors duration-150"
             style={{
-              color:           "var(--color-text-muted)",
+              color: "var(--color-text-muted)",
               backgroundColor: menuOpen ? "var(--color-bg-card)" : "transparent",
-              border:          "1px solid var(--color-border)",
+              border: "1px solid var(--color-border)",
             }}
             aria-label="Toggle menu"
           >
@@ -255,7 +255,7 @@ const Navbar = () => {
           className="md:hidden px-4 pb-4 pt-2 space-y-1"
           style={{
             backgroundColor: "var(--color-bg-nav)",
-            borderTop:       "1px solid var(--color-border)",
+            borderTop: "1px solid var(--color-border)",
           }}
         >
           {/* Nav links */}
@@ -269,7 +269,7 @@ const Navbar = () => {
                  ${isActive ? "font-semibold" : ""}`
               }
               style={({ isActive }) => ({
-                color:           isActive ? "var(--color-primary)" : "var(--color-text-muted)",
+                color: isActive ? "var(--color-primary)" : "var(--color-text-muted)",
                 backgroundColor: isActive ? "rgba(99,102,241,0.08)" : "transparent",
               })}
             >
@@ -281,11 +281,11 @@ const Navbar = () => {
             {!isAuthenticated ? (
               <div className="flex flex-col gap-2 pt-2">
                 <Link to="/login" onClick={() => setMenuOpen(false)}
-                      className="btn-ghost w-full text-center py-2.5">
+                  className="btn-ghost w-full text-center py-2.5">
                   Sign In
                 </Link>
                 <Link to="/register" onClick={() => setMenuOpen(false)}
-                      className="btn-primary w-full text-center py-2.5">
+                  className="btn-primary w-full text-center py-2.5">
                   Get Started
                 </Link>
               </div>
@@ -293,10 +293,10 @@ const Navbar = () => {
               <div className="pt-2 space-y-1">
                 {/* User info strip */}
                 <div className="flex items-center gap-3 px-4 py-3 rounded-lg"
-                     style={{ backgroundColor: "var(--color-bg-card)" }}>
+                  style={{ backgroundColor: "var(--color-bg-card)" }}>
                   <div className="w-9 h-9 rounded-full flex items-center justify-center
                                   text-sm font-bold text-white shrink-0"
-                       style={{ backgroundColor: "var(--color-primary)" }}>
+                    style={{ backgroundColor: "var(--color-primary)" }}>
                     {getInitials(user?.name)}
                   </div>
                   <div className="overflow-hidden">
@@ -312,20 +312,20 @@ const Navbar = () => {
                 {[
                   { label: "Dashboard", to: "/dashboard" },
                   { label: "My Courses", to: "/my-courses" },
-                  { label: "Profile",    to: "/profile"   },
-                  { label: "Settings",   to: "/settings"  },
+                  { label: "Profile", to: "/profile" },
+                  { label: "Settings", to: "/settings" },
                 ].map((item) => (
                   <Link key={item.to} to={item.to}
-                        onClick={() => setMenuOpen(false)}
-                        className="block px-4 py-2.5 rounded-lg text-sm transition-colors duration-150"
-                        style={{ color: "var(--color-text-muted)" }}>
+                    onClick={() => setMenuOpen(false)}
+                    className="block px-4 py-2.5 rounded-lg text-sm transition-colors duration-150"
+                    style={{ color: "var(--color-text-muted)" }}>
                     {item.label}
                   </Link>
                 ))}
 
                 <button onClick={handleLogout}
-                        className="w-full text-left px-4 py-2.5 rounded-lg text-sm mt-1"
-                        style={{ color: "var(--color-error)" }}>
+                  className="w-full text-left px-4 py-2.5 rounded-lg text-sm mt-1"
+                  style={{ color: "var(--color-error)" }}>
                   Sign Out
                 </button>
               </div>
