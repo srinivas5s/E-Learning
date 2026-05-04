@@ -38,7 +38,7 @@ const RegisterPage = () => {
             const res = await authApi.register(form);
             const { user, accessToken } = res.data.data;
             login(user, accessToken);
-            navigate("/dashboard", { replace: true });
+            navigate("/", { replace: true });
         } catch (err) {
             setApiError(err.response?.data?.message || "Something went wrong");
         } finally {

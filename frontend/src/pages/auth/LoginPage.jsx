@@ -8,8 +8,8 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Redirect to the page they tried to visit, or dashboard
-    const from = location.state?.from?.pathname || "/dashboard";
+    // Redirect to the page they tried to visit, or home
+    const from = location.state?.from?.pathname || "/";
 
     const [form, setForm] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
