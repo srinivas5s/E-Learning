@@ -3,12 +3,19 @@ import * as authService from "../services/auth.service.js";
 
 export const register = catchAsync(async (req, res) => {
     const { name, email, password, role } = req.body;
-    const user = await authService.registerUser({ name, email, password, role });
+     const { user, accessToken, refreshToken } = await authService.registerUser({ name, email, password, role });
+
+     res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
 
     res.status(201).json({
         status: "success",
         message: "Account created successfully",
-        data: { user },
+        data: { user, accessToken },
     });
 });
 
