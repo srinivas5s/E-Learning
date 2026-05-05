@@ -9,12 +9,14 @@ import LoginPage    from "./pages/auth/LoginPage.jsx";
 import RegisterPage from "./pages/auth/RegisterPage.jsx";
 
 // Home
-import Home from "./pages/home/Home.jsx";
+import Home  from "./pages/home/Home.jsx";
+import About   from "./pages/About.jsx";
+// import Contact from "./pages/Contact.jsx";
 
 // Placeholder pages — replace in future phases
 const CoursesPage = () => <PlaceholderPage title="Courses"   emoji="📚" />;
-const AboutPage   = () => <PlaceholderPage title="About"     emoji="ℹ️"  />;
-const ContactPage = () => <PlaceholderPage title="Contact"   emoji="✉️"  />;
+const AboutPage = About;;
+// const ContactPage = Contact;;
 const Dashboard   = () => <PlaceholderPage title="Dashboard" emoji="🎛️" />;
 const ProfilePage = () => <PlaceholderPage title="Profile"   emoji="👤" />;
 const NotFound    = () => <PlaceholderPage title="404 — Page Not Found" emoji="🔍" />;
@@ -30,7 +32,7 @@ const App = () => (
       <Route path="/"        element={<Home />} />
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/about"   element={<AboutPage />} />
-      <Route path="/contact" element={<ContactPage />} />
+      {/* <Route path="/contact" element={<ContactPage />} /> */}
 
       {/* Protected */}
       <Route element={<ProtectedRoute />}>
