@@ -5,34 +5,34 @@ import { Link } from "react-router-dom";
 
 const CONTACT_INFO = [
   {
-    emoji:   "✉️",
-    title:   "Email Us",
-    value:   "hello@learnflow.com",
-    sub:     "We reply within 24 hours",
-    color:   "#6366f1",
-    bg:      "rgba(99,102,241,0.08)",
-    border:  "rgba(99,102,241,0.2)",
-    href:    "mailto:hello@learnflow.com",
+    emoji: "✉️",
+    title: "Email Us",
+    value: "hello@learnflow.com",
+    sub: "We reply within 24 hours",
+    color: "#6366f1",
+    bg: "rgba(99,102,241,0.08)",
+    border: "rgba(99,102,241,0.2)",
+    href: "mailto:hello@learnflow.com",
   },
   {
-    emoji:   "📞",
-    title:   "Call Us",
-    value:   "+91 98765 43210",
-    sub:     "Mon–Fri, 9am – 6pm IST",
-    color:   "#0ea5e9",
-    bg:      "rgba(14,165,233,0.08)",
-    border:  "rgba(14,165,233,0.2)",
-    href:    "tel:+919876543210",
+    emoji: "📞",
+    title: "Call Us",
+    value: "+91 98765 43210",
+    sub: "Mon–Fri, 9am – 6pm IST",
+    color: "#0ea5e9",
+    bg: "rgba(14,165,233,0.08)",
+    border: "rgba(14,165,233,0.2)",
+    href: "tel:+919876543210",
   },
   {
-    emoji:   "📍",
-    title:   "Visit Us",
-    value:   "Bangalore, India",
-    sub:     "91 Springboard, Koramangala",
-    color:   "#10b981",
-    bg:      "rgba(16,185,129,0.08)",
-    border:  "rgba(16,185,129,0.2)",
-    href:    "https://maps.google.com",
+    emoji: "📍",
+    title: "Visit Us",
+    value: "Bangalore, India",
+    sub: "91 Springboard, Koramangala",
+    color: "#10b981",
+    bg: "rgba(16,185,129,0.08)",
+    border: "rgba(16,185,129,0.2)",
+    href: "https://maps.google.com",
   },
 ];
 
@@ -58,7 +58,7 @@ const FAQS = [
 // ── SECTION LABEL ─────────────────────────────────────────────────────────────
 const SectionLabel = ({ text }) => (
   <p className="text-sm font-semibold uppercase tracking-widest mb-3"
-     style={{ color: "var(--color-primary)" }}>
+    style={{ color: "var(--color-primary)" }}>
     {text}
   </p>
 );
@@ -72,17 +72,17 @@ const ContactHero = () => (
     {/* Blobs */}
     <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full blur-3xl
                     opacity-20 pointer-events-none"
-         style={{ backgroundColor: "var(--color-primary)" }} />
+      style={{ backgroundColor: "var(--color-primary)" }} />
     <div className="absolute -bottom-32 -left-32 w-80 h-80 rounded-full blur-3xl
                     opacity-10 pointer-events-none"
-         style={{ backgroundColor: "#0ea5e9" }} />
+      style={{ backgroundColor: "#0ea5e9" }} />
 
     {/* Dot grid */}
     <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
-         style={{
-           backgroundImage: "radial-gradient(circle, var(--color-text) 1px, transparent 1px)",
-           backgroundSize:  "32px 32px",
-         }} />
+      style={{
+        backgroundImage: "radial-gradient(circle, var(--color-text) 1px, transparent 1px)",
+        backgroundSize: "32px 32px",
+      }} />
 
     <div className="relative max-w-3xl mx-auto px-4 sm:px-6 text-center">
       {/* Pill */}
@@ -91,12 +91,12 @@ const ContactHero = () => (
                    text-xs font-semibold mb-6"
         style={{
           backgroundColor: "rgba(99,102,241,0.12)",
-          color:           "var(--color-primary)",
-          border:          "1px solid rgba(99,102,241,0.25)",
+          color: "var(--color-primary)",
+          border: "1px solid rgba(99,102,241,0.25)",
         }}
       >
         <span className="w-1.5 h-1.5 rounded-full animate-pulse"
-              style={{ backgroundColor: "var(--color-primary)" }} />
+          style={{ backgroundColor: "var(--color-primary)" }} />
         We'd Love to Hear from You
       </div>
 
@@ -121,7 +121,7 @@ const ContactHero = () => (
 
 // ── CONTACT INFO CARDS ────────────────────────────────────────────────────────
 const ContactInfo = () => (
-  <section className="pb-8" style={{ backgroundColor: "var(--color-bg)" }}>
+  <section className="py-8" style={{ backgroundColor: "var(--color-bg)" }}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {CONTACT_INFO.map(({ emoji, title, value, sub, color, bg, border, href }) => (
@@ -133,8 +133,8 @@ const ContactInfo = () => (
             className="flex items-start gap-4 p-5 rounded-2xl transition-all duration-300 group"
             style={{
               backgroundColor: bg,
-              border:          `1px solid ${border}`,
-              textDecoration:  "none",
+              border: `1px solid ${border}`,
+              textDecoration: "none",
             }}
             onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-3px)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
@@ -149,11 +149,11 @@ const ContactInfo = () => (
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider mb-1"
-                 style={{ color }}>
+                style={{ color }}>
                 {title}
               </p>
               <p className="text-sm font-semibold mb-0.5"
-                 style={{ color: "var(--color-text-heading)" }}>
+                style={{ color: "var(--color-text-heading)" }}>
                 {value}
               </p>
               <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
@@ -169,11 +169,11 @@ const ContactInfo = () => (
 
 // ── CONTACT FORM ──────────────────────────────────────────────────────────────
 const ContactForm = () => {
-  const [form, setForm]           = useState({ name: "", email: "", subject: "", message: "" });
-  const [errors, setErrors]       = useState({});
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading]     = useState(false);
-  const successRef                = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const successRef = useRef(null);
 
   useEffect(() => {
     if (submitted) successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -181,12 +181,12 @@ const ContactForm = () => {
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim())                      e.name    = "Name is required";
-    if (!form.email.trim())                     e.email   = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(form.email))  e.email   = "Enter a valid email";
-    if (!form.subject.trim())                   e.subject = "Subject is required";
-    if (!form.message.trim())                   e.message = "Message is required";
-    else if (form.message.trim().length < 20)   e.message = "Message must be at least 20 characters";
+    if (!form.name.trim()) e.name = "Name is required";
+    if (!form.email.trim()) e.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Enter a valid email";
+    if (!form.subject.trim()) e.subject = "Subject is required";
+    if (!form.message.trim()) e.message = "Message is required";
+    else if (form.message.trim().length < 20) e.message = "Message must be at least 20 characters";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -221,7 +221,7 @@ const ContactForm = () => {
                    py-14 px-8 rounded-2xl h-full"
         style={{
           backgroundColor: "var(--color-bg-card)",
-          border:          "1px solid var(--color-border)",
+          border: "1px solid var(--color-border)",
         }}
       >
         {/* Animated checkmark */}
@@ -229,7 +229,7 @@ const ContactForm = () => {
           className="w-20 h-20 rounded-full flex items-center justify-center text-4xl mb-6"
           style={{
             backgroundColor: "rgba(16,185,129,0.1)",
-            border:          "2px solid rgba(16,185,129,0.3)",
+            border: "2px solid rgba(16,185,129,0.3)",
           }}
         >
           ✅
@@ -273,7 +273,7 @@ const ContactForm = () => {
       className="p-7 sm:p-8 rounded-2xl"
       style={{
         backgroundColor: "var(--color-bg-card)",
-        border:          "1px solid var(--color-border)",
+        border: "1px solid var(--color-border)",
       }}
     >
       <h3
@@ -336,7 +336,7 @@ const ContactForm = () => {
           <label className="form-label" htmlFor="message">
             Message
             <span className="ml-2 text-xs font-normal"
-                  style={{ color: "var(--color-text-muted)" }}>
+              style={{ color: "var(--color-text-muted)" }}>
               ({form.message.length} / 500)
             </span>
           </label>
@@ -368,7 +368,7 @@ const ContactForm = () => {
             <span className="flex items-center gap-2">
               Send Message
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" />
               </svg>
             </span>
@@ -388,7 +388,7 @@ const FAQ = () => {
       className="p-7 sm:p-8 rounded-2xl"
       style={{
         backgroundColor: "var(--color-bg-card)",
-        border:          "1px solid var(--color-border)",
+        border: "1px solid var(--color-border)",
       }}
     >
       <h3
@@ -407,7 +407,7 @@ const FAQ = () => {
             key={i}
             className="rounded-xl overflow-hidden transition-all duration-200"
             style={{
-              border:          `1px solid ${open === i ? "rgba(99,102,241,0.3)" : "var(--color-border)"}`,
+              border: `1px solid ${open === i ? "rgba(99,102,241,0.3)" : "var(--color-border)"}`,
               backgroundColor: open === i ? "rgba(99,102,241,0.04)" : "transparent",
             }}
           >
@@ -428,8 +428,8 @@ const FAQ = () => {
                            transition-all duration-200 text-xs"
                 style={{
                   backgroundColor: open === i ? "var(--color-primary)" : "var(--color-border)",
-                  color:           open === i ? "#fff" : "var(--color-text-muted)",
-                  transform:       open === i ? "rotate(45deg)" : "rotate(0deg)",
+                  color: open === i ? "#fff" : "var(--color-text-muted)",
+                  transform: open === i ? "rotate(45deg)" : "rotate(0deg)",
                 }}
               >
                 +
@@ -464,8 +464,8 @@ const MapSection = () => (
                    items-center justify-center"
         style={{
           backgroundColor: "var(--color-bg-card)",
-          border:          "1px solid var(--color-border)",
-          background:      "linear-gradient(135deg, rgba(99,102,241,0.06) 0%, rgba(14,165,233,0.04) 100%)",
+          border: "1px solid var(--color-border)",
+          background: "linear-gradient(135deg, rgba(99,102,241,0.06) 0%, rgba(14,165,233,0.04) 100%)",
         }}
       >
         {/* Fake map grid lines */}
@@ -496,7 +496,7 @@ const MapSection = () => (
             className="px-5 py-2.5 rounded-xl text-center shadow-md"
             style={{
               backgroundColor: "var(--color-bg-card)",
-              border:          "1px solid var(--color-border)",
+              border: "1px solid var(--color-border)",
             }}
           >
             <p className="text-sm font-semibold" style={{ color: "var(--color-text-heading)" }}>
