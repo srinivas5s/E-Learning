@@ -12,6 +12,8 @@ const RegisterPage = () => {
     const [apiError, setApiError] = useState("");
     const [loading, setLoading] = useState(false);
     const [showPass, setShowPass] = useState(false);
+    const [redirecting, setRedirecting] = useState(false);
+
 
     const validate = () => {
         const e = {};
@@ -37,8 +39,9 @@ const RegisterPage = () => {
         try {
             const res = await authApi.register(form);
             const { user, accessToken } = res.data.data;
+            setRedirecting(true);
             login(user, accessToken);
-            navigate("/", { replace: true });
+            setTimeout(() => navigate("/", { replace: true }), 1400);
         } catch (err) {
             setApiError(err.response?.data?.message || "Something went wrong");
         } finally {
@@ -46,9 +49,67 @@ const RegisterPage = () => {
         }
     };
 
+    if (redirecting) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center gap-5"
+                style={{ backgroundColor: "var(--color-bg)" }}>
+
+                <div className="relative flex items-center justify-center w-20 h-20">
+                    <div className="absolute inset-0 rounded-full animate-ping opacity-20"
+                        style={{ backgroundColor: "var(--color-primary)" }} />
+                    <div className="absolute inset-0 rounded-full border-4 border-t-transparent animate-spin"
+                        style={{ borderColor: "var(--color-primary)", borderTopColor: "transparent" }} />
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl z-10"
+                        style={{ backgroundColor: "rgba(99,102,241,0.15)" }}>
+                        ✅
+                    </div>
+                </div>
+
+                <div className="text-center">
+                    <p className="text-lg font-bold mb-1"
+                        style={{ color: "var(--color-text-heading)", fontFamily: "var(--font-heading)" }}>
+                        Registration Successful!
+                    </p>
+                    <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
+                        Redirecting you now…
+                    </p>
+                </div>
+
+                <div className="w-48 h-1 rounded-full overflow-hidden"
+                    style={{ backgroundColor: "var(--color-border)" }}>
+                    <div className="h-full rounded-full"
+                        style={{
+                            backgroundColor: "var(--color-primary)",
+                            animation: "progressFill 1.3s ease forwards",
+                        }} />
+                </div>
+
+                <style>{`
+                    @keyframes progressFill {
+                        from { width: 0%; }
+                        to   { width: 100%; }
+                    }
+                `}</style>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen flex items-center justify-center px-4 py-10"
             style={{ backgroundColor: "var(--color-bg)" }}>
+
+                <style>{`
+                input:-webkit-autofill,
+                input:-webkit-autofill:hover,
+                input:-webkit-autofill:focus,
+                input:-webkit-autofill:active {
+                    -webkit-box-shadow: 0 0 0px 1000px var(--color-bg-input) inset !important;
+                    -webkit-text-fill-color: var(--color-text) !important;
+                    caret-color: var(--color-text) !important;
+                    transition: background-color 9999s ease-in-out 0s;
+                }
+            `}</style>
+
             <div className="auth-card w-full">
 
                 {/* Header */}
