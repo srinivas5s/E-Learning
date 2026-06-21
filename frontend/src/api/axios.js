@@ -1,37 +1,31 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api/v1",
+  baseURL:         import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api/v1",
   withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers:         { "Content-Type": "application/json" },
 });
 
-// ── Request interceptor: attach access token ──────────────────────────────
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// Attach access token to every request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 
-// ── Response interceptor: handle 401 ─────────────────────────────────────
+// Only redirect on 401 from protected routes
+// Never redirect on login/register failures
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const url = error.config?.url || "";
-    const isAuthRoute = url.includes("/login") || url.includes("/register");
- 
+    const url         = error.config?.url || "";
+    const isAuthRoute = url.includes("/auth/login") || url.includes("/auth/register");
+
     if (error.response?.status === 401 && !isAuthRoute) {
       localStorage.removeItem("accessToken");
       window.location.href = "/login";
     }
- 
+
     return Promise.reject(error);
   }
 );
