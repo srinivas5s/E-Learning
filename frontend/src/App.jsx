@@ -18,8 +18,8 @@ import StudentDashboard from "./pages/student/StudentDashboard.jsx";
 
 // Instructor pages
 import InstructorDashboard from "./pages/instructor/InstructorDashboard.jsx";
-// import CreateCourse from "./pages/instructor/CreateCourse.jsx";
-// import ManageCourses from "./pages/instructor/ManageCourses.jsx";
+import CreateCourse from "./features/courses/pages/CreateCourse.jsx"
+import ManageCourses from "./features/courses/pages/ManageCourses.jsx";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
@@ -70,8 +70,8 @@ const App = () => (
       {/* ── Instructor routes ───────────────────────────────────────────── */}
       <Route element={<ProtectedRoute roles={["instructor"]} />}>
         <Route path="/instructor/dashboard" element={<InstructorDashboard />} />
-        {/* <Route path="/instructor/create-course" element={<CreateCourse />} />
-        <Route path="/instructor/manage-courses" element={<ManageCourses />} /> */}
+        <Route path="/instructor/create-course" element={<CreateCourse />} />
+        <Route path="/instructor/manage-courses" element={<ManageCourses />} />
       </Route>
 
       {/* ── Admin routes ────────────────────────────────────────────────── */}
