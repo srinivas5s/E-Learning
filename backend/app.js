@@ -22,8 +22,6 @@ app.get("/", (req, res) => {
   res.send("Hello")
 })
 
-app.use("/api/v1/auth", authRoutes);
-
 app.use(errorHandler);
 
 export default app;

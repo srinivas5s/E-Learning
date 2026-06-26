@@ -22,13 +22,6 @@ export const LEVELS = [
 export const LANGUAGES = [
     "English",
     "Hindi",
-    "Spanish",
-    "French",
-    "German",
-    "Portuguese",
-    "Arabic",
-    "Chinese",
-    "Japanese",
     "Other",
 ];
 

@@ -5,41 +5,41 @@ const courseSchema = new mongoose.Schema(
   {
     // ── Core ───────────────────────────────────────────────────────────────
     title: {
-      type:      String,
-      required:  [true, "Course title is required"],
-      trim:      true,
-      minlength: [5,   "Title must be at least 5 characters"],
+      type: String,
+      required: [true, "Course title is required"],
+      trim: true,
+      minlength: [5, "Title must be at least 5 characters"],
       maxlength: [150, "Title cannot exceed 150 characters"],
     },
 
     slug: {
-      type:   String,
+      type: String,
       unique: true,
       lowercase: true,
       index: true,
     },
 
     subtitle: {
-      type:      String,
-      trim:      true,
+      type: String,
+      trim: true,
       maxlength: [300, "Subtitle cannot exceed 300 characters"],
     },
 
     description: {
-      type:      String,
-      required:  [true, "Course description is required"],
+      type: String,
+      required: [true, "Course description is required"],
       minlength: [20, "Description must be at least 20 characters"],
     },
 
     // ── Media ──────────────────────────────────────────────────────────────
     thumbnail: {
-      url:       { type: String, default: "" },
-      publicId:  { type: String, default: "" },
+      url: { type: String, default: "" },
+      publicId: { type: String, default: "" },
     },
 
     // ── Categorization ─────────────────────────────────────────────────────
     category: {
-      type:     String,
+      type: String,
       required: [true, "Category is required"],
       enum: [
         "Web Development",
@@ -58,29 +58,29 @@ const courseSchema = new mongoose.Schema(
     },
 
     level: {
-      type:     String,
+      type: String,
       required: [true, "Level is required"],
-      enum:     ["beginner", "intermediate", "advanced"],
-      default:  "beginner",
+      enum: ["beginner", "intermediate", "advanced"],
+      default: "beginner",
     },
 
     language: {
-      type:    String,
+      type: String,
       default: "English",
-      trim:    true,
+      trim: true,
     },
 
     // ── Pricing ────────────────────────────────────────────────────────────
     price: {
-      type:    Number,
+      type: Number,
       required: [true, "Price is required"],
-      min:     [0, "Price cannot be negative"],
+      min: [0, "Price cannot be negative"],
       default: 0,
     },
 
     discountPrice: {
-      type:    Number,
-      min:     [0, "Discount price cannot be negative"],
+      type: Number,
+      min: [0, "Discount price cannot be negative"],
       default: 0,
       validate: {
         validator(val) {
@@ -93,58 +93,58 @@ const courseSchema = new mongoose.Schema(
 
     // ── Content ────────────────────────────────────────────────────────────
     requirements: {
-      type:    [String],
+      type: [String],
       default: [],
     },
 
     learningOutcomes: {
-      type:    [String],
+      type: [String],
       default: [],
     },
 
     duration: {
-      type:    Number, // total minutes
+      type: Number, // total minutes
       default: 0,
-      min:     0,
+      min: 0,
     },
 
     // ── Relations ──────────────────────────────────────────────────────────
     instructor: {
-      type:     mongoose.Schema.Types.ObjectId,
-      ref:      "User",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: [true, "Instructor is required"],
-      index:    true,
+      index: true,
     },
 
     studentsEnrolled: {
-      type:    Number,
+      type: Number,
       default: 0,
-      min:     0,
+      min: 0,
     },
 
     // ── Ratings ────────────────────────────────────────────────────────────
     averageRating: {
-      type:    Number,
+      type: Number,
       default: 0,
-      min:     [0, "Rating cannot be below 0"],
-      max:     [5, "Rating cannot exceed 5"],
-      set:     (val) => Math.round(val * 10) / 10, // round to 1 decimal
+      min: [0, "Rating cannot be below 0"],
+      max: [5, "Rating cannot exceed 5"],
+      set: (val) => Math.round(val * 10) / 10, // round to 1 decimal
     },
 
     totalRatings: {
-      type:    Number,
+      type: Number,
       default: 0,
     },
 
     // ── Publishing ─────────────────────────────────────────────────────────
     isPublished: {
-      type:    Boolean,
+      type: Boolean,
       default: false,
     },
 
     status: {
-      type:    String,
-      enum:    ["draft", "published"],
+      type: String,
+      enum: ["draft", "published"],
       default: "draft",
     },
   },
@@ -183,32 +183,38 @@ courseSchema.virtual("discountPercent").get(function () {
 });
 
 // ── Pre-save: auto-generate slug from title ────────────────────────────────────
-courseSchema.pre("save", async function (next) {
-  if (!this.isModified("title")) return next();
+courseSchema.pre("save", async function () {
+  if (!this.isModified("title")) return;
 
-  let baseSlug = slugify(this.title, { lower: true, strict: true });
-  let slug     = baseSlug;
-  let count    = 1;
+  const baseSlug = slugify(this.title, {
+    lower: true,
+    strict: true,
+  });
 
-  // Ensure slug is unique — append number if collision
-  while (await mongoose.model("Course").exists({ slug, _id: { $ne: this._id } })) {
-    slug = `${baseSlug}-${count}`;
-    count++;
+  let slug = baseSlug;
+  let count = 1;
+
+  while (
+    await mongoose.model("Course").exists({
+      slug,
+      _id: { $ne: this._id },
+    })
+  ) {
+    slug = `${baseSlug}-${count++}`;
   }
 
   this.slug = slug;
-  next();
 });
 
 // ── Pre-save: sync isPublished with status ─────────────────────────────────────
-courseSchema.pre("save", function (next) {
+courseSchema.pre("save", async function () {
   if (this.isModified("status")) {
     this.isPublished = this.status === "published";
   }
+
   if (this.isModified("isPublished")) {
     this.status = this.isPublished ? "published" : "draft";
   }
-  next();
 });
 
 export const Course = mongoose.model("Course", courseSchema);
