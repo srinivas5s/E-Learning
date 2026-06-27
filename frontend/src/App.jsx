@@ -20,6 +20,8 @@ import StudentDashboard from "./pages/student/StudentDashboard.jsx";
 import InstructorDashboard from "./pages/instructor/InstructorDashboard.jsx";
 import CreateCourse from "./features/courses/pages/CreateCourse.jsx"
 import ManageCourses from "./features/courses/pages/ManageCourses.jsx";
+import CoursesPage from "./features/courses/pages/CoursesPage.jsx";
+import CourseDetail from "./features/courses/pages/CourseDetail.jsx";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
@@ -58,7 +60,8 @@ const App = () => (
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/courses" element={<NotFound />} /> {/* Phase 2 */}
+      <Route path="/courses" element={<CoursesPage />} />
+      <Route path="/courses/:slug" element={<CourseDetail />} />
 
       {/* ── Student routes ─────────────────────────────────────────────── */}
       <Route element={<ProtectedRoute roles={["student"]} />}>
