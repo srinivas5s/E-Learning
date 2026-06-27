@@ -15,7 +15,7 @@ import {
 // ── Icons ─────────────────────────────────────────────────────────────────────
 const PlusIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
     <line x1="12" y1="5" x2="12" y2="19" />
     <line x1="5" y1="12" x2="19" y2="12" />
   </svg>
@@ -23,7 +23,7 @@ const PlusIcon = () => (
 
 const EditIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round">
     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
   </svg>
@@ -31,7 +31,7 @@ const EditIcon = () => (
 
 const TrashIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round">
     <polyline points="3 6 5 6 21 6" />
     <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
     <path d="M10 11v6M14 11v6" />
@@ -41,7 +41,7 @@ const TrashIcon = () => (
 
 const EyeIcon = ({ off }) => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round">
     {off ? (
       <>
         <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
@@ -60,20 +60,20 @@ const EyeIcon = ({ off }) => (
 // ── Confirm Delete Modal ──────────────────────────────────────────────────────
 const DeleteModal = ({ course, onConfirm, onCancel, loading }) => (
   <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
-       style={{ backgroundColor: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
+    style={{ backgroundColor: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
     <div
       className="w-full max-w-sm rounded-2xl p-6 shadow-2xl"
       style={{
         backgroundColor: "var(--color-bg-card)",
-        border:          "1px solid var(--color-border)",
+        border: "1px solid var(--color-border)",
       }}
     >
       <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4"
-           style={{ backgroundColor: "rgba(248,113,113,0.1)" }}>
+        style={{ backgroundColor: "rgba(248,113,113,0.1)" }}>
         🗑️
       </div>
       <h3 className="text-base font-bold mb-2"
-          style={{ color: "var(--color-text-heading)", fontFamily: "var(--font-heading)" }}>
+        style={{ color: "var(--color-text-heading)", fontFamily: "var(--font-heading)" }}>
         Delete Course?
       </h3>
       <p className="text-sm mb-1" style={{ color: "var(--color-text-muted)" }}>
@@ -83,7 +83,7 @@ const DeleteModal = ({ course, onConfirm, onCancel, loading }) => (
         "{course.title}"
       </p>
       <p className="text-xs mb-6 px-3 py-2 rounded-lg"
-         style={{ backgroundColor: "rgba(248,113,113,0.08)", color: "var(--color-error)" }}>
+        style={{ backgroundColor: "rgba(248,113,113,0.08)", color: "var(--color-error)" }}>
         This action cannot be undone.
       </p>
 
@@ -118,11 +118,11 @@ const DeleteModal = ({ course, onConfirm, onCancel, loading }) => (
 const EmptyState = () => (
   <div className="flex flex-col items-center justify-center py-20 text-center">
     <div className="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl mb-5"
-         style={{ backgroundColor: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.15)" }}>
+      style={{ backgroundColor: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.15)" }}>
       📚
     </div>
     <h3 className="text-lg font-bold mb-2"
-        style={{ color: "var(--color-text-heading)", fontFamily: "var(--font-heading)" }}>
+      style={{ color: "var(--color-text-heading)", fontFamily: "var(--font-heading)" }}>
       No courses yet
     </h3>
     <p className="text-sm mb-6 max-w-xs" style={{ color: "var(--color-text-muted)" }}>
@@ -141,9 +141,9 @@ const EmptyState = () => (
 // ── Skeleton loader ───────────────────────────────────────────────────────────
 const SkeletonRow = () => (
   <div className="flex items-center gap-4 p-4 rounded-xl animate-pulse"
-       style={{ backgroundColor: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}>
+    style={{ backgroundColor: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}>
     <div className="w-24 h-16 rounded-lg shrink-0"
-         style={{ backgroundColor: "var(--color-border)" }} />
+      style={{ backgroundColor: "var(--color-border)" }} />
     <div className="flex-1 space-y-2">
       <div className="h-4 rounded w-2/3" style={{ backgroundColor: "var(--color-border)" }} />
       <div className="h-3 rounded w-1/3" style={{ backgroundColor: "var(--color-border)" }} />
@@ -163,7 +163,7 @@ const SkeletonRow = () => (
 // ── Course Row ────────────────────────────────────────────────────────────────
 const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }) => {
   const status = STATUS_BADGE[course.status] || STATUS_BADGE.draft;
-  const level  = LEVEL_BADGE[course.level]   || LEVEL_BADGE.beginner;
+  const level = LEVEL_BADGE[course.level] || LEVEL_BADGE.beginner;
   const isPublishing = publishingId === course._id;
 
   return (
@@ -172,7 +172,7 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
                  group hover:shadow-md"
       style={{
         backgroundColor: "var(--color-bg-card)",
-        border:          "1px solid var(--color-border)",
+        border: "1px solid var(--color-border)",
       }}
       onMouseEnter={(e) => e.currentTarget.style.borderColor = "rgba(99,102,241,0.3)"}
       onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--color-border)"}
@@ -185,18 +185,18 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
       >
         {course.thumbnail?.url
           ? <img src={course.thumbnail.url} alt={course.title}
-                 className="w-full h-full object-cover" />
+            className="w-full h-full object-cover" />
           : "📚"}
       </div>
 
       {/* Info */}
       <div className="flex-1 min-w-0">
         <h3 className="text-sm font-semibold truncate mb-1"
-            style={{ color: "var(--color-text-heading)" }}>
+          style={{ color: "var(--color-text-heading)" }}>
           {course.title}
         </h3>
         <div className="flex flex-wrap items-center gap-2 text-xs"
-             style={{ color: "var(--color-text-muted)" }}>
+          style={{ color: "var(--color-text-muted)" }}>
           <span>{formatPrice(course.price)}</span>
           <span>·</span>
           <span>{course.studentsEnrolled} students</span>
@@ -243,18 +243,18 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
           className="w-8 h-8 rounded-lg flex items-center justify-center
                      transition-all duration-150"
           style={{
-            color:           "var(--color-text-muted)",
+            color: "var(--color-text-muted)",
             backgroundColor: "transparent",
-            border:          "1px solid var(--color-border)",
+            border: "1px solid var(--color-border)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.color           = "var(--color-primary)";
-            e.currentTarget.style.borderColor     = "var(--color-primary)";
+            e.currentTarget.style.color = "var(--color-primary)";
+            e.currentTarget.style.borderColor = "var(--color-primary)";
             e.currentTarget.style.backgroundColor = "rgba(99,102,241,0.08)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.color           = "var(--color-text-muted)";
-            e.currentTarget.style.borderColor     = "var(--color-border)";
+            e.currentTarget.style.color = "var(--color-text-muted)";
+            e.currentTarget.style.borderColor = "var(--color-border)";
             e.currentTarget.style.backgroundColor = "transparent";
           }}
         >
@@ -269,15 +269,15 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
           className="w-8 h-8 rounded-lg flex items-center justify-center
                      transition-all duration-150 disabled:opacity-50"
           style={{
-            color:           course.isPublished ? "#10b981" : "var(--color-text-muted)",
+            color: course.isPublished ? "#10b981" : "var(--color-text-muted)",
             backgroundColor: course.isPublished ? "rgba(16,185,129,0.08)" : "transparent",
-            border:          `1px solid ${course.isPublished ? "rgba(16,185,129,0.3)" : "var(--color-border)"}`,
+            border: `1px solid ${course.isPublished ? "rgba(16,185,129,0.3)" : "var(--color-border)"}`,
           }}
           onMouseEnter={(e) => {
             if (!isPublishing) {
               e.currentTarget.style.backgroundColor = course.isPublished
                 ? "rgba(248,113,113,0.08)" : "rgba(16,185,129,0.08)";
-              e.currentTarget.style.color     = course.isPublished ? "#f87171" : "#10b981";
+              e.currentTarget.style.color = course.isPublished ? "#f87171" : "#10b981";
               e.currentTarget.style.borderColor = course.isPublished
                 ? "rgba(248,113,113,0.3)" : "rgba(16,185,129,0.3)";
             }
@@ -285,7 +285,7 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
           onMouseLeave={(e) => {
             e.currentTarget.style.backgroundColor = course.isPublished
               ? "rgba(16,185,129,0.08)" : "transparent";
-            e.currentTarget.style.color     = course.isPublished ? "#10b981" : "var(--color-text-muted)";
+            e.currentTarget.style.color = course.isPublished ? "#10b981" : "var(--color-text-muted)";
             e.currentTarget.style.borderColor = course.isPublished
               ? "rgba(16,185,129,0.3)" : "var(--color-border)";
           }}
@@ -303,18 +303,18 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
           className="w-8 h-8 rounded-lg flex items-center justify-center
                      transition-all duration-150"
           style={{
-            color:           "var(--color-text-muted)",
+            color: "var(--color-text-muted)",
             backgroundColor: "transparent",
-            border:          "1px solid var(--color-border)",
+            border: "1px solid var(--color-border)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.color           = "var(--color-error)";
-            e.currentTarget.style.borderColor     = "rgba(248,113,113,0.4)";
+            e.currentTarget.style.color = "var(--color-error)";
+            e.currentTarget.style.borderColor = "rgba(248,113,113,0.4)";
             e.currentTarget.style.backgroundColor = "rgba(248,113,113,0.08)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.color           = "var(--color-text-muted)";
-            e.currentTarget.style.borderColor     = "var(--color-border)";
+            e.currentTarget.style.color = "var(--color-text-muted)";
+            e.currentTarget.style.borderColor = "var(--color-border)";
             e.currentTarget.style.backgroundColor = "transparent";
           }}
         >
@@ -330,13 +330,13 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
 const ManageCourses = () => {
   const navigate = useNavigate();
 
-  const { data, loading, fetch }         = useGetInstructorCourses();
-  const { loading: publishing, toggle }  = useTogglePublish();
-  const { loading: deleting,   remove }  = useDeleteCourse();
+  const { data, loading, fetch } = useGetInstructorCourses();
+  const { loading: publishing, toggle } = useTogglePublish();
+  const { loading: deleting, remove } = useDeleteCourse();
 
-  const [publishingId,   setPublishingId]   = useState(null);
-  const [deleteTarget,   setDeleteTarget]   = useState(null);
-  const [statusFilter,   setStatusFilter]   = useState("");
+  const [publishingId, setPublishingId] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [statusFilter, setStatusFilter] = useState("");
 
   useEffect(() => { fetch({ status: statusFilter }); }, [statusFilter]);
 
@@ -359,13 +359,13 @@ const ManageCourses = () => {
     }
   };
 
-  const courses     = data?.courses     || [];
-  const pagination  = data?.pagination  || {};
+  const courses = data?.courses || [];
+  const pagination = data?.pagination || {};
 
   // ── Summary stats ─────────────────────────────────────────────────────────────
   const totalPublished = courses.filter((c) => c.status === "published").length;
-  const totalDraft     = courses.filter((c) => c.status === "draft").length;
-  const totalStudents  = courses.reduce((sum, c) => sum + (c.studentsEnrolled || 0), 0);
+  const totalDraft = courses.filter((c) => c.status === "draft").length;
+  const totalStudents = courses.reduce((sum, c) => sum + (c.studentsEnrolled || 0), 0);
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6" style={{ backgroundColor: "var(--color-bg)" }}>
@@ -375,7 +375,7 @@ const ManageCourses = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold"
-                style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}>
+              style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}>
               My Courses
             </h1>
             <p className="text-sm mt-1" style={{ color: "var(--color-text-muted)" }}>
@@ -396,13 +396,13 @@ const ManageCourses = () => {
         {!loading && courses.length > 0 && (
           <div className="grid grid-cols-3 gap-4 mb-6">
             {[
-              { label: "Total Courses",    value: pagination.total || courses.length, color: "#6366f1", bg: "rgba(99,102,241,0.08)"  },
-              { label: "Published",        value: totalPublished,                     color: "#10b981", bg: "rgba(16,185,129,0.08)"  },
-              { label: "Total Students",   value: totalStudents,                      color: "#f59e0b", bg: "rgba(245,158,11,0.08)"  },
+              { label: "Total Courses", value: pagination.total || courses.length, color: "#6366f1", bg: "rgba(99,102,241,0.08)" },
+              { label: "Published", value: totalPublished, color: "#10b981", bg: "rgba(16,185,129,0.08)" },
+              { label: "Total Students", value: totalStudents, color: "#f59e0b", bg: "rgba(245,158,11,0.08)" },
             ].map(({ label, value, color, bg }) => (
               <div key={label}
-                   className="text-center py-4 px-3 rounded-xl"
-                   style={{ backgroundColor: bg, border: `1px solid ${color}20` }}>
+                className="text-center py-4 px-3 rounded-xl"
+                style={{ backgroundColor: bg, border: `1px solid ${color}20` }}>
                 <p className="text-xl font-bold" style={{ color, fontFamily: "var(--font-heading)" }}>
                   {value}
                 </p>
@@ -417,9 +417,9 @@ const ManageCourses = () => {
         {/* ── Filter tabs ─────────────────────────────────────────────── */}
         <div className="flex items-center gap-2 mb-4">
           {[
-            { value: "",          label: "All"       },
+            { value: "", label: "All" },
             { value: "published", label: "Published" },
-            { value: "draft",     label: "Drafts"    },
+            { value: "draft", label: "Drafts" },
           ].map((tab) => (
             <button
               key={tab.value}
@@ -449,7 +449,7 @@ const ManageCourses = () => {
             className="rounded-2xl"
             style={{
               backgroundColor: "var(--color-bg-card)",
-              border:          "1px solid var(--color-border)",
+              border: "1px solid var(--color-border)",
             }}
           >
             <EmptyState />
