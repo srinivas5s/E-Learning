@@ -1,28 +1,30 @@
 import express from "express";
 import cors from "cors";
+
+import router from "./src/routes/index.js"; // or router.js
 import errorHandler from "./src/middlewares/error.middleware.js";
-import authRoutes from "./src/routes/auth.routes.js"
-import courseRoutes from "./src/routes/course.routes.js"
 
 const app = express();
 
-
+// Middlewares
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend URL
-    credentials: true, // if using cookies / auth
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 
 app.use(express.json());
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/courses", courseRoutes);
 
+// Root Route
 app.get("/", (req, res) => {
-  res.send("Hello")
-})
+  res.send("Hello");
+});
 
+// All API Routes
+app.use("/api/v1", router);
+
+// Error Handler (should be last)
 app.use(errorHandler);
 
 export default app;
-
