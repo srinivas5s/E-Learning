@@ -45,22 +45,22 @@ const ArrayInput = ({ label, placeholder, values = [], onChange }) => {
         <ul className="space-y-2">
           {values.map((item, i) => (
             <li key={i}
-                className="flex items-start gap-3 px-3 py-2.5 rounded-lg text-sm"
-                style={{
-                  backgroundColor: "rgba(99,102,241,0.06)",
-                  border:          "1px solid rgba(99,102,241,0.15)",
-                }}>
+              className="flex items-start gap-3 px-3 py-2.5 rounded-lg text-sm"
+              style={{
+                backgroundColor: "rgba(99,102,241,0.06)",
+                border: "1px solid rgba(99,102,241,0.15)",
+              }}>
               <span className="mt-0.5 shrink-0 w-5 h-5 rounded-full flex items-center
                                justify-center text-xs font-bold text-white"
-                    style={{ backgroundColor: "var(--color-primary)" }}>
+                style={{ backgroundColor: "var(--color-primary)" }}>
                 {i + 1}
               </span>
               <span className="flex-1" style={{ color: "var(--color-text)" }}>{item}</span>
               <button type="button" onClick={() => remove(i)}
-                      className="shrink-0 opacity-50 hover:opacity-100 transition-opacity"
-                      style={{ color: "var(--color-error)" }}>
+                className="shrink-0 opacity-50 hover:opacity-100 transition-opacity"
+                style={{ color: "var(--color-error)" }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>

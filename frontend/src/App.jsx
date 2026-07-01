@@ -18,10 +18,10 @@ import StudentDashboard from "./pages/student/StudentDashboard.jsx";
 
 // Instructor pages
 import InstructorDashboard from "./pages/instructor/InstructorDashboard.jsx";
-import CreateCourse from "./features/courses/pages/CreateCourse.jsx"
-import ManageCourses from "./features/courses/pages/ManageCourses.jsx";
-import CoursesPage from "./features/courses/pages/CoursesPage.jsx";
-import CourseDetail from "./features/courses/pages/CourseDetail.jsx";
+import CreateCourse from "./pages/instructor/CreateCourse.jsx"
+import ManageCourses from "./pages/instructor/ManageCourses.jsx";
+import CoursesPage from "./pages/student/CoursesPage.jsx";
+import CourseDetail from "./pages/student/CourseDetail.jsx";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";

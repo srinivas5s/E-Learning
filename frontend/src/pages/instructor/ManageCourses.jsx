@@ -4,13 +4,13 @@ import {
   useGetInstructorCourses,
   useTogglePublish,
   useDeleteCourse,
-} from "../services/useCourse.js";
+} from "../../services/useCourse.js";
 import {
   STATUS_BADGE,
   LEVEL_BADGE,
   formatPrice,
   formatDuration,
-} from "../courseConstants.js";
+} from "../../constants/courseConstants.js";
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 const PlusIcon = () => (

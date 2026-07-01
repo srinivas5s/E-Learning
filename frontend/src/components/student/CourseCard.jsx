@@ -3,15 +3,15 @@ import {
   formatPrice,
   formatDuration,
   LEVEL_BADGE,
-} from "../courseConstants.js";
+} from "../../constants/courseConstants.js";
 
 // ── Star rating ───────────────────────────────────────────────────────────────
 const Stars = ({ rating }) => (
   <div className="flex gap-0.5">
     {Array.from({ length: 5 }).map((_, i) => (
       <svg key={i} width="12" height="12" viewBox="0 0 24 24"
-           fill={i < Math.round(rating) ? "#f59e0b" : "none"}
-           stroke="#f59e0b" strokeWidth="1.5">
+        fill={i < Math.round(rating) ? "#f59e0b" : "none"}
+        stroke="#f59e0b" strokeWidth="1.5">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02
                          12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
@@ -21,7 +21,7 @@ const Stars = ({ rating }) => (
 
 // ── Course Card ───────────────────────────────────────────────────────────────
 const CourseCard = ({ course }) => {
-  const level   = LEVEL_BADGE[course.level] || LEVEL_BADGE.beginner;
+  const level = LEVEL_BADGE[course.level] || LEVEL_BADGE.beginner;
   const hasDiscount = course.discountPrice > 0 && course.discountPrice < course.price;
   const effectivePrice = hasDiscount ? course.discountPrice : course.price;
 
@@ -31,17 +31,17 @@ const CourseCard = ({ course }) => {
       className="flex flex-col rounded-2xl overflow-hidden transition-all duration-300 group"
       style={{
         backgroundColor: "var(--color-bg-card)",
-        border:          "1px solid var(--color-border)",
-        textDecoration:  "none",
+        border: "1px solid var(--color-border)",
+        textDecoration: "none",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform   = "translateY(-4px)";
-        e.currentTarget.style.boxShadow   = "0 16px 40px rgba(0,0,0,0.12)";
+        e.currentTarget.style.transform = "translateY(-4px)";
+        e.currentTarget.style.boxShadow = "0 16px 40px rgba(0,0,0,0.12)";
         e.currentTarget.style.borderColor = "rgba(99,102,241,0.4)";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.transform   = "translateY(0)";
-        e.currentTarget.style.boxShadow   = "none";
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = "none";
         e.currentTarget.style.borderColor = "var(--color-border)";
       }}
     >
@@ -88,7 +88,7 @@ const CourseCard = ({ course }) => {
         {/* Title */}
         <h3
           className="text-sm font-semibold leading-snug mb-2 line-clamp-2
-                     transition-colors duration-150 group-hover:text-[var(--color-primary)]"
+                     transition-colors duration-150 group-hover:text-(--color-primary)"
           style={{ color: "var(--color-text-heading)" }}
         >
           {course.title}
@@ -149,15 +149,15 @@ const CourseCard = ({ course }) => {
                        group-hover:text-white"
             style={{
               backgroundColor: "rgba(99,102,241,0.08)",
-              color:           "var(--color-primary)",
+              color: "var(--color-primary)",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = "var(--color-primary)";
-              e.currentTarget.style.color           = "#fff";
+              e.currentTarget.style.color = "#fff";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = "rgba(99,102,241,0.08)";
-              e.currentTarget.style.color           = "var(--color-primary)";
+              e.currentTarget.style.color = "var(--color-primary)";
             }}
           >
             View →
