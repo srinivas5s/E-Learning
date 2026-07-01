@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useGetAllCourses } from "../services/useCourse.js";
-import CourseCard from "../components/CourseCard.jsx";
+import { useGetAllCourses } from "../../services/useCourse.js";
+import CourseCard from "../../components/student/CourseCard.jsx";
 import {
   CATEGORIES,
   LEVELS,
   SORT_OPTIONS,
-} from "../courseConstants.js";
+} from "../../constants/courseConstants.js";
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 const SearchIcon = () => (

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCreateCourse } from "../services/useCourse.js";
-import ArrayInput from "../components/ArrayInput.jsx";
-import { CATEGORIES, LEVELS, LANGUAGES } from "../courseConstants.js";
+import { useCreateCourse } from "../../services/useCourse.js";
+import ArrayInput from "../../components/instructor/ArrayInput.jsx";
+import { CATEGORIES, LEVELS, LANGUAGES } from "../../constants/courseConstants.js";
 
 // ── Reusable section card ─────────────────────────────────────────────────────
 const Section = ({ title, subtitle, children }) => (

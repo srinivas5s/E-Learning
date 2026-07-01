@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useGetCourseBySlug } from "../services/useCourse.js";
-import { useAuth } from "../../../context/AuthContext.jsx";
+import { useGetCourseBySlug } from "../../services/useCourse.js";
+import { useAuth } from "../../context/AuthContext.jsx";
 import {
   formatPrice,
   formatDuration,
   LEVEL_BADGE,
-} from "../courseConstants.js";
+} from "../../constants/courseConstants.js";
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 const CheckIcon = () => (

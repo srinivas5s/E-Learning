@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import courseApi from "../../../api/course.api.js";
+import courseApi from "../api/course.api.js";
 import toast from "react-hot-toast";
 
 /**
