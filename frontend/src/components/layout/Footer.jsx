@@ -28,36 +28,36 @@ const YoutubeIcon = () => (
 // ── Links config ──────────────────────────────────────────────────────────────
 const FOOTER_LINKS = {
   Platform: [
-    { label: "Browse Courses", to: "/courses"  },
+    { label: "Browse Courses", to: "/courses" },
     { label: "Become Instructor", to: "/register" },
-    { label: "Pricing",        to: "/pricing"  },
-    { label: "Enterprise",     to: "/enterprise" },
+    { label: "Pricing", to: "/pricing" },
+    { label: "Enterprise", to: "/enterprise" },
   ],
   Learn: [
-    { label: "Web Development",  to: "/courses" },
-    { label: "Data Science",     to: "/courses" },
-    { label: "UI/UX Design",     to: "/courses" },
-    { label: "Mobile Dev",       to: "/courses" },
+    { label: "Web Development", to: "/courses" },
+    { label: "Data Science", to: "/courses" },
+    { label: "UI/UX Design", to: "/courses" },
+    { label: "Mobile Dev", to: "/courses" },
   ],
   Company: [
-    { label: "About Us",    to: "/about"   },
-    { label: "Blog",        to: "/blog"    },
-    { label: "Careers",     to: "/careers" },
-    { label: "Contact",     to: "/contact" },
+    { label: "About Us", to: "/about" },
+    { label: "Blog", to: "/blog" },
+    { label: "Careers", to: "/careers" },
+    { label: "Contact", to: "/contact" },
   ],
   Support: [
-    { label: "Help Center",      to: "/help"    },
-    { label: "Privacy Policy",   to: "/privacy" },
-    { label: "Terms of Service", to: "/terms"   },
-    { label: "Cookie Policy",    to: "/cookies" },
+    { label: "Help Center", to: "/help" },
+    { label: "Privacy Policy", to: "/privacy" },
+    { label: "Terms of Service", to: "/terms" },
+    { label: "Cookie Policy", to: "/cookies" },
   ],
 };
 
 const SOCIAL_LINKS = [
-  { icon: <TwitterIcon />,  href: "#", label: "Twitter"  },
-  { icon: <GithubIcon />,   href: "#", label: "GitHub"   },
+  { icon: <TwitterIcon />, href: "#", label: "Twitter" },
+  { icon: <GithubIcon />, href: "#", label: "GitHub" },
   { icon: <LinkedinIcon />, href: "#", label: "LinkedIn" },
-  { icon: <YoutubeIcon />,  href: "#", label: "YouTube"  },
+  { icon: <YoutubeIcon />, href: "#", label: "YouTube" },
 ];
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -69,7 +69,7 @@ const Footer = () => {
       className="w-full mt-auto"
       style={{
         backgroundColor: "var(--color-bg-card)",
-        borderTop:       "1px solid var(--color-border)",
+        borderTop: "1px solid var(--color-border)",
       }}
     >
       {/* ── Main Footer ──────────────────────────────────────────────────── */}
@@ -82,18 +82,18 @@ const Footer = () => {
             <Link to="/" className="inline-flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center
                               text-white text-sm font-bold"
-                   style={{ backgroundColor: "var(--color-primary)" }}>
+                style={{ backgroundColor: "var(--color-primary)" }}>
                 L
               </div>
               <span className="font-bold text-lg"
-                    style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}>
+                style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}>
                 LearnFlow
               </span>
             </Link>
 
             {/* Tagline */}
             <p className="text-sm leading-relaxed max-w-xs"
-               style={{ color: "var(--color-text-muted)" }}>
+              style={{ color: "var(--color-text-muted)" }}>
               Empowering learners worldwide with high-quality courses taught by
               industry experts.
             </p>
@@ -110,19 +110,19 @@ const Footer = () => {
                   className="w-9 h-9 rounded-lg flex items-center justify-center
                              transition-all duration-150 hover:scale-105"
                   style={{
-                    color:           "var(--color-text-muted)",
+                    color: "var(--color-text-muted)",
                     backgroundColor: "transparent",
-                    border:          "1px solid var(--color-border)",
+                    border: "1px solid var(--color-border)",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = "rgba(99,102,241,0.1)";
-                    e.currentTarget.style.color           = "var(--color-primary)";
-                    e.currentTarget.style.borderColor     = "var(--color-primary)";
+                    e.currentTarget.style.color = "var(--color-primary)";
+                    e.currentTarget.style.borderColor = "var(--color-primary)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = "transparent";
-                    e.currentTarget.style.color           = "var(--color-text-muted)";
-                    e.currentTarget.style.borderColor     = "var(--color-border)";
+                    e.currentTarget.style.color = "var(--color-text-muted)";
+                    e.currentTarget.style.borderColor = "var(--color-border)";
                   }}
                 >
                   {s.icon}
@@ -135,7 +135,7 @@ const Footer = () => {
           {Object.entries(FOOTER_LINKS).map(([section, links]) => (
             <div key={section}>
               <h4 className="text-sm font-semibold mb-4"
-                  style={{ color: "var(--color-text-heading)" }}>
+                style={{ color: "var(--color-text-heading)" }}>
                 {section}
               </h4>
               <ul className="space-y-2.5">
@@ -163,7 +163,7 @@ const Footer = () => {
                      items-start sm:items-center justify-between gap-4"
           style={{
             backgroundColor: "rgba(99,102,241,0.07)",
-            border:          "1px solid rgba(99,102,241,0.15)",
+            border: "1px solid rgba(99,102,241,0.15)",
           }}
         >
           <div>
@@ -194,7 +194,7 @@ const Footer = () => {
       >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center
                         justify-between gap-2 text-xs"
-             style={{ color: "var(--color-text-muted)" }}>
+          style={{ color: "var(--color-text-muted)" }}>
           <p>© {year} LearnFlow. All rights reserved.</p>
           <div className="flex items-center gap-4">
             {["Privacy", "Terms", "Cookies"].map((item) => (

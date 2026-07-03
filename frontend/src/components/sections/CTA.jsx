@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 // ── Trust badges ──────────────────────────────────────────────────────────────
 const BADGES = [
   { emoji: "🔒", text: "No credit card required" },
-  { emoji: "⚡", text: "Instant access"           },
-  { emoji: "♾️",  text: "Lifetime updates"         },
-  { emoji: "🏆", text: "Certificate included"     },
+  { emoji: "⚡", text: "Instant access" },
+  { emoji: "♾️", text: "Lifetime updates" },
+  { emoji: "🏆", text: "Certificate included" },
 ];
 
 // ── Floating stat cards ───────────────────────────────────────────────────────
@@ -15,14 +15,14 @@ const FloatCard = ({ emoji, value, label, className }) => (
                 rounded-xl shadow-xl pointer-events-none ${className}`}
     style={{
       backgroundColor: "var(--color-bg-card)",
-      border:          "1px solid var(--color-border)",
-      backdropFilter:  "blur(8px)",
+      border: "1px solid var(--color-border)",
+      backdropFilter: "blur(8px)",
     }}
   >
     <span className="text-2xl">{emoji}</span>
     <div>
       <p className="text-sm font-bold leading-none mb-0.5"
-         style={{ color: "var(--color-text-heading)" }}>
+        style={{ color: "var(--color-text-heading)" }}>
         {value}
       </p>
       <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
@@ -148,7 +148,7 @@ const CTA = () => (
             >
               Get Started Free
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </Link>
@@ -160,8 +160,8 @@ const CTA = () => (
                          transition-all duration-200 hover:scale-105 active:scale-95"
               style={{
                 backgroundColor: "rgba(255,255,255,0.12)",
-                border:          "1px solid rgba(255,255,255,0.3)",
-                backdropFilter:  "blur(4px)",
+                border: "1px solid rgba(255,255,255,0.3)",
+                backdropFilter: "blur(4px)",
               }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.2)"}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.12)"}
@@ -174,7 +174,7 @@ const CTA = () => (
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             {BADGES.map(({ emoji, text }) => (
               <div key={text}
-                   className="flex items-center gap-1.5 text-xs text-white/70">
+                className="flex items-center gap-1.5 text-xs text-white/70">
                 <span>{emoji}</span>
                 <span>{text}</span>
               </div>
@@ -189,13 +189,13 @@ const CTA = () => (
         {[
           { emoji: "🎓", value: "500+", label: "Courses" },
           { emoji: "🧑‍🏫", value: "200+", label: "Instructors" },
-          { emoji: "🌍", value: "80+",  label: "Countries" },
-          { emoji: "💼", value: "85%",  label: "Got hired" },
+          { emoji: "🌍", value: "80+", label: "Countries" },
+          { emoji: "💼", value: "85%", label: "Got hired" },
         ].map(({ emoji, value, label }) => (
           <div key={label} className="flex items-center gap-2">
             <span className="text-xl">{emoji}</span>
             <span className="font-bold text-sm"
-                  style={{ color: "var(--color-text-heading)" }}>
+              style={{ color: "var(--color-text-heading)" }}>
               {value}
             </span>
             <span className="text-sm" style={{ color: "var(--color-text-muted)" }}>

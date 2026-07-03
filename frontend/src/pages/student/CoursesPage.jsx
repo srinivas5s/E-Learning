@@ -11,7 +11,7 @@ import {
 // ── Icons ─────────────────────────────────────────────────────────────────────
 const SearchIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round">
     <circle cx="11" cy="11" r="8" />
     <line x1="21" y1="21" x2="16.65" y2="16.65" />
   </svg>
@@ -19,8 +19,8 @@ const SearchIcon = () => (
 
 const FilterIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <line x1="4" y1="6"  x2="20" y2="6"  />
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <line x1="4" y1="6" x2="20" y2="6" />
     <line x1="8" y1="12" x2="16" y2="12" />
     <line x1="11" y1="18" x2="13" y2="18" />
   </svg>
@@ -28,7 +28,7 @@ const FilterIcon = () => (
 
 const CloseIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
     <line x1="18" y1="6" x2="6" y2="18" />
     <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
@@ -37,7 +37,7 @@ const CloseIcon = () => (
 // ── Skeleton card ─────────────────────────────────────────────────────────────
 const SkeletonCard = () => (
   <div className="rounded-2xl overflow-hidden animate-pulse"
-       style={{ backgroundColor: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}>
+    style={{ backgroundColor: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}>
     <div className="h-44" style={{ backgroundColor: "var(--color-border)" }} />
     <div className="p-4 space-y-3">
       <div className="h-4 rounded w-4/5" style={{ backgroundColor: "var(--color-border)" }} />
@@ -55,8 +55,8 @@ const SkeletonCard = () => (
 const FilterSidebar = ({ filters, onChange, onClear, hasActive }) => {
   const selectStyle = {
     backgroundColor: "var(--color-bg-input)",
-    border:          "1px solid var(--color-border)",
-    color:           "var(--color-text)",
+    border: "1px solid var(--color-border)",
+    color: "var(--color-text)",
   };
 
   return (
@@ -64,13 +64,13 @@ const FilterSidebar = ({ filters, onChange, onClear, hasActive }) => {
       className="rounded-2xl p-5 h-fit"
       style={{
         backgroundColor: "var(--color-bg-card)",
-        border:          "1px solid var(--color-border)",
+        border: "1px solid var(--color-border)",
       }}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-sm font-bold flex items-center gap-2"
-            style={{ color: "var(--color-text-heading)" }}>
+          style={{ color: "var(--color-text-heading)" }}>
           <FilterIcon /> Filters
         </h3>
         {hasActive && (
@@ -105,7 +105,7 @@ const FilterSidebar = ({ filters, onChange, onClear, hasActive }) => {
           <div className="space-y-2">
             {[{ value: "", label: "All Levels" }, ...LEVELS].map((l) => (
               <label key={l.value}
-                     className="flex items-center gap-2.5 cursor-pointer group">
+                className="flex items-center gap-2.5 cursor-pointer group">
                 <input
                   type="radio"
                   name="level"
@@ -115,8 +115,10 @@ const FilterSidebar = ({ filters, onChange, onClear, hasActive }) => {
                   className="accent-indigo-500"
                 />
                 <span className="text-sm transition-colors duration-150"
-                      style={{ color: filters.level === l.value
-                        ? "var(--color-primary)" : "var(--color-text-muted)" }}>
+                  style={{
+                    color: filters.level === l.value
+                      ? "var(--color-primary)" : "var(--color-text-muted)"
+                  }}>
                   {l.label}
                 </span>
               </label>
@@ -148,9 +150,9 @@ const FilterSidebar = ({ filters, onChange, onClear, hasActive }) => {
           {/* Quick price filters */}
           <div className="flex flex-wrap gap-1.5 mt-2">
             {[
-              { label: "Free",       min: "0",    max: "0"     },
-              { label: "Under ₹999", min: "0",    max: "999"   },
-              { label: "Under ₹4999",min: "0",    max: "4999"  },
+              { label: "Free", min: "0", max: "0" },
+              { label: "Under ₹999", min: "0", max: "999" },
+              { label: "Under ₹4999", min: "0", max: "4999" },
             ].map((p) => (
               <button
                 key={p.label}
@@ -182,8 +184,8 @@ const FilterChip = ({ label, onRemove }) => (
                px-3 py-1.5 rounded-full"
     style={{
       backgroundColor: "rgba(99,102,241,0.1)",
-      color:           "var(--color-primary)",
-      border:          "1px solid rgba(99,102,241,0.25)",
+      color: "var(--color-primary)",
+      border: "1px solid rgba(99,102,241,0.25)",
     }}
   >
     {label}
@@ -199,7 +201,7 @@ const EmptyState = ({ hasFilters, onClear }) => (
                   py-20 text-center">
     <span className="text-5xl mb-4">{hasFilters ? "🔍" : "📭"}</span>
     <h3 className="text-lg font-bold mb-2"
-        style={{ color: "var(--color-text-heading)", fontFamily: "var(--font-heading)" }}>
+      style={{ color: "var(--color-text-heading)", fontFamily: "var(--font-heading)" }}>
       {hasFilters ? "No courses found" : "No courses yet"}
     </h3>
     <p className="text-sm mb-5 max-w-xs" style={{ color: "var(--color-text-muted)" }}>
@@ -222,16 +224,16 @@ const EmptyState = ({ hasFilters, onClear }) => (
 // ── Main Component ────────────────────────────────────────────────────────────
 const CoursesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data, loading, fetch }        = useGetAllCourses();
+  const { data, loading, fetch } = useGetAllCourses();
 
-  const [search,       setSearch]       = useState(searchParams.get("search") || "");
-  const [searchInput,  setSearchInput]  = useState(searchParams.get("search") || "");
-  const [sort,         setSort]         = useState(searchParams.get("sort")   || "newest");
-  const [showFilters,  setShowFilters]  = useState(false);
+  const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
+  const [sort, setSort] = useState(searchParams.get("sort") || "newest");
+  const [showFilters, setShowFilters] = useState(false);
 
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "",
-    level:    searchParams.get("level")    || "",
+    level: searchParams.get("level") || "",
     minPrice: searchParams.get("minPrice") || "",
     maxPrice: searchParams.get("maxPrice") || "",
   });
@@ -239,9 +241,9 @@ const CoursesPage = () => {
   // Build query and fetch
   const loadCourses = useCallback((page = 1) => {
     const params = { page, limit: 12, sort };
-    if (search)          params.search   = search;
+    if (search) params.search = search;
     if (filters.category) params.category = filters.category;
-    if (filters.level)    params.level    = filters.level;
+    if (filters.level) params.level = filters.level;
     if (filters.minPrice) params.minPrice = filters.minPrice;
     if (filters.maxPrice) params.maxPrice = filters.maxPrice;
     fetch(params);
@@ -252,10 +254,10 @@ const CoursesPage = () => {
   // Sync URL params
   useEffect(() => {
     const params = {};
-    if (search)           params.search   = search;
-    if (sort !== "newest") params.sort    = sort;
+    if (search) params.search = search;
+    if (sort !== "newest") params.sort = sort;
     if (filters.category) params.category = filters.category;
-    if (filters.level)    params.level    = filters.level;
+    if (filters.level) params.level = filters.level;
     if (filters.minPrice) params.minPrice = filters.minPrice;
     if (filters.maxPrice) params.maxPrice = filters.maxPrice;
     setSearchParams(params, { replace: true });
@@ -280,16 +282,16 @@ const CoursesPage = () => {
     filters.category || filters.level ||
     filters.minPrice || filters.maxPrice || search;
 
-  const courses    = data?.courses    || [];
+  const courses = data?.courses || [];
   const pagination = data?.pagination || {};
 
   // Active chip labels
   const chips = [
     filters.category && { key: "category", label: filters.category },
-    filters.level    && { key: "level",    label: filters.level     },
+    filters.level && { key: "level", label: filters.level },
     filters.minPrice && { key: "minPrice", label: `Min ₹${filters.minPrice}` },
     filters.maxPrice && { key: "maxPrice", label: `Max ₹${filters.maxPrice}` },
-    search           && { key: "search",   label: `"${search}"`              },
+    search && { key: "search", label: `"${search}"` },
   ].filter(Boolean);
 
   return (
@@ -299,11 +301,11 @@ const CoursesPage = () => {
         {/* ── Page Header ────────────────────────────────────────────── */}
         <div className="mb-8">
           <p className="text-sm font-semibold uppercase tracking-widest mb-2"
-             style={{ color: "var(--color-primary)" }}>
+            style={{ color: "var(--color-primary)" }}>
             All Courses
           </p>
           <h1 className="text-3xl sm:text-4xl font-bold mb-2"
-              style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}>
+            style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}>
             Explore{" "}
             <span style={{ color: "var(--color-primary)" }}>500+ Courses</span>
           </h1>
@@ -319,7 +321,7 @@ const CoursesPage = () => {
           <form onSubmit={handleSearch} className="flex-1 flex gap-2">
             <div className="relative flex-1">
               <span className="absolute left-3 top-1/2 -translate-y-1/2"
-                    style={{ color: "var(--color-text-muted)" }}>
+                style={{ color: "var(--color-text-muted)" }}>
                 <SearchIcon />
               </span>
               <input
@@ -357,8 +359,8 @@ const CoursesPage = () => {
                        text-sm font-medium transition-all duration-150"
             style={{
               backgroundColor: showFilters ? "var(--color-primary)" : "var(--color-bg-card)",
-              color:           showFilters ? "#fff" : "var(--color-text-muted)",
-              border:          `1px solid ${showFilters ? "var(--color-primary)" : "var(--color-border)"}`,
+              color: showFilters ? "#fff" : "var(--color-text-muted)",
+              border: `1px solid ${showFilters ? "var(--color-primary)" : "var(--color-border)"}`,
             }}
           >
             <FilterIcon />
@@ -414,8 +416,8 @@ const CoursesPage = () => {
                 {pagination.total
                   ? `Showing ${courses.length} of ${pagination.total} courses`
                   : courses.length > 0
-                  ? `${courses.length} courses`
-                  : ""}
+                    ? `${courses.length} courses`
+                    : ""}
               </p>
             )}
 
@@ -424,8 +426,8 @@ const CoursesPage = () => {
               {loading
                 ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
                 : courses.length === 0
-                ? <EmptyState hasFilters={!!hasActiveFilters} onClear={clearFilters} />
-                : courses.map((course) => (
+                  ? <EmptyState hasFilters={!!hasActiveFilters} onClear={clearFilters} />
+                  : courses.map((course) => (
                     <CourseCard key={course._id} course={course} />
                   ))
               }
@@ -459,7 +461,7 @@ const CoursesPage = () => {
                     .map((p, i) =>
                       p === "..." ? (
                         <span key={`dot-${i}`} className="px-2 py-2 text-sm"
-                              style={{ color: "var(--color-text-muted)" }}>…</span>
+                          style={{ color: "var(--color-text-muted)" }}>…</span>
                       ) : (
                         <button
                           key={p}

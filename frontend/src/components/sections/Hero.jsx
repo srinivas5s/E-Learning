@@ -49,11 +49,11 @@ const Hero = () => {
             {/* ── Background glow blobs ─────────────────────────────────────────── */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div
-                    className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full opacity-20 blur-3xl"
+                    className="absolute -top-40 -left-40 w-150 h-150 rounded-full opacity-20 blur-3xl"
                     style={{ backgroundColor: "var(--color-primary)" }}
                 />
                 <div
-                    className="absolute -bottom-40 -right-20 w-[500px] h-[500px] rounded-full opacity-10 blur-3xl"
+                    className="absolute -bottom-40 -right-20 w-125 h-125 rounded-full opacity-10 blur-3xl"
                     style={{ backgroundColor: "#0ea5e9" }}
                 />
             </div>

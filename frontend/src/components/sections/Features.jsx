@@ -1,52 +1,52 @@
 // ── Data ──────────────────────────────────────────────────────────────────────
 const FEATURES = [
   {
-    icon:    "🕐",
-    title:   "Learn Anytime, Anywhere",
-    desc:    "Access your courses 24/7 from any device. Pick up right where you left off — on mobile, tablet, or desktop.",
-    color:   "#6366f1",
-    bg:      "rgba(99,102,241,0.1)",
-    border:  "rgba(99,102,241,0.2)",
+    icon: "🕐",
+    title: "Learn Anytime, Anywhere",
+    desc: "Access your courses 24/7 from any device. Pick up right where you left off — on mobile, tablet, or desktop.",
+    color: "#6366f1",
+    bg: "rgba(99,102,241,0.1)",
+    border: "rgba(99,102,241,0.2)",
   },
   {
-    icon:    "🧑‍🏫",
-    title:   "Expert Instructors",
-    desc:    "Learn from industry professionals with real-world experience. Every instructor is vetted and highly rated.",
-    color:   "#0ea5e9",
-    bg:      "rgba(14,165,233,0.1)",
-    border:  "rgba(14,165,233,0.2)",
+    icon: "🧑‍🏫",
+    title: "Expert Instructors",
+    desc: "Learn from industry professionals with real-world experience. Every instructor is vetted and highly rated.",
+    color: "#0ea5e9",
+    bg: "rgba(14,165,233,0.1)",
+    border: "rgba(14,165,233,0.2)",
   },
   {
-    icon:    "🏆",
-    title:   "Earn Certificates",
-    desc:    "Get recognized for your skills. Share verified certificates on LinkedIn and boost your career prospects.",
-    color:   "#f59e0b",
-    bg:      "rgba(245,158,11,0.1)",
-    border:  "rgba(245,158,11,0.2)",
+    icon: "🏆",
+    title: "Earn Certificates",
+    desc: "Get recognized for your skills. Share verified certificates on LinkedIn and boost your career prospects.",
+    color: "#f59e0b",
+    bg: "rgba(245,158,11,0.1)",
+    border: "rgba(245,158,11,0.2)",
   },
   {
-    icon:    "⚡",
-    title:   "Hands-on Projects",
-    desc:    "Apply what you learn with real projects and coding challenges. Build a portfolio employers actually want to see.",
-    color:   "#10b981",
-    bg:      "rgba(16,185,129,0.1)",
-    border:  "rgba(16,185,129,0.2)",
+    icon: "⚡",
+    title: "Hands-on Projects",
+    desc: "Apply what you learn with real projects and coding challenges. Build a portfolio employers actually want to see.",
+    color: "#10b981",
+    bg: "rgba(16,185,129,0.1)",
+    border: "rgba(16,185,129,0.2)",
   },
   {
-    icon:    "🤝",
-    title:   "Community Support",
-    desc:    "Join a global community of learners. Ask questions, share progress, and grow together with peers.",
-    color:   "#ec4899",
-    bg:      "rgba(236,72,153,0.1)",
-    border:  "rgba(236,72,153,0.2)",
+    icon: "🤝",
+    title: "Community Support",
+    desc: "Join a global community of learners. Ask questions, share progress, and grow together with peers.",
+    color: "#ec4899",
+    bg: "rgba(236,72,153,0.1)",
+    border: "rgba(236,72,153,0.2)",
   },
   {
-    icon:    "📊",
-    title:   "Track Your Progress",
-    desc:    "Visual dashboards show exactly where you stand. Set goals, track streaks, and celebrate every milestone.",
-    color:   "#8b5cf6",
-    bg:      "rgba(139,92,246,0.1)",
-    border:  "rgba(139,92,246,0.2)",
+    icon: "📊",
+    title: "Track Your Progress",
+    desc: "Visual dashboards show exactly where you stand. Set goals, track streaks, and celebrate every milestone.",
+    color: "#8b5cf6",
+    bg: "rgba(139,92,246,0.1)",
+    border: "rgba(139,92,246,0.2)",
   },
 ];
 
@@ -56,15 +56,15 @@ const FeatureCard = ({ icon, title, desc, color, bg, border }) => (
     className="relative p-6 rounded-2xl transition-all duration-300 group cursor-default overflow-hidden"
     style={{
       backgroundColor: "var(--color-bg-card)",
-      border:          "1px solid var(--color-border)",
+      border: "1px solid var(--color-border)",
     }}
     onMouseEnter={(e) => {
       e.currentTarget.style.borderColor = border;
-      e.currentTarget.style.transform   = "translateY(-4px)";
+      e.currentTarget.style.transform = "translateY(-4px)";
     }}
     onMouseLeave={(e) => {
       e.currentTarget.style.borderColor = "var(--color-border)";
-      e.currentTarget.style.transform   = "translateY(0)";
+      e.currentTarget.style.transform = "translateY(0)";
     }}
   >
     {/* Hover glow in top-left corner */}
@@ -129,7 +129,7 @@ const Features = () => (
           className="text-3xl sm:text-4xl font-bold mb-4"
           style={{
             fontFamily: "var(--font-heading)",
-            color:      "var(--color-text-heading)",
+            color: "var(--color-text-heading)",
           }}
         >
           Everything You Need to{" "}
@@ -157,7 +157,7 @@ const Features = () => (
                    flex flex-col sm:flex-row items-center justify-between gap-6"
         style={{
           background: "linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(14,165,233,0.08) 100%)",
-          border:     "1px solid rgba(99,102,241,0.2)",
+          border: "1px solid rgba(99,102,241,0.2)",
         }}
       >
         <div>

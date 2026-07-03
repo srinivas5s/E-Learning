@@ -4,7 +4,7 @@ import authApi from "../api/auth.api.js";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user,    setUser]    = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const hydrated = useRef(false);
 
@@ -42,9 +42,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   // ── Role helpers ──────────────────────────────────────────────────────────
-  const isStudent    = user?.role === "student";
+  const isStudent = user?.role === "student";
   const isInstructor = user?.role === "instructor";
-  const isAdmin      = user?.role === "admin";
+  const isAdmin = user?.role === "admin";
 
   return (
     <AuthContext.Provider
