@@ -1,40 +1,40 @@
 // ── Data ──────────────────────────────────────────────────────────────────────
 const STATS = [
   {
-    value:   "50K+",
-    label:   "Active Learners",
-    emoji:   "🎓",
-    color:   "#6366f1",
-    bg:      "rgba(99,102,241,0.1)",
-    border:  "rgba(99,102,241,0.2)",
-    desc:    "students enrolled worldwide",
+    value: "50K+",
+    label: "Active Learners",
+    emoji: "🎓",
+    color: "#6366f1",
+    bg: "rgba(99,102,241,0.1)",
+    border: "rgba(99,102,241,0.2)",
+    desc: "students enrolled worldwide",
   },
   {
-    value:   "500+",
-    label:   "Expert Courses",
-    emoji:   "📚",
-    color:   "#0ea5e9",
-    bg:      "rgba(14,165,233,0.1)",
-    border:  "rgba(14,165,233,0.2)",
-    desc:    "across 20+ categories",
+    value: "500+",
+    label: "Expert Courses",
+    emoji: "📚",
+    color: "#0ea5e9",
+    bg: "rgba(14,165,233,0.1)",
+    border: "rgba(14,165,233,0.2)",
+    desc: "across 20+ categories",
   },
   {
-    value:   "200+",
-    label:   "Top Instructors",
-    emoji:   "🧑‍🏫",
-    color:   "#f59e0b",
-    bg:      "rgba(245,158,11,0.1)",
-    border:  "rgba(245,158,11,0.2)",
-    desc:    "industry professionals",
+    value: "200+",
+    label: "Top Instructors",
+    emoji: "🧑‍🏫",
+    color: "#f59e0b",
+    bg: "rgba(245,158,11,0.1)",
+    border: "rgba(245,158,11,0.2)",
+    desc: "industry professionals",
   },
   {
-    value:   "95%",
-    label:   "Satisfaction Rate",
-    emoji:   "⭐",
-    color:   "#10b981",
-    bg:      "rgba(16,185,129,0.1)",
-    border:  "rgba(16,185,129,0.2)",
-    desc:    "based on 12k+ reviews",
+    value: "95%",
+    label: "Satisfaction Rate",
+    emoji: "⭐",
+    color: "#10b981",
+    bg: "rgba(16,185,129,0.1)",
+    border: "rgba(16,185,129,0.2)",
+    desc: "based on 12k+ reviews",
   },
 ];
 
@@ -45,17 +45,17 @@ const StatCard = ({ value, label, emoji, color, bg, border, desc }) => (
                transition-all duration-300 group cursor-default"
     style={{
       backgroundColor: "var(--color-bg-card)",
-      border:          "1px solid var(--color-border)",
+      border: "1px solid var(--color-border)",
     }}
     onMouseEnter={(e) => {
-      e.currentTarget.style.borderColor       = border;
-      e.currentTarget.style.transform         = "translateY(-4px)";
-      e.currentTarget.style.boxShadow         = `0 12px 32px ${bg}`;
+      e.currentTarget.style.borderColor = border;
+      e.currentTarget.style.transform = "translateY(-4px)";
+      e.currentTarget.style.boxShadow = `0 12px 32px ${bg}`;
     }}
     onMouseLeave={(e) => {
-      e.currentTarget.style.borderColor       = "var(--color-border)";
-      e.currentTarget.style.transform         = "translateY(0)";
-      e.currentTarget.style.boxShadow         = "none";
+      e.currentTarget.style.borderColor = "var(--color-border)";
+      e.currentTarget.style.transform = "translateY(0)";
+      e.currentTarget.style.boxShadow = "none";
     }}
   >
     {/* Icon bubble */}

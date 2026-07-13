@@ -53,15 +53,7 @@ const Unauthorized = () => (
   </div>
 );
 
-// ── ProtectedRoute ────────────────────────────────────────────────────────────
-//
-// Usage as a layout route (wraps child routes):
-//   <Route element={<ProtectedRoute />}>               ← any logged-in user
-//   <Route element={<ProtectedRoute roles={["admin"]} />}>  ← admin only
-//   <Route element={<ProtectedRoute roles={["instructor", "admin"]} />}>
-//
-// Props:
-//   roles — optional array of allowed roles. If omitted, any logged-in user passes.
+// ── ProtectedRoute ──────────────────────────────────────────────────────────
 
 const ProtectedRoute = ({ roles }) => {
   const { isAuthenticated, loading, user } = useAuth();

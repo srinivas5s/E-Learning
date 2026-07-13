@@ -54,7 +54,6 @@ export const formatPrice = (price) => {
     }).format(price);
 };
 
-// Format duration from total minutes → "2h 30m"
 export const formatDuration = (minutes) => {
     if (!minutes) return "0m";
     const h = Math.floor(minutes / 60);

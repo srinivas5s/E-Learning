@@ -3,59 +3,59 @@ import { useState } from "react";
 // ── Data ──────────────────────────────────────────────────────────────────────
 const TESTIMONIALS = [
   {
-    id:       1,
-    name:     "Priya Sharma",
-    role:     "Frontend Developer",
-    company:  "Google",
+    id: 1,
+    name: "Priya Sharma",
+    role: "Frontend Developer",
+    company: "Google",
     initials: "PS",
-    bg:       "#6366f1",
-    rating:   5,
-    course:   "Full Stack Web Development",
-    text:     "LearnFlow completely changed my career trajectory. The Full Stack course was incredibly well-structured — I went from knowing basic HTML to landing a job at Google in under 8 months. The project-based learning made all the difference.",
+    bg: "#6366f1",
+    rating: 5,
+    course: "Full Stack Web Development",
+    text: "LearnFlow completely changed my career trajectory. The Full Stack course was incredibly well-structured — I went from knowing basic HTML to landing a job at Google in under 8 months. The project-based learning made all the difference.",
   },
   {
-    id:       2,
-    name:     "Rahul Verma",
-    role:     "Data Analyst",
-    company:  "Microsoft",
+    id: 2,
+    name: "Rahul Verma",
+    role: "Data Analyst",
+    company: "Microsoft",
     initials: "RV",
-    bg:       "#0ea5e9",
-    rating:   5,
-    course:   "Data Science with Python",
-    text:     "I tried many platforms before LearnFlow. Nothing came close to the depth and quality here. The instructor explains every concept with real-world examples. I got promoted within 3 months of completing the Data Science course.",
+    bg: "#0ea5e9",
+    rating: 5,
+    course: "Data Science with Python",
+    text: "I tried many platforms before LearnFlow. Nothing came close to the depth and quality here. The instructor explains every concept with real-world examples. I got promoted within 3 months of completing the Data Science course.",
   },
   {
-    id:       3,
-    name:     "Sara Johnson",
-    role:     "Product Designer",
-    company:  "Figma",
+    id: 3,
+    name: "Sara Johnson",
+    role: "Product Designer",
+    company: "Figma",
     initials: "SJ",
-    bg:       "#ec4899",
-    rating:   5,
-    course:   "UI/UX Design Masterclass",
-    text:     "The UI/UX Masterclass is simply the best design course available online. It's not just theory — you build 10 real projects. My portfolio went from empty to impressive, and I landed my dream job at Figma within 6 months.",
+    bg: "#ec4899",
+    rating: 5,
+    course: "UI/UX Design Masterclass",
+    text: "The UI/UX Masterclass is simply the best design course available online. It's not just theory — you build 10 real projects. My portfolio went from empty to impressive, and I landed my dream job at Figma within 6 months.",
   },
   {
-    id:       4,
-    name:     "Arjun Mehta",
-    role:     "Mobile Developer",
-    company:  "Swiggy",
+    id: 4,
+    name: "Arjun Mehta",
+    role: "Mobile Developer",
+    company: "Swiggy",
     initials: "AM",
-    bg:       "#8b5cf6",
-    rating:   5,
-    course:   "React Native Mobile Dev",
-    text:     "Went from zero mobile development experience to shipping two apps on the Play Store. The React Native course was concise, modern, and the instructor responds to questions within hours. Worth every rupee.",
+    bg: "#8b5cf6",
+    rating: 5,
+    course: "React Native Mobile Dev",
+    text: "Went from zero mobile development experience to shipping two apps on the Play Store. The React Native course was concise, modern, and the instructor responds to questions within hours. Worth every rupee.",
   },
   {
-    id:       5,
-    name:     "Neha Kapoor",
-    role:     "Backend Engineer",
-    company:  "Razorpay",
+    id: 5,
+    name: "Neha Kapoor",
+    role: "Backend Engineer",
+    company: "Razorpay",
     initials: "NK",
-    bg:       "#10b981",
-    rating:   5,
-    course:   "Full Stack Web Development",
-    text:     "The community support alone is worth it. Anytime I got stuck, someone from the community or the instructor helped me within the day. I now work at Razorpay and still come back to LearnFlow for new skills.",
+    bg: "#10b981",
+    rating: 5,
+    course: "Full Stack Web Development",
+    text: "The community support alone is worth it. Anytime I got stuck, someone from the community or the instructor helped me within the day. I now work at Razorpay and still come back to LearnFlow for new skills.",
   },
 ];
 
@@ -74,7 +74,7 @@ const Stars = ({ count = 5 }) => (
 // ── Quote Icon ────────────────────────────────────────────────────────────────
 const QuoteIcon = () => (
   <svg width="32" height="32" viewBox="0 0 24 24"
-       fill="var(--color-primary)" opacity="0.15">
+    fill="var(--color-primary)" opacity="0.15">
     <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25
              0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1
              1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
@@ -90,9 +90,9 @@ const TestimonialCard = ({ name, role, company, initials, bg, rating, course, te
     className="flex flex-col h-full p-6 rounded-2xl transition-all duration-300"
     style={{
       backgroundColor: "var(--color-bg-card)",
-      border:          `1px solid ${active ? "rgba(99,102,241,0.4)" : "var(--color-border)"}`,
-      boxShadow:       active ? "0 8px 32px rgba(99,102,241,0.12)" : "none",
-      transform:       active ? "scale(1.02)" : "scale(1)",
+      border: `1px solid ${active ? "rgba(99,102,241,0.4)" : "var(--color-border)"}`,
+      boxShadow: active ? "0 8px 32px rgba(99,102,241,0.12)" : "none",
+      transform: active ? "scale(1.02)" : "scale(1)",
     }}
   >
     {/* Quote + Stars */}
@@ -115,8 +115,8 @@ const TestimonialCard = ({ name, role, company, initials, bg, rating, course, te
                  px-2.5 py-1 rounded-full self-start mb-5"
       style={{
         backgroundColor: "rgba(99,102,241,0.08)",
-        color:           "var(--color-primary)",
-        border:          "1px solid rgba(99,102,241,0.15)",
+        color: "var(--color-primary)",
+        border: "1px solid rgba(99,102,241,0.15)",
       }}
     >
       <span>📚</span>
@@ -178,7 +178,7 @@ const Testimonials = () => {
       {/* Subtle background glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                   w-[600px] h-[400px] rounded-full blur-3xl opacity-5 pointer-events-none"
+                   w-150 h-100 rounded-full blur-3xl opacity-5 pointer-events-none"
         style={{ backgroundColor: "var(--color-primary)" }}
       />
 
@@ -212,7 +212,7 @@ const Testimonials = () => {
                      py-4 px-6 rounded-2xl max-w-xl mx-auto"
           style={{
             backgroundColor: "var(--color-bg-card)",
-            border:          "1px solid var(--color-border)",
+            border: "1px solid var(--color-border)",
           }}
         >
           <div className="text-center">
@@ -252,22 +252,22 @@ const Testimonials = () => {
                        transition-all duration-150 hover:scale-105 active:scale-95"
             style={{
               backgroundColor: "var(--color-bg-card)",
-              border:          "1px solid var(--color-border)",
-              color:           "var(--color-text-muted)",
+              border: "1px solid var(--color-border)",
+              color: "var(--color-text-muted)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor       = "var(--color-primary)";
-              e.currentTarget.style.color             = "var(--color-primary)";
-              e.currentTarget.style.backgroundColor   = "rgba(99,102,241,0.08)";
+              e.currentTarget.style.borderColor = "var(--color-primary)";
+              e.currentTarget.style.color = "var(--color-primary)";
+              e.currentTarget.style.backgroundColor = "rgba(99,102,241,0.08)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor       = "var(--color-border)";
-              e.currentTarget.style.color             = "var(--color-text-muted)";
-              e.currentTarget.style.backgroundColor   = "var(--color-bg-card)";
+              e.currentTarget.style.borderColor = "var(--color-border)";
+              e.currentTarget.style.color = "var(--color-text-muted)";
+              e.currentTarget.style.backgroundColor = "var(--color-bg-card)";
             }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
@@ -280,8 +280,8 @@ const Testimonials = () => {
                 onClick={() => setActive(i)}
                 className="rounded-full transition-all duration-200"
                 style={{
-                  width:           i === active ? "24px" : "8px",
-                  height:          "8px",
+                  width: i === active ? "24px" : "8px",
+                  height: "8px",
                   backgroundColor: i === active ? "var(--color-primary)" : "var(--color-border)",
                 }}
               />
@@ -295,22 +295,22 @@ const Testimonials = () => {
                        transition-all duration-150 hover:scale-105 active:scale-95"
             style={{
               backgroundColor: "var(--color-bg-card)",
-              border:          "1px solid var(--color-border)",
-              color:           "var(--color-text-muted)",
+              border: "1px solid var(--color-border)",
+              color: "var(--color-text-muted)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor       = "var(--color-primary)";
-              e.currentTarget.style.color             = "var(--color-primary)";
-              e.currentTarget.style.backgroundColor   = "rgba(99,102,241,0.08)";
+              e.currentTarget.style.borderColor = "var(--color-primary)";
+              e.currentTarget.style.color = "var(--color-primary)";
+              e.currentTarget.style.backgroundColor = "rgba(99,102,241,0.08)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor       = "var(--color-border)";
-              e.currentTarget.style.color             = "var(--color-text-muted)";
-              e.currentTarget.style.backgroundColor   = "var(--color-bg-card)";
+              e.currentTarget.style.borderColor = "var(--color-border)";
+              e.currentTarget.style.color = "var(--color-text-muted)";
+              e.currentTarget.style.backgroundColor = "var(--color-bg-card)";
             }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M9 18l6-6-6-6" />
             </svg>
           </button>

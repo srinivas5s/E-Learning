@@ -42,6 +42,7 @@ const NAV_LINKS = {
   ],
   student: [
     { label: "Dashboard", to: "/dashboard" },
+    { label: "Courses", to: "/courses" },
     { label: "My Courses", to: "/my-courses" },
     { label: "Profile", to: "/profile" },
   ],

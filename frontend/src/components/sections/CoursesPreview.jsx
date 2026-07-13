@@ -3,99 +3,99 @@ import { Link } from "react-router-dom";
 // ── Data ──────────────────────────────────────────────────────────────────────
 const COURSES = [
   {
-    id:         1,
-    title:      "Full Stack Web Development",
+    id: 1,
+    title: "Full Stack Web Development",
     instructor: "Jane Doe",
     instructorInitials: "JD",
     instructorBg: "#6366f1",
-    category:   "Web Development",
+    category: "Web Development",
     categoryColor: "#6366f1",
-    categoryBg:  "rgba(99,102,241,0.1)",
-    rating:     4.9,
-    reviews:    2340,
-    students:   12400,
-    price:      4999,
+    categoryBg: "rgba(99,102,241,0.1)",
+    rating: 4.9,
+    reviews: 2340,
+    students: 12400,
+    price: 4999,
     originalPrice: 9999,
-    duration:   "42 hrs",
-    lessons:    128,
-    level:      "Beginner",
-    emoji:      "💻",
-    badge:      "Bestseller",
+    duration: "42 hrs",
+    lessons: 128,
+    level: "Beginner",
+    emoji: "💻",
+    badge: "Bestseller",
     badgeColor: "#f59e0b",
-    badgeBg:    "rgba(245,158,11,0.12)",
+    badgeBg: "rgba(245,158,11,0.12)",
   },
   {
-    id:         2,
-    title:      "UI/UX Design Masterclass",
+    id: 2,
+    title: "UI/UX Design Masterclass",
     instructor: "Alex Kim",
     instructorInitials: "AK",
     instructorBg: "#ec4899",
-    category:   "Design",
+    category: "Design",
     categoryColor: "#ec4899",
-    categoryBg:  "rgba(236,72,153,0.1)",
-    rating:     4.8,
-    reviews:    1890,
-    students:   9800,
-    price:      3999,
+    categoryBg: "rgba(236,72,153,0.1)",
+    rating: 4.8,
+    reviews: 1890,
+    students: 9800,
+    price: 3999,
     originalPrice: 7999,
-    duration:   "36 hrs",
-    lessons:    94,
-    level:      "Intermediate",
-    emoji:      "🎨",
-    badge:      "Top Rated",
+    duration: "36 hrs",
+    lessons: 94,
+    level: "Intermediate",
+    emoji: "🎨",
+    badge: "Top Rated",
     badgeColor: "#10b981",
-    badgeBg:    "rgba(16,185,129,0.12)",
+    badgeBg: "rgba(16,185,129,0.12)",
   },
   {
-    id:         3,
-    title:      "Data Science with Python",
+    id: 3,
+    title: "Data Science with Python",
     instructor: "Sam Patel",
     instructorInitials: "SP",
     instructorBg: "#0ea5e9",
-    category:   "Data Science",
+    category: "Data Science",
     categoryColor: "#0ea5e9",
-    categoryBg:  "rgba(14,165,233,0.1)",
-    rating:     4.7,
-    reviews:    3120,
-    students:   15600,
-    price:      5499,
+    categoryBg: "rgba(14,165,233,0.1)",
+    rating: 4.7,
+    reviews: 3120,
+    students: 15600,
+    price: 5499,
     originalPrice: 10999,
-    duration:   "58 hrs",
-    lessons:    162,
-    level:      "Intermediate",
-    emoji:      "📊",
-    badge:      "Hot",
+    duration: "58 hrs",
+    lessons: 162,
+    level: "Intermediate",
+    emoji: "📊",
+    badge: "Hot",
     badgeColor: "#ef4444",
-    badgeBg:    "rgba(239,68,68,0.12)",
+    badgeBg: "rgba(239,68,68,0.12)",
   },
   {
-    id:         4,
-    title:      "React Native Mobile Dev",
+    id: 4,
+    title: "React Native Mobile Dev",
     instructor: "Chris Lee",
     instructorInitials: "CL",
     instructorBg: "#8b5cf6",
-    category:   "Mobile Dev",
+    category: "Mobile Dev",
     categoryColor: "#8b5cf6",
-    categoryBg:  "rgba(139,92,246,0.1)",
-    rating:     4.8,
-    reviews:    1450,
-    students:   7200,
-    price:      4499,
+    categoryBg: "rgba(139,92,246,0.1)",
+    rating: 4.8,
+    reviews: 1450,
+    students: 7200,
+    price: 4499,
     originalPrice: 8999,
-    duration:   "48 hrs",
-    lessons:    110,
-    level:      "Advanced",
-    emoji:      "📱",
-    badge:      "New",
+    duration: "48 hrs",
+    lessons: 110,
+    level: "Advanced",
+    emoji: "📱",
+    badge: "New",
     badgeColor: "#6366f1",
-    badgeBg:    "rgba(99,102,241,0.12)",
+    badgeBg: "rgba(99,102,241,0.12)",
   },
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const StarRating = ({ rating }) => {
-  const full  = Math.floor(rating);
-  const half  = rating % 1 >= 0.5;
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
 
   return (
     <div className="flex items-center gap-0.5">
@@ -104,8 +104,8 @@ const StarRating = ({ rating }) => {
         const isHalf = !filled && i === full && half;
         return (
           <svg key={i} width="13" height="13" viewBox="0 0 24 24"
-               fill={filled || isHalf ? "#f59e0b" : "none"}
-               stroke="#f59e0b" strokeWidth="1.5">
+            fill={filled || isHalf ? "#f59e0b" : "none"}
+            stroke="#f59e0b" strokeWidth="1.5">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02
                              12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
           </svg>
@@ -130,16 +130,16 @@ const CourseCard = ({
                group cursor-pointer"
     style={{
       backgroundColor: "var(--color-bg-card)",
-      border:          "1px solid var(--color-border)",
+      border: "1px solid var(--color-border)",
     }}
     onMouseEnter={(e) => {
-      e.currentTarget.style.transform  = "translateY(-6px)";
-      e.currentTarget.style.boxShadow  = "0 20px 48px rgba(0,0,0,0.15)";
+      e.currentTarget.style.transform = "translateY(-6px)";
+      e.currentTarget.style.boxShadow = "0 20px 48px rgba(0,0,0,0.15)";
       e.currentTarget.style.borderColor = categoryColor;
     }}
     onMouseLeave={(e) => {
-      e.currentTarget.style.transform  = "translateY(0)";
-      e.currentTarget.style.boxShadow  = "none";
+      e.currentTarget.style.transform = "translateY(0)";
+      e.currentTarget.style.boxShadow = "none";
       e.currentTarget.style.borderColor = "var(--color-border)";
     }}
   >
@@ -175,8 +175,8 @@ const CourseCard = ({
         className="absolute top-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full"
         style={{
           backgroundColor: "rgba(0,0,0,0.4)",
-          color:           "#fff",
-          backdropFilter:  "blur(4px)",
+          color: "#fff",
+          backdropFilter: "blur(4px)",
         }}
       >
         {level}
@@ -197,7 +197,7 @@ const CourseCard = ({
       {/* Title */}
       <h3
         className="text-sm font-semibold leading-snug mb-3 line-clamp-2
-                   transition-colors duration-200 group-hover:text-[var(--color-primary)]"
+                   transition-colors duration-200 group-hover:text-(--color-primary)"
         style={{ color: "var(--color-text-heading)" }}
       >
         {title}
@@ -232,7 +232,7 @@ const CourseCard = ({
       <div
         className="flex items-center gap-3 text-xs pb-4 mb-4"
         style={{
-          color:        "var(--color-text-muted)",
+          color: "var(--color-text-muted)",
           borderBottom: "1px solid var(--color-border)",
         }}
       >
@@ -295,7 +295,7 @@ const CoursesPreview = () => (
             className="text-3xl sm:text-4xl font-bold"
             style={{
               fontFamily: "var(--font-heading)",
-              color:      "var(--color-text-heading)",
+              color: "var(--color-text-heading)",
             }}
           >
             Start with Our{" "}
@@ -312,7 +312,7 @@ const CoursesPreview = () => (
         >
           View all courses
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </Link>

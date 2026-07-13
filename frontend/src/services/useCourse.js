@@ -2,10 +2,7 @@ import { useState, useCallback } from "react";
 import courseApi from "../api/course.api.js";
 import toast from "react-hot-toast";
 
-/**
- * Generic async handler — wraps any courseApi call with
- * loading state + toast error handling.
- */
+
 const useAsync = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -31,10 +28,6 @@ const useAsync = () => {
 
 // ── Public hooks ──────────────────────────────────────────────────────────────
 
-/**
- * Fetch paginated/filtered public courses.
- * Returns { courses, pagination } or null on error.
- */
 export const useGetAllCourses = () => {
     const { loading, error, run } = useAsync();
     const [data, setData] = useState(null);
@@ -47,10 +40,7 @@ export const useGetAllCourses = () => {
     return { data, loading, error, fetch };
 };
 
-/**
- * Fetch a single published course by slug.
- * Returns course object or null.
- */
+
 export const useGetCourseBySlug = () => {
     const { loading, error, run } = useAsync();
     const [course, setCourse] = useState(null);
@@ -65,9 +55,6 @@ export const useGetCourseBySlug = () => {
 
 // ── Instructor hooks ──────────────────────────────────────────────────────────
 
-/**
- * Fetch instructor's own courses (all statuses).
- */
 export const useGetInstructorCourses = () => {
     const { loading, error, run } = useAsync();
     const [data, setData] = useState(null);
@@ -80,9 +67,7 @@ export const useGetInstructorCourses = () => {
     return { data, loading, error, fetch };
 };
 
-/**
- * Fetch a single course by ID (for edit form).
- */
+
 export const useGetCourseById = () => {
     const { loading, error, run } = useAsync();
     const [course, setCourse] = useState(null);
@@ -95,10 +80,7 @@ export const useGetCourseById = () => {
     return { course, loading, error, fetch };
 };
 
-/**
- * Create a new course.
- * Returns created course or null.
- */
+
 export const useCreateCourse = () => {
     const { loading, error, run } = useAsync();
 
@@ -114,10 +96,7 @@ export const useCreateCourse = () => {
     return { loading, error, create };
 };
 
-/**
- * Update a course.
- * Returns updated course or null.
- */
+
 export const useUpdateCourse = () => {
     const { loading, error, run } = useAsync();
 
@@ -133,10 +112,7 @@ export const useUpdateCourse = () => {
     return { loading, error, update };
 };
 
-/**
- * Toggle publish status of a course.
- * Returns updated course or null.
- */
+
 export const useTogglePublish = () => {
     const { loading, error, run } = useAsync();
 
@@ -152,10 +128,7 @@ export const useTogglePublish = () => {
     return { loading, error, toggle };
 };
 
-/**
- * Delete a course.
- * Returns true on success, null on error.
- */
+
 export const useDeleteCourse = () => {
     const { loading, error, run } = useAsync();
 

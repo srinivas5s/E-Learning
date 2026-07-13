@@ -10,7 +10,7 @@ const Section = ({ title, subtitle, children }) => (
     className="rounded-2xl p-6 sm:p-8"
     style={{
       backgroundColor: "var(--color-bg-card)",
-      border:          "1px solid var(--color-border)",
+      border: "1px solid var(--color-border)",
     }}
   >
     <div className="mb-6">
@@ -35,7 +35,7 @@ const Field = ({ label, error, hint, children }) => (
   <div>
     {label && <label className="form-label">{label}</label>}
     {children}
-    {hint  && !error && (
+    {hint && !error && (
       <p className="text-xs mt-1.5" style={{ color: "var(--color-text-muted)" }}>{hint}</p>
     )}
     {error && <p className="error-msg">{error}</p>}
@@ -45,33 +45,33 @@ const Field = ({ label, error, hint, children }) => (
 // ── Error border helper ───────────────────────────────────────────────────────
 const errStyle = (hasError) => hasError ? {
   borderColor: "var(--color-error)",
-  boxShadow:   "0 0 0 3px rgba(248,113,113,0.12)",
+  boxShadow: "0 0 0 3px rgba(248,113,113,0.12)",
 } : {};
 
 // ── Main Component ────────────────────────────────────────────────────────────
 const CreateCourse = () => {
-  const navigate          = useNavigate();
+  const navigate = useNavigate();
   const { loading, create } = useCreateCourse();
 
   const [form, setForm] = useState({
-    title:            "",
-    subtitle:         "",
-    description:      "",
-    category:         "",
-    level:            "beginner",
-    language:         "English",
-    price:            0,
-    discountPrice:    0,
-    requirements:     [],
+    title: "",
+    subtitle: "",
+    description: "",
+    category: "",
+    level: "beginner",
+    language: "English",
+    price: 0,
+    discountPrice: 0,
+    requirements: [],
     learningOutcomes: [],
-    duration:         0,
+    duration: 0,
   });
 
   const [errors, setErrors] = useState({});
 
   const set = (field, value) => {
-    setForm((prev)   => ({ ...prev,   [field]: value }));
-    setErrors((prev) => ({ ...prev,   [field]: ""    }));
+    setForm((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
   const handleChange = (e) => {
@@ -82,12 +82,12 @@ const CreateCourse = () => {
   // ── Validation ───────────────────────────────────────────────────────────────
   const validate = () => {
     const e = {};
-    if (!form.title.trim())                e.title       = "Title is required";
-    else if (form.title.length < 5)        e.title       = "Min 5 characters";
-    if (!form.description.trim())          e.description = "Description is required";
+    if (!form.title.trim()) e.title = "Title is required";
+    else if (form.title.length < 5) e.title = "Min 5 characters";
+    if (!form.description.trim()) e.description = "Description is required";
     else if (form.description.length < 20) e.description = "Min 20 characters";
-    if (!form.category)                    e.category    = "Please select a category";
-    if (form.price < 0)                    e.price       = "Price cannot be negative";
+    if (!form.category) e.category = "Please select a category";
+    if (form.price < 0) e.price = "Price cannot be negative";
     if (form.discountPrice > 0 && form.discountPrice >= form.price)
       e.discountPrice = "Must be less than original price";
     setErrors(e);
@@ -123,7 +123,7 @@ const CreateCourse = () => {
             onMouseLeave={(e) => e.currentTarget.style.color = "var(--color-text-muted)"}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M19 12H5M12 5l-7 7 7 7" />
             </svg>
             Back to My Courses
@@ -146,7 +146,7 @@ const CreateCourse = () => {
           <Section title="Basic Information" subtitle="Core details students see first">
 
             <Field label="Course Title *" error={errors.title}
-                   hint="A clear, specific title performs better in search">
+              hint="A clear, specific title performs better in search">
               <div className="relative">
                 <input
                   name="title" type="text"
@@ -158,7 +158,7 @@ const CreateCourse = () => {
                   style={errStyle(errors.title)}
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs"
-                      style={{ color: form.title.length > 130 ? "var(--color-error)" : "var(--color-text-muted)" }}>
+                  style={{ color: form.title.length > 130 ? "var(--color-error)" : "var(--color-text-muted)" }}>
                   {form.title.length}/150
                 </span>
               </div>
@@ -176,7 +176,7 @@ const CreateCourse = () => {
             </Field>
 
             <Field label="Description *" error={errors.description}
-                   hint="Minimum 20 characters. What will students learn?">
+              hint="Minimum 20 characters. What will students learn?">
               <div className="relative">
                 <textarea
                   name="description"
@@ -188,7 +188,7 @@ const CreateCourse = () => {
                   style={errStyle(errors.description)}
                 />
                 <span className="absolute bottom-2.5 right-3 text-xs"
-                      style={{ color: "var(--color-text-muted)" }}>
+                  style={{ color: "var(--color-text-muted)" }}>
                   {form.description.length} chars
                 </span>
               </div>
@@ -202,8 +202,8 @@ const CreateCourse = () => {
 
               <Field label="Category *" error={errors.category}>
                 <select name="category" className="input-field"
-                        value={form.category} onChange={handleChange}
-                        style={errStyle(errors.category)}>
+                  value={form.category} onChange={handleChange}
+                  style={errStyle(errors.category)}>
                   <option value="" disabled>Select category</option>
                   {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
@@ -211,14 +211,14 @@ const CreateCourse = () => {
 
               <Field label="Level">
                 <select name="level" className="input-field"
-                        value={form.level} onChange={handleChange}>
+                  value={form.level} onChange={handleChange}>
                   {LEVELS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
                 </select>
               </Field>
 
               <Field label="Language">
                 <select name="language" className="input-field"
-                        value={form.language} onChange={handleChange}>
+                  value={form.language} onChange={handleChange}>
                   {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
                 </select>
               </Field>
@@ -233,25 +233,25 @@ const CreateCourse = () => {
               <Field label="Original Price (₹)" error={errors.price}>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm"
-                        style={{ color: "var(--color-text-muted)" }}>₹</span>
+                    style={{ color: "var(--color-text-muted)" }}>₹</span>
                   <input name="price" type="number" min="0"
-                         className="input-field pl-7"
-                         placeholder="0" value={form.price}
-                         onChange={handleChange}
-                         style={errStyle(errors.price)} />
+                    className="input-field pl-7"
+                    placeholder="0" value={form.price}
+                    onChange={handleChange}
+                    style={errStyle(errors.price)} />
                 </div>
               </Field>
 
               <Field label="Discount Price (₹)" error={errors.discountPrice}
-                     hint="Must be less than original price">
+                hint="Must be less than original price">
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm"
-                        style={{ color: "var(--color-text-muted)" }}>₹</span>
+                    style={{ color: "var(--color-text-muted)" }}>₹</span>
                   <input name="discountPrice" type="number" min="0"
-                         className="input-field pl-7"
-                         placeholder="0" value={form.discountPrice}
-                         onChange={handleChange}
-                         style={errStyle(errors.discountPrice)} />
+                    className="input-field pl-7"
+                    placeholder="0" value={form.discountPrice}
+                    onChange={handleChange}
+                    style={errStyle(errors.discountPrice)} />
                 </div>
               </Field>
 
@@ -260,7 +260,7 @@ const CreateCourse = () => {
             {/* Discount preview */}
             {discount && (
               <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm"
-                   style={{ backgroundColor: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
+                style={{ backgroundColor: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
                 <span style={{ color: "#10b981" }}>✓</span>
                 <span style={{ color: "#10b981" }}>
                   Students save ₹{(form.price - form.discountPrice).toLocaleString()} —{" "}
@@ -278,7 +278,7 @@ const CreateCourse = () => {
               style={{ borderColor: "var(--color-border)" }}
             >
               <div className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl"
-                   style={{ backgroundColor: "rgba(99,102,241,0.1)" }}>
+                style={{ backgroundColor: "rgba(99,102,241,0.1)" }}>
                 🖼️
               </div>
               <div className="text-center">
@@ -298,11 +298,11 @@ const CreateCourse = () => {
             <Field label="Total Duration (minutes)" hint="Approximate total video duration">
               <div className="relative">
                 <input name="duration" type="number" min="0"
-                       className="input-field pr-20"
-                       placeholder="e.g. 300"
-                       value={form.duration} onChange={handleChange} />
+                  className="input-field pr-20"
+                  placeholder="e.g. 300"
+                  value={form.duration} onChange={handleChange} />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs"
-                      style={{ color: "var(--color-text-muted)" }}>
+                  style={{ color: "var(--color-text-muted)" }}>
                   {form.duration > 0
                     ? `${Math.floor(form.duration / 60)}h ${form.duration % 60}m`
                     : "mins"}
@@ -332,11 +332,11 @@ const CreateCourse = () => {
                        gap-3 px-6 py-4 rounded-2xl"
             style={{
               backgroundColor: "var(--color-bg-card)",
-              border:          "1px solid var(--color-border)",
+              border: "1px solid var(--color-border)",
             }}
           >
             <p className="text-xs text-center sm:text-left"
-               style={{ color: "var(--color-text-muted)" }}>
+              style={{ color: "var(--color-text-muted)" }}>
               Course saves as <strong style={{ color: "var(--color-text)" }}>Draft</strong>.
               Publish it from Manage Courses whenever you're ready.
             </p>
