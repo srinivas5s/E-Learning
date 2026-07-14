@@ -10,6 +10,8 @@ import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import LoginPage from "./pages/auth/LoginPage.jsx";
 import RegisterPage from "./pages/auth/RegisterPage.jsx";
+import CoursesPage from "./pages/student/CoursesPage.jsx";
+import CourseDetail from "./pages/student/CourseDetail.jsx";
 
 // Student pages
 import StudentDashboard from "./pages/student/StudentDashboard.jsx";
@@ -20,8 +22,12 @@ import StudentDashboard from "./pages/student/StudentDashboard.jsx";
 import InstructorDashboard from "./pages/instructor/InstructorDashboard.jsx";
 import CreateCourse from "./pages/instructor/CreateCourse.jsx"
 import ManageCourses from "./pages/instructor/ManageCourses.jsx";
-import CoursesPage from "./pages/student/CoursesPage.jsx";
-import CourseDetail from "./pages/student/CourseDetail.jsx";
+import CourseContent from "./pages/instructor/CourseContent.jsx";
+import CreateModule from "./pages/instructor/CreateModule.jsx";
+import EditModule from "./pages/instructor/EditModule.jsx";
+import CreateLesson from "./pages/instructor/CreateLesson.jsx";
+import EditLesson from "./pages/instructor/EditLesson.jsx";
+
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
@@ -75,6 +81,11 @@ const App = () => (
         <Route path="/instructor/dashboard" element={<InstructorDashboard />} />
         <Route path="/instructor/create-course" element={<CreateCourse />} />
         <Route path="/instructor/manage-courses" element={<ManageCourses />} />
+        <Route path="/instructor/courses/:courseId/content" element={<CourseContent />} />
+        <Route path="/instructor/courses/:courseId/modules/create" element={<CreateModule />} />
+        <Route path="/instructor/courses/:courseId/modules/:moduleId/edit" element={<EditModule />} />
+        <Route path="/instructor/courses/:courseId/modules/:moduleId/lessons/create" element={<CreateLesson />} />
+        <Route path="/instructor/courses/:courseId/modules/:moduleId/lessons/:lessonId/edit" element={<EditLesson />} />
       </Route>
 
       {/* ── Admin routes ────────────────────────────────────────────────── */}
