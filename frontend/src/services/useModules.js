@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { moduleApi } from "../services/content.api.js";
+import { moduleApi } from "../api/content.api.js";
 import toast from "react-hot-toast";
 
 export const useModules = (courseId) => {
