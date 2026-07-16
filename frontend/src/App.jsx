@@ -21,6 +21,7 @@ import StudentDashboard from "./pages/student/StudentDashboard.jsx";
 // Instructor pages
 import InstructorDashboard from "./pages/instructor/InstructorDashboard.jsx";
 import CreateCourse from "./pages/instructor/CreateCourse.jsx"
+import EditCourse from "./pages/instructor/EditCourse.jsx"
 import ManageCourses from "./pages/instructor/ManageCourses.jsx";
 import CourseContent from "./pages/instructor/CourseContent.jsx";
 import CreateModule from "./pages/instructor/CreateModule.jsx";
@@ -80,6 +81,7 @@ const App = () => (
       <Route element={<ProtectedRoute roles={["instructor"]} />}>
         <Route path="/instructor/dashboard" element={<InstructorDashboard />} />
         <Route path="/instructor/create-course" element={<CreateCourse />} />
+        <Route path="/instructor/edit-course/:courseId" element={<EditCourse />} />
         <Route path="/instructor/manage-courses" element={<ManageCourses />} />
         <Route path="/instructor/courses/:courseId/content" element={<CourseContent />} />
         <Route path="/instructor/courses/:courseId/modules/create" element={<CreateModule />} />
