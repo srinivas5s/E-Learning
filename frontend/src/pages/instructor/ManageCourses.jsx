@@ -168,6 +168,7 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
 
   return (
     <div
+      onClick={() => navigate(`/instructor/courses/${course._id}/content`)}
       className="flex items-center gap-4 p-4 rounded-xl transition-all duration-200
                  group hover:shadow-md"
       style={{
@@ -238,8 +239,10 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
 
         {/* Edit */}
         <button
-          onClick={() => navigate(`/instructor/edit-course/${course._id}`)}
-          title="Edit course"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/instructor/edit-course/${course._id}`);
+          }} title="Edit course"
           className="w-8 h-8 rounded-lg flex items-center justify-center
                      transition-all duration-150"
           style={{
@@ -263,7 +266,10 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
 
         {/* Publish / Unpublish */}
         <button
-          onClick={() => onPublishToggle(course._id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onPublishToggle(course._id);
+          }}
           disabled={isPublishing}
           title={course.isPublished ? "Unpublish" : "Publish"}
           className="w-8 h-8 rounded-lg flex items-center justify-center
@@ -298,7 +304,10 @@ const CourseRow = ({ course, onPublishToggle, onDelete, publishingId, navigate }
 
         {/* Delete */}
         <button
-          onClick={() => onDelete(course)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(course);
+          }}
           title="Delete course"
           className="w-8 h-8 rounded-lg flex items-center justify-center
                      transition-all duration-150"

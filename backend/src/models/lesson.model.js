@@ -123,8 +123,8 @@ lessonSchema.virtual("videoDurationFormatted").get(function () {
 });
 
 // ── Pre-save: auto-generate slug from title ───────────────────────────────────
-lessonSchema.pre("save", async function (next) {
-    if (!this.isModified("title")) return next();
+lessonSchema.pre("save", async function () {
+    if (!this.isModified("title")) return;
 
     const baseSlug = slugify(this.title, { lower: true, strict: true });
     let slug = baseSlug;
@@ -143,7 +143,7 @@ lessonSchema.pre("save", async function (next) {
     }
 
     this.slug = slug;
-    next();
+    // next();
 });
 
 export const Lesson = mongoose.model("Lesson", lessonSchema);

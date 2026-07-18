@@ -1,7 +1,7 @@
-import { Router }            from "express";
-import * as lessonController  from "../controllers/lesson.controller.js";
+import { Router } from "express";
+import * as lessonController from "../controllers/lesson.controller.js";
 import { protect, authorize } from "../middlewares/auth.middleware.js";
-import validate               from "../middlewares/validate.middleware.js";
+import validate from "../middlewares/validate.middleware.js";
 import {
   createLessonSchema,
   updateLessonSchema,
