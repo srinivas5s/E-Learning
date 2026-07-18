@@ -80,9 +80,9 @@ const App = () => (
       {/* ── Instructor routes ───────────────────────────────────────────── */}
       <Route element={<ProtectedRoute roles={["instructor"]} />}>
         <Route path="/instructor/dashboard" element={<InstructorDashboard />} />
+        <Route path="/instructor/manage-courses" element={<ManageCourses />} />
         <Route path="/instructor/create-course" element={<CreateCourse />} />
         <Route path="/instructor/edit-course/:courseId" element={<EditCourse />} />
-        <Route path="/instructor/manage-courses" element={<ManageCourses />} />
         <Route path="/instructor/courses/:courseId/content" element={<CourseContent />} />
         <Route path="/instructor/courses/:courseId/modules/create" element={<CreateModule />} />
         <Route path="/instructor/courses/:courseId/modules/:moduleId/edit" element={<EditModule />} />

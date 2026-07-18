@@ -90,6 +90,7 @@ export const getLessonById = async (lessonId, user) => {
 
   if (!lesson) throw new AppError("Lesson not found", 404);
 
+
   const isPrivileged = user && (user.role === "instructor" || user.role === "admin");
 
   if (!isPrivileged) {
@@ -105,7 +106,6 @@ export const getLessonById = async (lessonId, user) => {
       throw new AppError("Lesson not found", 404);
     }
   }
-
   return lesson;
 };
 
