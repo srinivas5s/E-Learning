@@ -11,19 +11,12 @@ import {
 // mergeParams: true — gives access to :moduleId from the parent router
 const router = Router({ mergeParams: true });
 
-// ── Public ────────────────────────────────────────────────────────────────────
-// GET /api/v1/modules/:moduleId/lessons
-// Guests and students see only published lessons
-router.get("/", lessonController.getLessonsByModule);
-
-// GET /api/v1/modules/:moduleId/lessons/:lessonId
-// Preview lessons accessible without auth
-router.get("/:lessonId", lessonController.getLessonById);
-
-// ── Protected — instructor or admin only ──────────────────────────────────────
 router.use(protect);
 
-// POST /api/v1/modules/:moduleId/lessons
+router.get("/", lessonController.getLessonsByModule);
+
+router.get("/:lessonId", lessonController.getLessonById);
+
 router.post(
   "/",
   authorize("instructor", "admin"),
@@ -31,8 +24,6 @@ router.post(
   lessonController.createLesson
 );
 
-// PATCH /api/v1/modules/:moduleId/lessons/reorder
-// Must be before /:lessonId to avoid "reorder" being treated as an ID
 router.patch(
   "/reorder",
   authorize("instructor", "admin"),
@@ -40,7 +31,6 @@ router.patch(
   lessonController.reorderLessons
 );
 
-// PATCH /api/v1/modules/:moduleId/lessons/:lessonId
 router.patch(
   "/:lessonId",
   authorize("instructor", "admin"),
@@ -48,14 +38,12 @@ router.patch(
   lessonController.updateLesson
 );
 
-// PATCH /api/v1/modules/:moduleId/lessons/:lessonId/publish
 router.patch(
   "/:lessonId/publish",
   authorize("instructor", "admin"),
   lessonController.togglePublishLesson
 );
 
-// DELETE /api/v1/modules/:moduleId/lessons/:lessonId
 router.delete(
   "/:lessonId",
   authorize("instructor", "admin"),
