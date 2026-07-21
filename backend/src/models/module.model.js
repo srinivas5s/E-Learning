@@ -58,7 +58,6 @@ moduleSchema.index({ course: 1, order: 1 });   // fetch modules for a course in 
 moduleSchema.index({ course: 1, isPublished: 1 }); // filter published modules
 
 // ── Virtual: lessons count ────────────────────────────────────────────────────
-// Populated via aggregation where needed — not stored to avoid stale data
 moduleSchema.virtual("lessons", {
     ref: "Lesson",
     localField: "_id",

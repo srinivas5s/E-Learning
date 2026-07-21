@@ -34,8 +34,6 @@ export const createLessonSchema = Joi.object({
             "string.max": "Description cannot exceed 2000 characters",
         }),
 
-    // moduleId is taken from the URL param, not the body
-    // courseId is derived from the module in the service
 
     video: videoSchema.optional(),
     attachments: Joi.array().items(attachmentSchema).default([]),
@@ -56,8 +54,7 @@ export const updateLessonSchema = Joi.object({
     "object.min": "At least one field is required to update",
 });
 
-// Ordered array of lesson IDs within a module
-// e.g. { lessons: ["id1", "id2", "id3"] }
+
 export const reorderLessonsSchema = Joi.object({
     lessons: Joi.array()
         .items(Joi.string().hex().length(24).required())

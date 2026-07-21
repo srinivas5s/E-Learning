@@ -3,10 +3,6 @@ import AppError from "../utils/AppError.js";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/**
- * Verify the requesting user owns the course (or is admin).
- * Throws 403 if not authorized.
- */
 const assertOwnerOrAdmin = (course, user) => {
     const isOwner = course.instructor._id
         ? course.instructor._id.toString() === user._id.toString()

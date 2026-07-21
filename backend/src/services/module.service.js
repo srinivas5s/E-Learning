@@ -5,9 +5,6 @@ import AppError   from "../utils/AppError.js";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/**
- * Verify course exists and requesting user owns it (or is admin).
- */
 const assertCourseOwner = async (courseId, user) => {
   const course = await Course.findById(courseId);
   if (!course) throw new AppError("Course not found", 404);
@@ -20,9 +17,7 @@ const assertCourseOwner = async (courseId, user) => {
   return course;
 };
 
-/**
- * Verify module exists and belongs to the given course.
- */
+
 const assertModuleInCourse = async (moduleId, courseId) => {
   const module = await Module.findOne({ _id: moduleId, course: courseId });
   if (!module) throw new AppError("Module not found in this course", 404);

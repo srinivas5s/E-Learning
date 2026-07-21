@@ -29,8 +29,6 @@ export const updateModuleSchema = Joi.object({
     "object.min": "At least one field is required to update",
 });
 
-// Accepts an ordered array of module IDs
-// e.g. { modules: ["id1", "id2", "id3"] }
 export const reorderModulesSchema = Joi.object({
     modules: Joi.array()
         .items(Joi.string().hex().length(24).required())
