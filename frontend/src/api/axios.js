@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL:         import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api/v1",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api/v1",
   withCredentials: true,
-  headers:         { "Content-Type": "application/json" },
+  headers: { "Content-Type": "application/json" },
 });
 
 api.interceptors.request.use((config) => {
@@ -15,7 +15,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const url         = error.config?.url || "";
+    const url = error.config?.url || "";
     const isAuthRoute = url.includes("/auth/login") || url.includes("/auth/register");
 
     if (error.response?.status === 401 && !isAuthRoute) {
