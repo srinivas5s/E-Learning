@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import { playerApi } from "../services/player.api.js";
-import courseApi from "../../instructor/services/course.api.js";
+import { playerApi } from "../api/player.api.js";
+import courseApi from "../api/course.api.js";
 import toast from "react-hot-toast";
 
 export const useCoursePlayer = (slug) => {

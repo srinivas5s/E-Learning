@@ -29,7 +29,7 @@ const LessonNavigation = ({ hasPrev, hasNext, onPrev, onNext, prevTitle, nextTit
                 <span className="hidden sm:flex flex-col items-start leading-tight">
                     <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>Previous</span>
                     {hasPrev && prevTitle && (
-                        <span className="text-xs font-medium truncate max-w-[140px]">{prevTitle}</span>
+                        <span className="text-xs font-medium truncate max-w-35">{prevTitle}</span>
                     )}
                 </span>
             </button>
@@ -48,7 +48,7 @@ const LessonNavigation = ({ hasPrev, hasNext, onPrev, onNext, prevTitle, nextTit
                 <span className="hidden sm:flex flex-col items-end leading-tight">
                     <span className="text-xs opacity-80">Next</span>
                     {hasNext && nextTitle && (
-                        <span className="text-xs font-medium truncate max-w-[140px]">{nextTitle}</span>
+                        <span className="text-xs font-medium truncate max-w-35">{nextTitle}</span>
                     )}
                 </span>
                 <ChevronRight />
