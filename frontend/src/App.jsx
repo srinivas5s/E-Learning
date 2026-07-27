@@ -15,6 +15,7 @@ import CourseDetail from "./pages/student/CourseDetail.jsx";
 
 // Student pages
 import StudentDashboard from "./pages/student/StudentDashboard.jsx";
+import CoursePlayer from "./pages/student/CoursePlayer.jsx";
 // import MyCourses from "./pages/student/MyCourses.jsx";
 // import Profile from "./pages/student/Profile.jsx";
 
@@ -69,6 +70,7 @@ const App = () => (
       <Route path="/contact" element={<Contact />} />
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/courses/:slug" element={<CourseDetail />} />
+      <Route path="/courses/:slug/learn" element={<CoursePlayer />} />
 
       {/* ── Student routes ─────────────────────────────────────────────── */}
       <Route element={<ProtectedRoute roles={["student"]} />}>

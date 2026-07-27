@@ -132,6 +132,14 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
     alert("Enrollment system coming in Phase 3!");
   };
 
+  const handleStartLearning = () => {
+    if (!isAuthenticated) {
+      navigate("/login", { state: { from: { pathname: `/courses/${course.slug}/learn` } } });
+      return;
+    }
+    navigate(`/courses/${course.slug}/learn`);
+  };
+
   return (
     <div
       className="rounded-2xl overflow-hidden shadow-xl sticky top-20"
@@ -183,7 +191,7 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
         )}
 
         {/* Enroll button */}
-        <button
+       <button
           onClick={handleEnroll}
           className="btn-primary w-full py-3 text-sm font-bold rounded-xl mb-3"
           style={{ backgroundColor: "var(--color-primary)" }}
@@ -194,6 +202,16 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
               ? "Enroll for Free"
               : "Enroll Now"}
         </button>
+
+        {/* Temporary — Phase 3C testing, no enrollment gate yet */}
+        <button
+          onClick={handleStartLearning}
+          className="btn-ghost w-full py-2.5 text-sm font-medium rounded-xl mb-3"
+          style={{ border: "1px solid var(--color-border)" }}
+        >
+          ▶ Start Learning (Preview)
+        </button>
+
 
         {/* Guarantee */}
         <p className="text-xs text-center mb-5" style={{ color: "var(--color-text-muted)" }}>

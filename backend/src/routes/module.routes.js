@@ -12,14 +12,12 @@ import {
 const router = Router({ mergeParams: true });
 
 // ── Public ────────────────────────────────────────────────────────────────────
-// GET /api/v1/courses/:courseId/modules
-// Guests and students see only published modules + lessons
+
 router.get("/", moduleController.getModulesByCourse);
 
 // ── Protected — instructor or admin only ──────────────────────────────────────
 router.use(protect);
 
-// POST /api/v1/courses/:courseId/modules
 router.post(
   "/",
   authorize("instructor", "admin"),
@@ -27,8 +25,6 @@ router.post(
   moduleController.createModule
 );
 
-// PATCH /api/v1/courses/:courseId/modules/reorder
-// Must be before /:moduleId to avoid "reorder" being treated as an ID
 router.patch(
   "/reorder",
   authorize("instructor", "admin"),
@@ -36,7 +32,6 @@ router.patch(
   moduleController.reorderModules
 );
 
-// PATCH /api/v1/courses/:courseId/modules/:moduleId
 router.patch(
   "/:moduleId",
   authorize("instructor", "admin"),
@@ -44,7 +39,6 @@ router.patch(
   moduleController.updateModule
 );
 
-// DELETE /api/v1/courses/:courseId/modules/:moduleId
 router.delete(
   "/:moduleId",
   authorize("instructor", "admin"),

@@ -5,10 +5,6 @@ import AppError   from "../utils/AppError.js";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/**
- * Verify module exists and requesting user owns the parent course.
- * Returns { module, course }.
- */
 const assertModuleOwner = async (moduleId, user) => {
   const module = await Module.findById(moduleId).populate("course");
   if (!module) throw new AppError("Module not found", 404);
@@ -23,9 +19,6 @@ const assertModuleOwner = async (moduleId, user) => {
   return { module, course };
 };
 
-/**
- * Verify lesson exists and belongs to the given module.
- */
 const assertLessonInModule = async (lessonId, moduleId) => {
   const lesson = await Lesson.findOne({ _id: lessonId, module: moduleId });
   if (!lesson) throw new AppError("Lesson not found in this module", 404);
@@ -94,8 +87,6 @@ export const getLessonById = async (lessonId, user) => {
   const isPrivileged = user && (user.role === "instructor" || user.role === "admin");
 
   if (!isPrivileged) {
-    // Students can only access published lessons
-    // unless the lesson is marked as free preview
     if (!lesson.isPublished && !lesson.isPreview) {
       throw new AppError("Lesson not found", 404);
     }

@@ -106,10 +106,10 @@ const lessonSchema = new mongoose.Schema(
 );
 
 // ── Indexes ───────────────────────────────────────────────────────────────────
-lessonSchema.index({ module: 1, order: 1 });       // fetch lessons in a module in order
-lessonSchema.index({ course: 1, order: 1 });       // fetch all lessons in a course
-lessonSchema.index({ module: 1, isPublished: 1 }); // public — only published lessons
-lessonSchema.index({ slug: 1, course: 1 }, { unique: true, sparse: true }); // slug unique per course
+lessonSchema.index({ module: 1, order: 1 });       
+lessonSchema.index({ course: 1, order: 1 });       
+lessonSchema.index({ module: 1, isPublished: 1 }); 
+lessonSchema.index({ slug: 1, course: 1 }, { unique: true, sparse: true }); 
 
 // ── Virtual: video duration formatted ────────────────────────────────────────
 lessonSchema.virtual("videoDurationFormatted").get(function () {
