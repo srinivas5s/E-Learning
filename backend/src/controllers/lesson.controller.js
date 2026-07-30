@@ -58,6 +58,21 @@ export const updateLesson = catchAsync(async (req, res) => {
     });
 });
 
+export const uploadLessonVideo = catchAsync(async (req, res) => {
+    const lesson = await lessonService.uploadLessonVideo(
+        req.params.moduleId,
+        req.params.lessonId,
+        req.user,
+        req.file
+    );
+
+    res.status(200).json({
+        status: "success",
+        message: "Video uploaded successfully",
+        data: { lesson },
+    });
+});
+
 // ── Publish / Unpublish lesson ────────────────────────────────────────────────
 export const togglePublishLesson = catchAsync(async (req, res) => {
     const lesson = await lessonService.togglePublishLesson(

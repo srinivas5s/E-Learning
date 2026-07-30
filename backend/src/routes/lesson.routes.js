@@ -2,6 +2,7 @@ import { Router } from "express";
 import * as lessonController from "../controllers/lesson.controller.js";
 import { protect, authorize } from "../middlewares/auth.middleware.js";
 import validate from "../middlewares/validate.middleware.js";
+import { uploadVideo } from "../middlewares/upload.middleware.js"; 
 import {
   createLessonSchema,
   updateLessonSchema,
@@ -22,6 +23,13 @@ router.post(
   authorize("instructor", "admin"),
   validate(createLessonSchema),
   lessonController.createLesson
+);
+
+router.post(
+  "/:lessonId/video",
+  authorize("instructor", "admin"),
+  uploadVideo,
+  lessonController.uploadLessonVideo
 );
 
 router.patch(

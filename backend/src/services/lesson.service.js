@@ -1,7 +1,8 @@
 import { Lesson } from "../models/lesson.model.js";
 import { Module } from "../models/module.model.js";
 import { Course } from "../models/course.model.js";
-import AppError   from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
+import cloudinary from "../config/cloudinary.js";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -9,7 +10,7 @@ const assertModuleOwner = async (moduleId, user) => {
   const module = await Module.findById(moduleId).populate("course");
   if (!module) throw new AppError("Module not found", 404);
 
-  const course  = module.course;
+  const course = module.course;
   const isOwner = course.instructor.toString() === user._id.toString();
 
   if (!isOwner && user.role !== "admin") {
@@ -39,8 +40,8 @@ export const createLesson = async (moduleId, user, data) => {
 
   const lesson = await Lesson.create({
     ...data,
-    module:  moduleId,
-    course:  course._id,
+    module: moduleId,
+    course: course._id,
     order,
   });
 
@@ -62,7 +63,7 @@ export const getLessonsByModule = async (moduleId, user) => {
     filter.isPublished = true;
   } else if (user.role === "instructor") {
     // Check ownership — if not owner, treat as student
-    const course  = await Course.findById(module.course);
+    const course = await Course.findById(module.course);
     const isOwner = course?.instructor.toString() === user._id.toString();
     if (!isOwner) filter.isPublished = true;
   }
@@ -116,6 +117,51 @@ export const updateLesson = async (moduleId, lessonId, user, data) => {
   return lesson;
 };
 
+// ── Upload / replace lesson video ─────────────────────────────────────────────
+
+const streamUpload = (buffer) =>
+  new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { resource_type: "video", folder: "lms/lesson-videos" },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+    stream.end(buffer);
+  });
+
+export const uploadLessonVideo = async (moduleId, lessonId, user, file) => {
+  await assertModuleOwner(moduleId, user);
+  const lesson = await assertLessonInModule(lessonId, moduleId);
+
+  if (!file) {
+    throw new AppError("No video file provided", 400);
+  }
+
+  const oldPublicId = lesson.video?.publicId;
+
+  const result = await streamUpload(file.buffer);
+
+  lesson.video = {
+    url: result.secure_url,
+    publicId: result.public_id,
+    duration: Math.round(result.duration || 0),
+    thumbnail: result.thumbnail_url || "",
+  };
+
+  await lesson.save();
+
+  // Delete old asset only after the new one is confirmed saved
+  if (oldPublicId) {
+    cloudinary.uploader
+      .destroy(oldPublicId, { resource_type: "video" })
+      .catch(() => { }); // best-effort cleanup, don't fail the request over it
+  }
+
+  return lesson;
+};
+
 // ── Publish / Unpublish ───────────────────────────────────────────────────────
 
 export const togglePublishLesson = async (moduleId, lessonId, user) => {
@@ -146,7 +192,7 @@ export const deleteLesson = async (moduleId, lessonId, user) => {
 
   // Re-normalize order of remaining lessons in the module
   const remaining = await Lesson.find({ module: moduleId }).sort({ order: 1 });
-  const bulkOps   = remaining.map((l, i) => ({
+  const bulkOps = remaining.map((l, i) => ({
     updateOne: {
       filter: { _id: l._id },
       update: { $set: { order: i + 1 } },
@@ -161,7 +207,7 @@ export const reorderLessons = async (moduleId, user, lessonIds) => {
   await assertModuleOwner(moduleId, user);
 
   // Verify all IDs belong to this module
-  const existing    = await Lesson.find({ module: moduleId }).select("_id");
+  const existing = await Lesson.find({ module: moduleId }).select("_id");
   const existingIds = existing.map((l) => l._id.toString());
 
   const invalid = lessonIds.filter((id) => !existingIds.includes(id));
