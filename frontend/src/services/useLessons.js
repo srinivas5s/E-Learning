@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 export const useLessons = (moduleId, onLessonsChange) => {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [uploading, setUploading] = useState(false);
 
     const handleError = (err) => {
         const msg = err.response?.data?.message || "Something went wrong";
@@ -47,6 +49,28 @@ export const useLessons = (moduleId, onLessonsChange) => {
             return null;
         } finally {
             setSaving(false);
+        }
+    }, [moduleId, onLessonsChange]);
+
+    const uploadVideo = useCallback(async (lessonId, file, currentLessons) => {
+        setUploading(true);
+        setUploadProgress(0);
+        try {
+            const res = await lessonApi.uploadVideo(moduleId, lessonId, file, setUploadProgress);
+            const updated = res.data.data.lesson;
+            const next = (currentLessons || []).map((l) =>
+                l._id === lessonId ? { ...l, ...updated } : l
+            );
+            onLessonsChange?.(moduleId, next);
+            toast.success("Video uploaded successfully");
+            return updated;
+        } catch (err) {
+            const msg = err.response?.data?.message || "Video upload failed";
+            toast.error(msg);
+            return null;
+        } finally {
+            setUploading(false);
+            setUploadProgress(0);
         }
     }, [moduleId, onLessonsChange]);
 
@@ -96,8 +120,11 @@ export const useLessons = (moduleId, onLessonsChange) => {
     return {
         saving,
         error,
+        uploading,
+        uploadProgress,
         createLesson,
         updateLesson,
+        uploadVideo,
         togglePublish,
         deleteLesson,
         reorderLessons,

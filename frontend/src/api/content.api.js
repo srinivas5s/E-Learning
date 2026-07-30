@@ -20,4 +20,23 @@ export const lessonApi = {
     togglePublish: (moduleId, lessonId) => api.patch(`/modules/${moduleId}/lessons/${lessonId}/publish`),
     delete: (moduleId, lessonId) => api.delete(`/modules/${moduleId}/lessons/${lessonId}`),
     reorder: (moduleId, lessonIds) => api.patch(`/modules/${moduleId}/lessons/reorder`, { lessons: lessonIds }),
+    uploadVideo: (moduleId, lessonId, file, onUploadProgress) => {
+        const formData = new FormData();
+        formData.append("video", file);
+
+        return api.post(
+            `/modules/${moduleId}/lessons/${lessonId}/video`,
+            formData,
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+                onUploadProgress: (progressEvent) => {
+                    if (!onUploadProgress || !progressEvent.total) return;
+                    const percent = Math.round(
+                        (progressEvent.loaded * 100) / progressEvent.total
+                    );
+                    onUploadProgress(percent);
+                },
+            }
+        );
+    }
 };
