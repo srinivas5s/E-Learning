@@ -11,7 +11,6 @@ const BackIcon = () => (
     </svg>
 );
 
-// ── Skeleton ──────────────────────────────────────────────────────────────────
 const Skeleton = () => (
     <div className="space-y-5 animate-pulse">
         {[1, 2, 3].map((i) => (
@@ -33,9 +32,8 @@ const EditLesson = () => {
     const [fetching, setFetching] = useState(true);
     const [fetchErr, setFetchErr] = useState(null);
 
-    const { saving, updateLesson } = useLessons(moduleId);
+    const { saving, updateLesson, uploadVideo, uploading, uploadProgress } = useLessons(moduleId);
 
-    // Fetch lesson on mount
     useEffect(() => {
         lessonApi.getOne(moduleId, lessonId)
             .then((res) => setLesson(res.data.data.lesson))
@@ -48,6 +46,14 @@ const EditLesson = () => {
         if (updated) navigate(`/instructor/courses/${courseId}/content`);
     };
 
+    // New — video upload handler, updates local `lesson` state so the form
+    // reflects the new video immediately without a full page refetch
+    const handleVideoUpload = async (file) => {
+        const updated = await uploadVideo(lessonId, file, []);
+        if (updated) setLesson((prev) => ({ ...prev, ...updated }));
+        return updated;
+    };
+
     const handleCancel = () =>
         navigate(`/instructor/courses/${courseId}/content`);
 
@@ -56,7 +62,6 @@ const EditLesson = () => {
             style={{ backgroundColor: "var(--color-bg)" }}>
             <div className="max-w-2xl mx-auto">
 
-                {/* Header */}
                 <div className="mb-8">
                     <button
                         onClick={handleCancel}
@@ -68,10 +73,8 @@ const EditLesson = () => {
                         <BackIcon /> Back to Course Content
                     </button>
 
-                    <h1
-                        className="text-2xl font-bold"
-                        style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}
-                    >
+                    <h1 className="text-2xl font-bold"
+                        style={{ fontFamily: "var(--font-heading)", color: "var(--color-text-heading)" }}>
                         Edit Lesson
                     </h1>
                     {lesson && (
@@ -81,18 +84,15 @@ const EditLesson = () => {
                     )}
                 </div>
 
-                {/* States */}
                 {fetching && <Skeleton />}
 
                 {fetchErr && (
-                    <div
-                        className="px-4 py-3 rounded-xl text-sm"
+                    <div className="px-4 py-3 rounded-xl text-sm"
                         style={{
                             backgroundColor: "rgba(248,113,113,0.08)",
                             border: "1px solid rgba(248,113,113,0.2)",
                             color: "var(--color-error)",
-                        }}
-                    >
+                        }}>
                         ⚠️ {fetchErr}
                     </div>
                 )}
@@ -103,6 +103,9 @@ const EditLesson = () => {
                         onSubmit={handleSubmit}
                         onCancel={handleCancel}
                         saving={saving}
+                        onVideoUpload={handleVideoUpload}
+                        uploading={uploading}
+                        uploadProgress={uploadProgress}
                     />
                 )}
             </div>
