@@ -15,8 +15,12 @@ const LessonSidebar = ({
     onLessonClick,
     mobileOpen,
     onMobileClose,
+    isPreviewMode = false,   // new
 }) => {
     const totalLessons = modules.reduce((s, m) => s + (m.lessons?.length || 0), 0);
+    const previewCount = modules.reduce(
+        (s, m) => s + (m.lessons?.filter((l) => l.isPreview).length || 0), 0
+    );
 
     const content = (
         <div className="flex flex-col h-full">
@@ -33,7 +37,9 @@ const LessonSidebar = ({
                         {course?.title || "Course Content"}
                     </h2>
                     <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-                        {modules.length} modules · {totalLessons} lessons
+                        {isPreviewMode
+                            ? `${previewCount} free preview lesson${previewCount === 1 ? "" : "s"}`
+                            : `${modules.length} modules · ${totalLessons} lessons`}
                     </p>
                 </div>
 
@@ -49,6 +55,21 @@ const LessonSidebar = ({
                     <CloseIcon />
                 </button>
             </div>
+
+            {/* Preview mode banner — CTA to enroll */}
+            {isPreviewMode && (
+                <div
+                    className="mx-3 mt-3 px-3 py-2.5 rounded-lg text-center"
+                    style={{
+                        backgroundColor: "rgba(99,102,241,0.08)",
+                        border: "1px solid rgba(99,102,241,0.2)",
+                    }}
+                >
+                    <p className="text-xs font-medium" style={{ color: "var(--color-primary)" }}>
+                        🔒 Enroll to unlock the full course
+                    </p>
+                </div>
+            )}
 
             {/* Scrollable module list */}
             <div className="flex-1 overflow-y-auto px-2 py-3 space-y-1">
@@ -67,6 +88,7 @@ const LessonSidebar = ({
                             index={i}
                             activeLessonId={activeLessonId}
                             onLessonClick={onLessonClick}
+                            isPreviewMode={isPreviewMode}
                         />
                     ))
                 )}
@@ -76,7 +98,6 @@ const LessonSidebar = ({
 
     return (
         <>
-            {/* Desktop — always visible */}
             <aside
                 className="hidden lg:flex flex-col w-72 shrink-0 rounded-xl overflow-hidden"
                 style={{
@@ -90,7 +111,6 @@ const LessonSidebar = ({
                 {content}
             </aside>
 
-            {/* Mobile — slide-in drawer */}
             {mobileOpen && (
                 <>
                     <div

@@ -132,12 +132,12 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
     alert("Enrollment system coming in Phase 3!");
   };
 
-  const handleStartLearning = () => {
+  const handlePreviewLearning = () => {
     if (!isAuthenticated) {
-      navigate("/login", { state: { from: { pathname: `/courses/${course.slug}/learn` } } });
+      navigate("/login", { state: { from: { pathname: `/courses/${course.slug}/preview` } } });
       return;
     }
-    navigate(`/courses/${course.slug}/learn`);
+    navigate(`/courses/${course.slug}/preview`);
   };
 
   return (
@@ -205,7 +205,7 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
 
         {/* Temporary — Phase 3C testing, no enrollment gate yet */}
         <button
-          onClick={handleStartLearning}
+          onClick={handlePreviewLearning}
           className="btn-ghost w-full py-2.5 text-sm font-medium rounded-xl mb-3"
           style={{ border: "1px solid var(--color-border)" }}
         >

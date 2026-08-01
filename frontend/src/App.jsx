@@ -71,7 +71,7 @@ const App = () => (
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/courses/:slug" element={<CourseDetail />} />
       <Route path="/courses/:slug/learn" element={<CoursePlayer />} />
-
+      <Route path="/courses/:slug/preview" element={<CoursePlayer />} />
       {/* ── Student routes ─────────────────────────────────────────────── */}
       <Route element={<ProtectedRoute roles={["student"]} />}>
         <Route path="/dashboard" element={<StudentDashboard />} />
