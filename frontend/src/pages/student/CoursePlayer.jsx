@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useLocation } from "react-router-dom";
 
 import { useCoursePlayer } from "../../services/useCoursePlayer.js";
 import LessonSidebar from "../../components/student/LessonSidebar.jsx";
@@ -19,8 +19,13 @@ const MenuIcon = () => (
 
 const CoursePlayer = () => {
     const { slug } = useParams();
+    const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
     const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+    // ── Mode detection from route ─────────────────────────────────────────────
+    const mode = location.pathname.endsWith("/preview") ? "preview" : "learn";
+    const isPreviewMode = mode === "preview";
 
     const {
         course,
@@ -37,14 +42,26 @@ const CoursePlayer = () => {
         goToPrev,
     } = useCoursePlayer(slug);
 
-    // ── Initial load — restore lesson from URL if present ────────────────────────
+    // ── Initial load — in preview mode, restore/land on a preview-eligible lesson only
     useEffect(() => {
-        const initialLessonId = searchParams.get("lesson");
-        fetchCourseAndModules(initialLessonId);
+        const requestedLessonId = searchParams.get("lesson");
+        fetchCourseAndModules(requestedLessonId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slug]);
+    }, [slug, mode]);
 
-    // ── Keep URL in sync with active lesson ──────────────────────────────────────
+    // Once modules load in preview mode, if the active/restored lesson isn't
+    // actually a preview lesson, redirect selection to the first available one
+    useEffect(() => {
+        if (!isPreviewMode || flatLessons.length === 0) return;
+        if (activeLesson && activeLesson.isPreview) return;
+
+        const firstPreview = flatLessons.find((l) => l.isPreview);
+        if (firstPreview) {
+            selectLesson(firstPreview.moduleId, firstPreview._id);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isPreviewMode, flatLessons, activeLesson?._id]);
+
     useEffect(() => {
         if (activeLesson?._id) {
             setSearchParams({ lesson: activeLesson._id }, { replace: true });
@@ -53,14 +70,41 @@ const CoursePlayer = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeLesson?._id]);
 
+    // ── Gate lesson selection — blocks locked lessons in preview mode ────────────
     const handleLessonClick = (moduleId, lessonId) => {
+        if (isPreviewMode) {
+            const target = flatLessons.find((l) => l._id === lessonId);
+            if (!target?.isPreview) return; // locked — ignore the click
+        }
         selectLesson(moduleId, lessonId);
         setMobileSidebarOpen(false);
     };
 
+    // ── Prev/Next also respect the lock in preview mode ──────────────────────────
     const currentIndex = flatLessons.findIndex((l) => l._id === activeLesson?._id);
-    const hasPrev = currentIndex > 0;
-    const hasNext = currentIndex >= 0 && currentIndex < flatLessons.length - 1;
+
+    const handleNext = () => {
+        if (!isPreviewMode) return goToNext();
+        const next = flatLessons.slice(currentIndex + 1).find((l) => l.isPreview);
+        if (next) selectLesson(next.moduleId, next._id);
+    };
+
+    const handlePrev = () => {
+        if (!isPreviewMode) return goToPrev();
+        const prevSlice = flatLessons.slice(0, currentIndex).reverse();
+        const prev = prevSlice.find((l) => l.isPreview);
+        if (prev) selectLesson(prev.moduleId, prev._id);
+    };
+
+    const hasNext = isPreviewMode
+        ? flatLessons.slice(currentIndex + 1).some((l) => l.isPreview)
+        : currentIndex >= 0 && currentIndex < flatLessons.length - 1;
+
+    const hasPrev = isPreviewMode
+        ? flatLessons.slice(0, currentIndex).some((l) => l.isPreview)
+        : currentIndex > 0;
+
+    const isLessonBlocked = isPreviewMode && activeLesson && !activeLesson.isPreview;
 
     if (loading) {
         return (
@@ -87,7 +131,6 @@ const CoursePlayer = () => {
     return (
         <div className="max-w-350 mx-auto px-4 py-6">
 
-            {/* Mobile header — course title + sidebar toggle */}
             <div className="lg:hidden flex items-center justify-between mb-4">
                 <h1 className="text-sm font-bold truncate" style={{ color: "var(--color-text-heading)" }}>
                     {course?.title}
@@ -103,22 +146,37 @@ const CoursePlayer = () => {
             </div>
 
             <div className="flex gap-6 items-start">
-                {/* Main content */}
                 <div className="flex-1 min-w-0 space-y-4">
-                    <VideoPlayer lesson={activeLesson} loading={lessonLoading} />
-                    <LessonContent lesson={activeLesson} loading={lessonLoading} />
-                    <Attachments attachments={activeLesson?.attachments || []} />
+                    {isLessonBlocked ? (
+                        <div
+                            className="rounded-xl p-10 flex flex-col items-center justify-center gap-3 text-center"
+                            style={{ backgroundColor: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+                        >
+                            <span className="text-3xl">🔒</span>
+                            <p className="text-sm font-medium" style={{ color: "var(--color-text)" }}>
+                                This lesson isn't available in preview
+                            </p>
+                            <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
+                                Enroll to unlock the full course
+                            </p>
+                        </div>
+                    ) : (
+                        <>
+                            <VideoPlayer lesson={activeLesson} loading={lessonLoading} />
+                            <LessonContent lesson={activeLesson} loading={lessonLoading} />
+                            <Attachments attachments={activeLesson?.attachments || []} />
+                        </>
+                    )}
                     <LessonNavigation
                         hasPrev={hasPrev}
                         hasNext={hasNext}
-                        onPrev={goToPrev}
-                        onNext={goToNext}
+                        onPrev={handlePrev}
+                        onNext={handleNext}
                         prevTitle={hasPrev ? flatLessons[currentIndex - 1]?.title : null}
                         nextTitle={hasNext ? flatLessons[currentIndex + 1]?.title : null}
                     />
                 </div>
 
-                {/* Sidebar */}
                 <LessonSidebar
                     course={course}
                     modules={modules}
@@ -126,6 +184,7 @@ const CoursePlayer = () => {
                     onLessonClick={handleLessonClick}
                     mobileOpen={mobileSidebarOpen}
                     onMobileClose={() => setMobileSidebarOpen(false)}
+                    isPreviewMode={isPreviewMode}
                 />
             </div>
         </div>

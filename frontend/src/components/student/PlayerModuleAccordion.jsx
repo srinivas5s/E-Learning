@@ -19,14 +19,21 @@ const VideoIcon = () => (
     </svg>
 );
 
-const PlayerModuleAccordion = ({ module, index, activeLessonId, onLessonClick }) => {
-    // Each accordion owns its own open state — expanding one does NOT collapse others
+const LockIcon = () => (
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" />
+        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+);
+
+const PlayerModuleAccordion = ({ module, index, activeLessonId, onLessonClick, isPreviewMode = false }) => {
     const [open, setOpen] = useState(true);
     const lessons = module.lessons || [];
 
     return (
         <div>
-            {/* Module header */}
+            {/* Module header — unchanged */}
             <button
                 type="button"
                 onClick={() => setOpen((o) => !o)}
@@ -61,29 +68,38 @@ const PlayerModuleAccordion = ({ module, index, activeLessonId, onLessonClick })
                 <div className="ml-5 mt-0.5 space-y-0.5 mb-1">
                     {lessons.map((lesson, li) => {
                         const isActive = activeLessonId === lesson._id;
+                        const isLocked = isPreviewMode && !lesson.isPreview;
+
                         return (
                             <button
                                 key={lesson._id}
                                 type="button"
                                 onClick={() => onLessonClick?.(module._id, lesson._id)}
+                                disabled={isLocked}
                                 className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg
                            text-left transition-all duration-100"
                                 style={{
                                     backgroundColor: isActive ? "rgba(99,102,241,0.12)" : "transparent",
                                     borderLeft: isActive
                                         ? "2px solid var(--color-primary)" : "2px solid transparent",
+                                    opacity: isLocked ? 0.5 : 1,
+                                    cursor: isLocked ? "not-allowed" : "pointer",
                                 }}
                                 onMouseEnter={(e) => {
-                                    if (!isActive) e.currentTarget.style.backgroundColor = "rgba(99,102,241,0.05)";
+                                    if (!isActive && !isLocked)
+                                        e.currentTarget.style.backgroundColor = "rgba(99,102,241,0.05)";
                                 }}
                                 onMouseLeave={(e) => {
-                                    if (!isActive) e.currentTarget.style.backgroundColor = "transparent";
+                                    if (!isActive && !isLocked)
+                                        e.currentTarget.style.backgroundColor = "transparent";
                                 }}
                             >
                                 <span style={{
-                                    color: lesson.video?.url ? "var(--color-primary)" : "var(--color-border)",
+                                    color: isLocked
+                                        ? "var(--color-text-muted)"
+                                        : lesson.video?.url ? "var(--color-primary)" : "var(--color-border)",
                                 }}>
-                                    <VideoIcon />
+                                    {isLocked ? <LockIcon /> : <VideoIcon />}
                                 </span>
 
                                 <p
@@ -96,13 +112,20 @@ const PlayerModuleAccordion = ({ module, index, activeLessonId, onLessonClick })
                                     {li + 1}. {lesson.title}
                                 </p>
 
-                                {lesson.isPreview && (
+                                {isLocked ? (
                                     <span
                                         className="shrink-0 text-xs px-1.5 py-0.5 rounded-full font-medium"
                                         style={{
-                                            backgroundColor: "rgba(16,185,129,0.12)",
-                                            color: "#10b981",
+                                            backgroundColor: "var(--color-border)",
+                                            color: "var(--color-text-muted)",
                                         }}
+                                    >
+                                        Locked
+                                    </span>
+                                ) : lesson.isPreview && (
+                                    <span
+                                        className="shrink-0 text-xs px-1.5 py-0.5 rounded-full font-medium"
+                                        style={{ backgroundColor: "rgba(16,185,129,0.12)", color: "#10b981" }}
                                     >
                                         Preview
                                     </span>
