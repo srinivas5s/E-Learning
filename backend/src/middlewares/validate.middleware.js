@@ -1,11 +1,10 @@
 import AppError from "../utils/AppError.js";
 
-
-const validate = (schema) => (req, res, next) => {
-    const { error, value } = schema.validate(req.body, {
-        abortEarly: false, 
-        stripUnknown: true,  
-        convert: true,  
+const validate = (schema, source = "body") => (req, res, next) => {
+    const { error, value } = schema.validate(req[source], {
+        abortEarly: false,
+        stripUnknown: true,
+        convert: true,
     });
 
     if (error) {
@@ -15,7 +14,7 @@ const validate = (schema) => (req, res, next) => {
         return next(new AppError(message, 422));
     }
 
-    req.body = value; 
+    req[source] = value;
     next();
 };
 
