@@ -5,6 +5,8 @@ import validate from "../middlewares/validate.middleware.js";
 import {
     createEnrollmentSchema,
     courseParamSchema,
+    lessonParamSchema,
+    updateCurrentLessonSchema,
 } from "../validators/enrollment.validator.js";
 
 const router = Router();

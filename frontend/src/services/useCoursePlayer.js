@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
 import { playerApi } from "../api/player.api.js";
 import courseApi from "../api/course.api.js";
+import enrollmentApi from "../api/enrollment.api.js"; // adjust path to actual location
+
 import toast from "react-hot-toast";
 
 export const useCoursePlayer = (slug) => {
@@ -12,6 +14,8 @@ export const useCoursePlayer = (slug) => {
     const [loading, setLoading] = useState(false);
     const [lessonLoading, setLessonLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [enrollment, setEnrollment] = useState(null);
+    const [enrollmentLoading, setEnrollmentLoading] = useState(false);
 
     // ── Helpers ─────────────────────────────────────────────────────────────────
     const handleError = (err) => {
@@ -20,6 +24,100 @@ export const useCoursePlayer = (slug) => {
         toast.error(msg);
     };
 
+    // ── Fetch enrollment (progress + completion state) ────────────────────────────
+    const fetchEnrollment = useCallback(async (courseId) => {
+        setEnrollmentLoading(true);
+        try {
+            const res = await enrollmentApi.getEnrollmentByCourse(courseId);
+            setEnrollment(res.data.data.enrollment);
+        } catch (err) {
+            // Not enrolled, or not applicable in this context — fail silently.
+            // CoursePlayer decides whether calling this was appropriate at all.
+            setEnrollment(null);
+        } finally {
+            setEnrollmentLoading(false);
+        }
+    }, []);
+
+    // ── Mark lesson complete (optimistic) ─────────────────────────────────────────
+    const markComplete = useCallback(async (courseId, lessonId) => {
+        if (!enrollment) return null;
+
+        const prevEnrollment = enrollment;
+        const alreadyDone = enrollment.completedLessons.some((id) => id === lessonId || id?._id === lessonId);
+        if (alreadyDone) return enrollment;
+
+        // Optimistic update
+        setEnrollment((prev) => ({
+            ...prev,
+            completedLessons: [...prev.completedLessons, lessonId],
+        }));
+
+        try {
+            const res = await enrollmentApi.markLessonComplete(courseId, lessonId);
+            const updated = res.data.data.enrollment;
+            setEnrollment(updated);
+            return updated;
+        } catch (err) {
+            setEnrollment(prevEnrollment); // rollback
+            toast.error(err.response?.data?.message || "Failed to mark lesson complete");
+            return null;
+        }
+    }, [enrollment]);
+
+    // ── Unmark lesson complete (optimistic) ────────────────────────────────────────
+    const unmarkComplete = useCallback(async (courseId, lessonId) => {
+        if (!enrollment) return null;
+
+        const prevEnrollment = enrollment;
+
+        setEnrollment((prev) => ({
+            ...prev,
+            completedLessons: prev.completedLessons.filter(
+                (id) => id !== lessonId && id?._id !== lessonId
+            ),
+        }));
+
+        try {
+            const res = await enrollmentApi.removeCompletedLesson(courseId, lessonId);
+            const updated = res.data.data.enrollment;
+            setEnrollment(updated);
+            return updated;
+        } catch (err) {
+            setEnrollment(prevEnrollment); // rollback
+            toast.error(err.response?.data?.message || "Failed to update lesson");
+            return null;
+        }
+    }, [enrollment]);
+
+    // ── Update current lesson — skips the call if the lesson hasn't actually changed
+    const updateCurrentLesson = useCallback(async (courseId, lessonId) => {
+        setEnrollment((prev) => {
+            if (!prev) return prev;
+
+            const currentId = prev.currentLesson?._id || prev.currentLesson;
+            if (currentId === lessonId) return prev; // no-op, same lesson — skip API call
+
+            // Fire-and-forget — don't block player navigation on this write
+            enrollmentApi.updateCurrentLesson(courseId, lessonId).catch(() => {
+                // Silent — this is a non-critical background sync; a failed write
+                // here shouldn't interrupt playback or surface an error toast
+            });
+
+            return { ...prev, currentLesson: lessonId };
+        });
+    }, []);
+
+    // ── Resume learning — returns { lessonId } for CoursePlayer to act on ────────
+    const resumeLearning = useCallback(async (courseId) => {
+        try {
+            const res = await enrollmentApi.getResumePoint(courseId);
+            return res.data.data; // { lessonId }
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Couldn't resume this course");
+            return null;
+        }
+    }, []);
     // ── Flatten modules → single lesson array (adds moduleId/moduleTitle) ────────
     const flattenLessons = (mods) =>
         mods.flatMap((m) =>
@@ -93,6 +191,13 @@ export const useCoursePlayer = (slug) => {
         loading,
         lessonLoading,
         error,
+        enrollment,
+        enrollmentLoading,
+        fetchEnrollment,
+        markComplete,
+        unmarkComplete,
+        updateCurrentLesson,
+        resumeLearning,
         fetchCourseAndModules,
         selectLesson,
         goToNext: () => goToLesson("next"),

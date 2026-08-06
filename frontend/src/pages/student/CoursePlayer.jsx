@@ -40,6 +40,11 @@ const CoursePlayer = () => {
         selectLesson,
         goToNext,
         goToPrev,
+        enrollment,
+        fetchEnrollment,
+        markComplete,
+        unmarkComplete,
+        updateCurrentLesson,
     } = useCoursePlayer(slug);
 
     // ── Initial load — in preview mode, restore/land on a preview-eligible lesson only
@@ -63,9 +68,19 @@ const CoursePlayer = () => {
     }, [isPreviewMode, flatLessons, activeLesson?._id]);
 
     useEffect(() => {
+        if (!isPreviewMode && course?._id) {
+            fetchEnrollment(course._id);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isPreviewMode, course?._id]);
+
+    useEffect(() => {
         if (activeLesson?._id) {
             setSearchParams({ lesson: activeLesson._id }, { replace: true });
             window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        if (!isPreviewMode && course?._id) {
+            updateCurrentLesson(course._id, activeLesson._id);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeLesson?._id]);
@@ -87,6 +102,18 @@ const CoursePlayer = () => {
         if (!isPreviewMode) return goToNext();
         const next = flatLessons.slice(currentIndex + 1).find((l) => l.isPreview);
         if (next) selectLesson(next.moduleId, next._id);
+    };
+
+    const handleToggleComplete = () => {
+        if (!activeLesson || !course?._id) return;
+        const isDone = enrollment?.completedLessons?.some(
+            (id) => id === activeLesson._id || id?._id === activeLesson._id
+        );
+        if (isDone) {
+            unmarkComplete(course._id, activeLesson._id);
+        } else {
+            markComplete(course._id, activeLesson._id);
+        }
     };
 
     const handlePrev = () => {
@@ -145,6 +172,23 @@ const CoursePlayer = () => {
                 </button>
             </div>
 
+            {!isPreviewMode && enrollment && (
+                <div className="mb-4 flex items-center gap-3">
+                    <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ backgroundColor: "var(--color-border)" }}>
+                        <div
+                            className="h-full rounded-full transition-all duration-500"
+                            style={{
+                                width: `${enrollment.progressPercent}%`,
+                                backgroundColor: enrollment.progressPercent === 100 ? "#10b981" : "var(--color-primary)",
+                            }}
+                        />
+                    </div>
+                    <span className="text-xs font-semibold shrink-0" style={{ color: "var(--color-text-muted)" }}>
+                        {enrollment.progressPercent}% complete
+                    </span>
+                </div>
+            )}
+
             <div className="flex gap-6 items-start">
                 <div className="flex-1 min-w-0 space-y-4">
                     {isLessonBlocked ? (
@@ -164,6 +208,26 @@ const CoursePlayer = () => {
                         <>
                             <VideoPlayer lesson={activeLesson} loading={lessonLoading} />
                             <LessonContent lesson={activeLesson} loading={lessonLoading} />
+                            {!isPreviewMode && activeLesson && (
+                                <button
+                                    type="button"
+                                    onClick={handleToggleComplete}
+                                    className="w-full py-2.5 text-sm font-semibold rounded-xl transition-colors duration-150"
+                                    style={
+                                        enrollment?.completedLessons?.some(
+                                            (id) => id === activeLesson._id || id?._id === activeLesson._id
+                                        )
+                                            ? { backgroundColor: "rgba(16,185,129,0.1)", color: "#10b981", border: "1px solid rgba(16,185,129,0.3)" }
+                                            : { backgroundColor: "var(--color-primary)", color: "#fff" }
+                                    }
+                                >
+                                    {enrollment?.completedLessons?.some(
+                                        (id) => id === activeLesson._id || id?._id === activeLesson._id
+                                    )
+                                        ? "✓ Completed"
+                                        : "Mark as Complete"}
+                                </button>
+                            )}
                             <Attachments attachments={activeLesson?.attachments || []} />
                         </>
                     )}
@@ -185,6 +249,7 @@ const CoursePlayer = () => {
                     mobileOpen={mobileSidebarOpen}
                     onMobileClose={() => setMobileSidebarOpen(false)}
                     isPreviewMode={isPreviewMode}
+                    completedLessons={enrollment?.completedLessons || []}
                 />
             </div>
         </div>
