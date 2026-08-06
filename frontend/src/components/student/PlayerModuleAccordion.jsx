@@ -27,7 +27,21 @@ const LockIcon = () => (
     </svg>
 );
 
-const PlayerModuleAccordion = ({ module, index, activeLessonId, onLessonClick, isPreviewMode = false }) => {
+const CheckIcon = () => (
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+        stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12" />
+    </svg>
+);
+
+const PlayerModuleAccordion = ({
+    module,
+    index,
+    activeLessonId,
+    onLessonClick,
+    isPreviewMode = false,
+    completedLessons = [],
+}) => {
     const [open, setOpen] = useState(true);
     const lessons = module.lessons || [];
 
@@ -69,6 +83,9 @@ const PlayerModuleAccordion = ({ module, index, activeLessonId, onLessonClick, i
                     {lessons.map((lesson, li) => {
                         const isActive = activeLessonId === lesson._id;
                         const isLocked = isPreviewMode && !lesson.isPreview;
+                        const isDone = completedLessons.some(
+                            (id) => id === lesson._id || id?._id === lesson._id
+                        );
 
                         return (
                             <button
@@ -97,9 +114,11 @@ const PlayerModuleAccordion = ({ module, index, activeLessonId, onLessonClick, i
                                 <span style={{
                                     color: isLocked
                                         ? "var(--color-text-muted)"
-                                        : lesson.video?.url ? "var(--color-primary)" : "var(--color-border)",
+                                        : isDone
+                                            ? "#10b981"
+                                            : lesson.video?.url ? "var(--color-primary)" : "var(--color-border)",
                                 }}>
-                                    {isLocked ? <LockIcon /> : <VideoIcon />}
+                                    {isLocked ? <LockIcon /> : isDone ? <CheckIcon /> : <VideoIcon />}
                                 </span>
 
                                 <p

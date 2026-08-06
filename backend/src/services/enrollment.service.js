@@ -1,5 +1,6 @@
 import { Enrollment } from "../models/enrollment.model.js";
 import { Course } from "../models/course.model.js";
+import { Lesson } from "../models/lesson.model.js";
 import AppError from "../utils/AppError.js";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -86,4 +87,102 @@ export const cancelEnrollment = async (courseId, user) => {
     await Course.findByIdAndUpdate(courseId, { $inc: { studentsEnrolled: -1 } });
 
     return enrollment;
+};
+
+const recalculateProgress = async (enrollment) => {
+    const totalPublished = await Lesson.countDocuments({
+        course: enrollment.course,
+        isPublished: true,
+    });
+
+    const percent = totalPublished > 0
+        ? Math.round((enrollment.completedLessons.length / totalPublished) * 100)
+        : 0;
+
+    enrollment.progressPercent = percent;
+
+    if (percent >= 100 && enrollment.status === "active") {
+        enrollment.status = "completed";
+        enrollment.completedAt = new Date();
+    }
+};
+
+// ── Mark lesson as completed ──────────────────────────────────────────────────
+
+export const markLessonComplete = async (courseId, lessonId, user) => {
+    const enrollment = await assertEnrollmentExists(user._id, courseId);
+
+    const lesson = await Lesson.findOne({ _id: lessonId, course: courseId });
+    if (!lesson) throw new AppError("Lesson not found in this course", 404);
+
+    const alreadyCompleted = enrollment.completedLessons.some(
+        (id) => id.toString() === lessonId
+    );
+
+    if (!alreadyCompleted) {
+        enrollment.completedLessons.push(lessonId);
+        await recalculateProgress(enrollment);
+    }
+
+    enrollment.currentLesson = lessonId;
+    enrollment.lastAccessedAt = new Date();
+    await enrollment.save();
+
+    return enrollment;
+};
+
+// ── Mark lesson as incomplete (toggle) ────────────────────────────────────────
+
+export const removeCompletedLesson = async (courseId, lessonId, user) => {
+    const enrollment = await assertEnrollmentExists(user._id, courseId);
+
+    enrollment.completedLessons = enrollment.completedLessons.filter(
+        (id) => id.toString() !== lessonId
+    );
+
+    await recalculateProgress(enrollment);
+    await enrollment.save();
+
+    return enrollment;
+};
+
+// ── Get course progress ───────────────────────────────────────────────────────
+
+export const getCourseProgress = async (courseId, user) => {
+    const enrollment = await assertEnrollmentExists(user._id, courseId);
+    return enrollment;
+};
+
+// ── Update current lesson (called when student navigates in the player) ─────
+
+export const updateCurrentLesson = async (courseId, lessonId, user) => {
+    const enrollment = await assertEnrollmentExists(user._id, courseId);
+
+    const lesson = await Lesson.findOne({ _id: lessonId, course: courseId });
+    if (!lesson) throw new AppError("Lesson not found in this course", 404);
+
+    enrollment.currentLesson = lessonId;
+    enrollment.lastAccessedAt = new Date();
+    await enrollment.save();
+
+    return enrollment;
+};
+
+// ── Resume learning — returns where the student should continue ─────────────
+
+export const getResumePoint = async (courseId, user) => {
+    const enrollment = await assertEnrollmentExists(user._id, courseId);
+
+    if (enrollment.currentLesson) {
+        return { lessonId: enrollment.currentLesson };
+    }
+
+    const firstLesson = await Lesson.findOne({ course: courseId, isPublished: true })
+        .sort({ order: 1 });
+
+    if (!firstLesson) {
+        throw new AppError("This course has no published lessons yet", 404);
+    }
+
+    return { lessonId: firstLesson._id };
 };

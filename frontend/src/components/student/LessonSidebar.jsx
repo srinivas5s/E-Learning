@@ -16,6 +16,7 @@ const LessonSidebar = ({
     mobileOpen,
     onMobileClose,
     isPreviewMode = false,   // new
+    completedLessons = [],
 }) => {
     const totalLessons = modules.reduce((s, m) => s + (m.lessons?.length || 0), 0);
     const previewCount = modules.reduce(
@@ -89,6 +90,8 @@ const LessonSidebar = ({
                             activeLessonId={activeLessonId}
                             onLessonClick={onLessonClick}
                             isPreviewMode={isPreviewMode}
+                            completedLessons={completedLessons}   // new
+
                         />
                     ))
                 )}

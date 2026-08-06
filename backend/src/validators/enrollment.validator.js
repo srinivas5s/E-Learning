@@ -18,3 +18,15 @@ export const courseParamSchema = Joi.object({
     courseId: objectId.required()
         .messages({ "any.required": "Course ID is required" }),
 });
+
+export const lessonParamSchema = Joi.object({
+    courseId: objectId.required()
+        .messages({ "any.required": "Course ID is required" }),
+    lessonId: objectId.required()
+        .messages({ "any.required": "Lesson ID is required" }),
+});
+
+export const updateCurrentLessonSchema = Joi.object({
+    lessonId: objectId.required()
+        .messages({ "any.required": "Lesson ID is required" }),
+});

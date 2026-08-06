@@ -41,6 +41,31 @@ const enrollmentSchema = new mongoose.Schema(
             min: 0,
         },
 
+        // ── Progress tracking ─────────────────────────────────────────────────────────
+        completedLessons: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "Lesson",
+            default: [],
+        },
+
+        currentLesson: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Lesson",
+            default: null,
+        },
+
+        progressPercent: {
+            type: Number,
+            default: 0,
+            min: 0,
+            max: 100,
+        },
+
+        lastAccessedAt: {
+            type: Date,
+            default: null,
+        },
+
         // ── Timestamps ────────────────────────────────────────────────────────────
         enrolledAt: {
             type: Date,
