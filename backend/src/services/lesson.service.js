@@ -1,6 +1,7 @@
 import { Lesson } from "../models/lesson.model.js";
 import { Module } from "../models/module.model.js";
 import { Course } from "../models/course.model.js";
+import { Enrollment } from "../models/enrollment.model.js";
 import AppError from "../utils/AppError.js";
 import cloudinary from "../config/cloudinary.js";
 
@@ -90,6 +91,16 @@ export const getLessonById = async (lessonId, user) => {
   if (!isPrivileged) {
     if (!lesson.isPublished && !lesson.isPreview) {
       throw new AppError("Lesson not found", 404);
+    }
+    if (lesson.isPublished && !lesson.isPreview) {
+      const enrollment = user && await Enrollment.findOne({
+        student: user._id,
+        course: lesson.course._id,
+        status: { $ne: "cancelled" },
+      });
+      if (!enrollment) {
+        throw new AppError("You must be enrolled to access this lesson", 403);
+      }
     }
   } else if (user.role === "instructor") {
     const isOwner =

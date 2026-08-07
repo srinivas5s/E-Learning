@@ -70,12 +70,13 @@ const App = () => (
       <Route path="/contact" element={<Contact />} />
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/courses/:slug" element={<CourseDetail />} />
-      <Route path="/courses/:slug/learn" element={<CoursePlayer />} />
       <Route path="/courses/:slug/preview" element={<CoursePlayer />} />
+
       {/* ── Student routes ─────────────────────────────────────────────── */}
       <Route element={<ProtectedRoute roles={["student"]} />}>
         <Route path="/dashboard" element={<StudentDashboard />} />
         <Route path="/my-courses" element={<MyCourses />} />
+        <Route path="/courses/:slug/learn" element={<CoursePlayer />} />
         {/* <Route path="/profile" element={<Profile />} /> */}
       </Route>
 

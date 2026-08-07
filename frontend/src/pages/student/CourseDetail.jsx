@@ -133,12 +133,8 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
   };
 
   const handlePreviewLearning = () => {
-    if (!isAuthenticated) {
-      navigate("/login", { state: { from: { pathname: `/courses/${course.slug}/preview` } } });
-      return;
-    }
     navigate(`/courses/${course.slug}/preview`);
-  };
+};
 
   return (
     <div
