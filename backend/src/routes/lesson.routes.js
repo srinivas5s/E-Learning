@@ -12,11 +12,12 @@ import {
 // mergeParams: true — gives access to :moduleId from the parent router
 const router = Router({ mergeParams: true });
 
-router.use(protect);
 
 router.get("/", lessonController.getLessonsByModule);
 
 router.get("/:lessonId", lessonController.getLessonById);
+
+router.use(protect);
 
 router.post(
   "/",

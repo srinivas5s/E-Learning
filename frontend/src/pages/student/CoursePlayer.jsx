@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams, useLocation } from "react-router-dom";
-
+import { useAuth } from "../../context/AuthContext.jsx";
 import { useCoursePlayer } from "../../services/useCoursePlayer.js";
 import LessonSidebar from "../../components/student/LessonSidebar.jsx";
 import VideoPlayer from "../../components/student/VideoPlayer.jsx";
 import LessonContent from "../../components/student/LessonContent.jsx";
 import Attachments from "../../components/student/Attachments.jsx";
 import LessonNavigation from "../../components/student/LessonNavigation.jsx";
+import toast from "react-hot-toast";
 
 const MenuIcon = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -22,6 +23,10 @@ const CoursePlayer = () => {
     const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
     const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const [accessChecked, setAccessChecked] = useState(false);
+    const [accessDenied, setAccessDenied] = useState(false);
 
     // ── Mode detection from route ─────────────────────────────────────────────
     const mode = location.pathname.endsWith("/preview") ? "preview" : "learn";
@@ -84,6 +89,30 @@ const CoursePlayer = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeLesson?._id]);
+
+    useEffect(() => {
+        if (isPreviewMode) {
+            setAccessChecked(true); // preview mode has its own lock logic already; no course-level gate needed
+            return;
+        }
+        if (!course || !user) return; // wait for course + auth to be ready
+
+        const isAdmin = user.role === "admin";
+        const isOwnerInstructor =
+            user.role === "instructor" && course.instructor?._id === user._id;
+        const isEnrolled = !!enrollment; // from useCoursePlayer's fetchEnrollment, called separately
+
+        if (isAdmin || isOwnerInstructor || isEnrolled) {
+            setAccessChecked(true);
+            return;
+        }
+
+        // Denied — student not enrolled, or instructor who doesn't own this course
+        toast.error("You need to enroll in this course to access the lessons");
+        navigate(`/courses/${slug}`, { replace: true });
+        setAccessDenied(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isPreviewMode, course, user, enrollment]);
 
     // ── Gate lesson selection — blocks locked lessons in preview mode ────────────
     const handleLessonClick = (moduleId, lessonId) => {
