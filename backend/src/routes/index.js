@@ -5,6 +5,7 @@ import courseRoutes from "./course.routes.js";
 import moduleRoutes from "./module.routes.js";
 import lessonRoutes from "./lesson.routes.js";
 import enrollmentRoutes from "./enrollment.routes.js";
+import paymentRoutes from "./payment.routes.js";
 
 
 const router = Router();
@@ -23,5 +24,8 @@ router.use("/modules/:moduleId/lessons", lessonRoutes);
 
 // Enrollments
 router.use("/enrollments", enrollmentRoutes);
+
+// Payments
+router.use("/payments", paymentRoutes);
 
 export default router;
