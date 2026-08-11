@@ -114,28 +114,105 @@ const CourseNotFound = () => (
   </div>
 );
 
-// ── Enroll / Price card ───────────────────────────────────────────────────────
-const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
+const EnrollCard = ({ course, isAuthenticated }) => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const [checkingEnrollment, setCheckingEnrollment] = useState(true);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [purchasing, setPurchasing] = useState(false);
+
   const hasDiscount = course.discountPrice > 0 && course.discountPrice < course.price;
   const effectivePrice = hasDiscount ? course.discountPrice : course.price;
   const discountPct = hasDiscount
     ? Math.round((1 - course.discountPrice / course.price) * 100)
     : 0;
 
-  const handleEnroll = () => {
+  // ── Check enrollment state — UI decision only, no business logic here ───────
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setCheckingEnrollment(false);
+      return;
+    }
+    enrollmentApi
+      .getEnrollmentByCourse(course._id)
+      .then(() => setIsEnrolled(true))
+      .catch(() => setIsEnrolled(false))
+      .finally(() => setCheckingEnrollment(false));
+  }, [course._id, isAuthenticated]);
+
+  const handleContinueLearning = () => {
+    navigate(`/courses/${course.slug}/learn`);
+  };
+
+  // ── Buy Now → create order → open Razorpay Checkout ──────────────────────────
+  const handleBuyNow = async () => {
     if (!isAuthenticated) {
       navigate("/login", { state: { from: { pathname: `/courses/${course.slug}` } } });
       return;
     }
-    // Enrollment logic — Phase 3
-    alert("Enrollment system coming in Phase 3!");
+
+    if (purchasing) return; // guard against rapid double-clicks
+
+    setPurchasing(true);
+
+    const scriptLoaded = await loadRazorpayScript();
+    if (!scriptLoaded) {
+      toast.error("Couldn't load the payment gateway. Please try again.");
+      setPurchasing(false);
+      return;
+    }
+
+    let orderData;
+    try {
+      const res = await paymentApi.createOrder(course._id);
+      orderData = res.data.data;
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Couldn't start the payment. Please try again.");
+      setPurchasing(false);
+      return;
+    }
+
+    const options = {
+      key: orderData.keyId,
+      amount: orderData.amount,
+      currency: orderData.currency,
+      order_id: orderData.orderId,
+      name: "LearnFlow",
+      description: orderData.courseName,
+      prefill: {
+        name: user?.name || "",
+        email: user?.email || "",
+      },
+      theme: { color: "#6366f1" },
+
+      handler: function (response) {
+        // response: { razorpay_payment_id, razorpay_order_id, razorpay_signature }
+        // Phase 5C scope ends here — this result is NOT trusted as proof of
+        // payment. No enrollment is created, no Payment status is changed,
+        // and no course access is granted. Phase 5D will send this response
+        // to the backend for signature verification, which is the actual
+        // source of truth for payment success.
+        toast.success("Payment submitted");
+        setPurchasing(false);
+      },
+
+      modal: {
+        ondismiss: function () {
+          toast("Payment cancelled", { icon: "ℹ️" });
+          setPurchasing(false);
+        },
+      },
+    };
+
+    try {
+      const razorpayInstance = new window.Razorpay(options);
+      razorpayInstance.open();
+    } catch (err) {
+      toast.error("Couldn't open the payment window. Please try again.");
+      setPurchasing(false);
+    }
   };
-
-  const handlePreviewLearning = () => {
-    navigate(`/courses/${course.slug}/preview`);
-};
-
   return (
     <div
       className="rounded-2xl overflow-hidden shadow-xl sticky top-20"
@@ -144,7 +221,7 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
         border: "1px solid var(--color-border)",
       }}
     >
-      {/* Thumbnail preview */}
+      {/* Thumbnail preview — unchanged */}
       <div
         className="relative h-48 flex items-center justify-center overflow-hidden"
         style={{ backgroundColor: "rgba(99,102,241,0.08)" }}
@@ -155,7 +232,6 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
         ) : (
           <span className="text-6xl">📚</span>
         )}
-        {/* Play overlay */}
         <div className="absolute inset-0 flex items-center justify-center
                         bg-black/20 cursor-pointer group/play">
           <div className="w-14 h-14 rounded-full flex items-center justify-center
@@ -167,7 +243,7 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
       </div>
 
       <div className="p-6">
-        {/* Price */}
+        {/* Price — unchanged */}
         <div className="flex items-baseline gap-3 mb-1">
           <span className="text-3xl font-bold"
             style={{ color: "var(--color-text-heading)", fontFamily: "var(--font-heading)" }}>
@@ -186,30 +262,57 @@ const EnrollCard = ({ course, isAuthenticated, isStudent }) => {
           </p>
         )}
 
-        {/* Enroll button */}
-       <button
-          onClick={handleEnroll}
-          className="btn-primary w-full py-3 text-sm font-bold rounded-xl mb-3"
-          style={{ backgroundColor: "var(--color-primary)" }}
-        >
-          {!isAuthenticated
-            ? "Sign In to Enroll"
-            : effectivePrice === 0
-              ? "Enroll for Free"
-              : "Enroll Now"}
-        </button>
+        {/* Primary action — Continue Learning / Buy Now, state-dependent */}
+        {checkingEnrollment ? (
+          <button
+            disabled
+            className="btn-primary w-full py-3 text-sm font-bold rounded-xl mb-3 opacity-60"
+            style={{ backgroundColor: "var(--color-primary)" }}
+          >
+            <span className="flex items-center justify-center gap-2">
+              <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white
+                               rounded-full animate-spin" />
+              Checking…
+            </span>
+          </button>
+        ) : isEnrolled ? (
+          <button
+            onClick={handleContinueLearning}
+            className="btn-primary w-full py-3 text-sm font-bold rounded-xl mb-3"
+            style={{ backgroundColor: "var(--color-primary)" }}
+          >
+            Continue Learning
+          </button>
+        ) : (
+          <button
+            onClick={handleBuyNow}
+            disabled={purchasing}
+            className="btn-primary w-full py-3 text-sm font-bold rounded-xl mb-3"
+            style={{ backgroundColor: "var(--color-primary)", opacity: purchasing ? 0.7 : 1 }}
+          >
+            {purchasing ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white
+                                 rounded-full animate-spin" />
+                Creating secure payment…
+              </span>
+            ) : !isAuthenticated ? (
+              "Sign In to Buy"
+            ) : (
+              "Buy Now"
+            )}
+          </button>
+        )}
 
-        {/* Temporary — Phase 3C testing, no enrollment gate yet */}
+        {/* Preview button — UNCHANGED, exactly as before */}
         <button
-          onClick={handlePreviewLearning}
+          onClick={() => navigate(`/courses/${course.slug}/preview`)}
           className="btn-ghost w-full py-2.5 text-sm font-medium rounded-xl mb-3"
           style={{ border: "1px solid var(--color-border)" }}
         >
-          ▶ Start Learning (Preview)
+          ▶ Preview Course
         </button>
 
-
-        {/* Guarantee */}
         <p className="text-xs text-center mb-5" style={{ color: "var(--color-text-muted)" }}>
           30-Day Money-Back Guarantee
         </p>
@@ -532,6 +635,24 @@ const CourseDetail = () => {
                 Enroll Now
               </button>
             </div>
+
+            {/* Mobile price strip */}
+            {/* <div
+              className="lg:hidden flex items-center justify-between px-4 py-3 rounded-xl mb-6"
+              style={{ backgroundColor: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+            >
+              <div>
+                <span className="text-xl font-bold" style={{ color: "var(--color-text-heading)" }}>
+                  {formatPrice(hasDiscount ? course.discountPrice : course.price)}
+                </span>
+                {hasDiscount && (
+                  <span className="text-sm line-through ml-2" style={{ color: "var(--color-text-muted)" }}>
+                    {formatPrice(course.price)}
+                  </span>
+                )}
+              </div>
+              <MobileBuyButton course={course} isAuthenticated={isAuthenticated} />
+            </div> */}
 
             {/* Desktop sticky card */}
             <div className="hidden lg:block">
