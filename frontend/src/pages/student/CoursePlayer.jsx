@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams, useLocation } from "react-router-dom";
+import { useParams, useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useCoursePlayer } from "../../services/useCoursePlayer.js";
 import LessonSidebar from "../../components/student/LessonSidebar.jsx";
