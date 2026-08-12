@@ -1,7 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useGetCourseBySlug } from "../../services/useCourse.js";
+import enrollmentApi from "../../api/enrollment.api.js";
+import paymentApi from "../../api/payment.api.js";
 import { useAuth } from "../../context/AuthContext.jsx";
+import {loadRazorpayScript} from "../../utils/loadRazorpayScript.js";
 import {
   formatPrice,
   formatDuration,
