@@ -6,6 +6,9 @@ import { createOrderSchema } from "../validators/payment.validator.js";
 
 const router = Router();
 
+router.post("/callback", paymentController.handleCallback);
+
+
 router.use(protect);
 
 router.post(
