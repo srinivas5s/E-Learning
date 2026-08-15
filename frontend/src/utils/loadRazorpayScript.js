@@ -1,19 +1,18 @@
-let scriptPromise = null;
+let customScriptPromise = null;
 
-export const loadRazorpayScript = () => {
-    if (window.Razorpay) return Promise.resolve(true);
-    if (scriptPromise) return scriptPromise;
+export const loadRazorpayCustomScript = () => {
+    if (customScriptPromise) return customScriptPromise;
 
-    scriptPromise = new Promise((resolve) => {
+    customScriptPromise = new Promise((resolve) => {
         const script = document.createElement("script");
-        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.src = "https://checkout.razorpay.com/v1/razorpay.js";
         script.onload = () => resolve(true);
         script.onerror = () => {
-            scriptPromise = null; // allow a retry on next attempt if it failed
+            customScriptPromise = null;
             resolve(false);
         };
         document.body.appendChild(script);
     });
 
-    return scriptPromise;
+    return customScriptPromise;
 };
