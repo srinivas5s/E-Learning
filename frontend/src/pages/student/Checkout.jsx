@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useGetCourseBySlug } from "../../../services/useCourse.js";
-import { useAuth } from "../../../context/AuthContext.jsx";
-import paymentApi from "../../../api/payment.api.js";
-import { loadRazorpayScript } from "../../../utils/loadRazorpayScript.js";
-import { loadRazorpayCustomScript } from "../../../utils/loadRazorpayCustomScript.js";
-import { NETBANKING_BANKS } from "../../../constants/bankList.js";
-import { formatPrice } from "../../../constants/courseConstants.js";
+import { useGetCourseBySlug } from "../../services/useCourse.js";
+import { useAuth } from "../../context/AuthContext.jsx";
+import paymentApi from "../../api/payment.api.js";
+import { loadRazorpayScript } from "../../utils/loadRazorpayScript.js";
+import { loadRazorpayCustomScript } from "../../utils/loadRazorpayCustomScript.js";
+import { NETBANKING_BANKS } from "../../constants/bankList.js";
+import { formatPrice } from "../../constants/courseConstants.js";
 
 const CheckIcon = () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round">

@@ -149,73 +149,13 @@ const EnrollCard = ({ course, isAuthenticated }) => {
   };
 
   // ── Buy Now → create order → open Razorpay Checkout ──────────────────────────
-  const handleBuyNow = async () => {
+  const handleBuyNow = () => {
     if (!isAuthenticated) {
-      navigate("/login", { state: { from: { pathname: `/courses/${course.slug}` } } });
-      return;
+        navigate("/login", { state: { from: { pathname: `/courses/${course.slug}` } } });
+        return;
     }
-
-    if (purchasing) return; // guard against rapid double-clicks
-
-    setPurchasing(true);
-
-    const scriptLoaded = await loadRazorpayScript();
-    if (!scriptLoaded) {
-      toast.error("Couldn't load the payment gateway. Please try again.");
-      setPurchasing(false);
-      return;
-    }
-
-    let orderData;
-    try {
-      const res = await paymentApi.createOrder(course._id);
-      orderData = res.data.data;
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Couldn't start the payment. Please try again.");
-      setPurchasing(false);
-      return;
-    }
-
-    const options = {
-      key: orderData.keyId,
-      amount: orderData.amount,
-      currency: orderData.currency,
-      order_id: orderData.orderId,
-      name: "LearnFlow",
-      description: orderData.courseName,
-      prefill: {
-        name: user?.name || "",
-        email: user?.email || "",
-      },
-      theme: { color: "#6366f1" },
-
-      handler: function (response) {
-        // response: { razorpay_payment_id, razorpay_order_id, razorpay_signature }
-        // Phase 5C scope ends here — this result is NOT trusted as proof of
-        // payment. No enrollment is created, no Payment status is changed,
-        // and no course access is granted. Phase 5D will send this response
-        // to the backend for signature verification, which is the actual
-        // source of truth for payment success.
-        toast.success("Payment submitted");
-        setPurchasing(false);
-      },
-
-      modal: {
-        ondismiss: function () {
-          toast("Payment cancelled", { icon: "ℹ️" });
-          setPurchasing(false);
-        },
-      },
-    };
-
-    try {
-      const razorpayInstance = new window.Razorpay(options);
-      razorpayInstance.open();
-    } catch (err) {
-      toast.error("Couldn't open the payment window. Please try again.");
-      setPurchasing(false);
-    }
-  };
+    navigate(`/courses/${course.slug}/checkout`);
+};
   return (
     <div
       className="rounded-2xl overflow-hidden shadow-xl sticky top-20"

@@ -17,6 +17,9 @@ import CourseDetail from "./pages/student/CourseDetail.jsx";
 import StudentDashboard from "./pages/student/StudentDashboard.jsx";
 import CoursePlayer from "./pages/student/CoursePlayer.jsx";
 import MyCourses from "./pages/student/MyCourses.jsx";
+import Checkout from "./pages/student/Checkout.jsx";
+import PaymentCallback from "./pages/student/PaymentCallback.jsx";
+// import PaymentSuccess from "./pages/student/PaymentSuccess.jsx";
 // import Profile from "./pages/student/Profile.jsx";
 
 // Instructor pages
@@ -77,6 +80,8 @@ const App = () => (
         <Route path="/dashboard" element={<StudentDashboard />} />
         <Route path="/my-courses" element={<MyCourses />} />
         <Route path="/courses/:slug/learn" element={<CoursePlayer />} />
+        <Route path="/courses/:slug/checkout" element={<Checkout />} />
+<Route path="/payment/callback" element={<PaymentCallback />} />
         {/* <Route path="/profile" element={<Profile />} /> */}
       </Route>
 
