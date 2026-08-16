@@ -10,3 +10,4 @@ export const NETBANKING_BANKS = [
     { code: "YESB", name: "Yes Bank" },
     { code: "INDB", name: "IndusInd Bank" },
 ];
+
