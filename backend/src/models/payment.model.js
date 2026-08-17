@@ -34,13 +34,11 @@ const paymentSchema = new mongoose.Schema(
         // Populated after payment succeeds
         razorpayPaymentId: {
             type: String,
-            default: null,
         },
 
         // Populated after signature verification
         razorpaySignature: {
             type: String,
-            default: null,
         },
 
         // ── Amount ───────────────────────────────────────────────────────────────

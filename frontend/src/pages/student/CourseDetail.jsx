@@ -4,7 +4,7 @@ import { useGetCourseBySlug } from "../../services/useCourse.js";
 import enrollmentApi from "../../api/enrollment.api.js";
 import paymentApi from "../../api/payment.api.js";
 import { useAuth } from "../../context/AuthContext.jsx";
-import {loadRazorpayScript} from "../../utils/loadRazorpayScript.js";
+import { loadRazorpayScript } from "../../utils/loadRazorpayScript.js";
 import {
   formatPrice,
   formatDuration,
@@ -117,6 +117,68 @@ const CourseNotFound = () => (
   </div>
 );
 
+const MobileBuyButton = ({ course, isAuthenticated }) => {
+  const navigate = useNavigate();
+  const [checkingEnrollment, setCheckingEnrollment] = useState(true);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setCheckingEnrollment(false);
+      return;
+    }
+    enrollmentApi
+      .getEnrollmentByCourse(course._id)
+      .then(() => setIsEnrolled(true))
+      .catch(() => setIsEnrolled(false))
+      .finally(() => setCheckingEnrollment(false));
+  }, [course._id, isAuthenticated]);
+
+  const handleClick = () => {
+    if (!isAuthenticated) {
+      navigate("/login", { state: { from: { pathname: `/courses/${course.slug}` } } });
+      return;
+    }
+    navigate(`/courses/${course.slug}/checkout`);
+  };
+
+  if (checkingEnrollment) {
+    return (
+      <button disabled className="btn-primary px-5 py-2 text-sm rounded-xl opacity-60"
+        style={{ backgroundColor: "var(--color-primary)" }}>
+        …
+      </button>
+    );
+  }
+
+  if (isEnrolled) {
+    return (
+      <button
+        disabled
+        className="px-5 py-2 text-sm font-semibold rounded-xl"
+        style={{
+          backgroundColor: "rgba(16,185,129,0.1)",
+          color: "#10b981",
+          border: "1px solid rgba(16,185,129,0.3)",
+          cursor: "default",
+        }}
+      >
+        ✓ Purchased
+      </button>
+    );
+  }
+
+  return (
+    <button
+      onClick={handleClick}
+      className="btn-primary px-5 py-2 text-sm rounded-xl"
+      style={{ backgroundColor: "var(--color-primary)" }}
+    >
+      {!isAuthenticated ? "Sign In to Buy" : "Buy Now"}
+    </button>
+  );
+};
+
 const EnrollCard = ({ course, isAuthenticated }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -151,11 +213,11 @@ const EnrollCard = ({ course, isAuthenticated }) => {
   // ── Buy Now → create order → open Razorpay Checkout ──────────────────────────
   const handleBuyNow = () => {
     if (!isAuthenticated) {
-        navigate("/login", { state: { from: { pathname: `/courses/${course.slug}` } } });
-        return;
+      navigate("/login", { state: { from: { pathname: `/courses/${course.slug}` } } });
+      return;
     }
     navigate(`/courses/${course.slug}/checkout`);
-};
+  };
   return (
     <div
       className="rounded-2xl overflow-hidden shadow-xl sticky top-20"
@@ -205,7 +267,7 @@ const EnrollCard = ({ course, isAuthenticated }) => {
           </p>
         )}
 
-        {/* Primary action — Continue Learning / Buy Now, state-dependent */}
+        {/* Primary action — Purchased / Buy Now, state-dependent */}
         {checkingEnrollment ? (
           <button
             disabled
@@ -213,18 +275,22 @@ const EnrollCard = ({ course, isAuthenticated }) => {
             style={{ backgroundColor: "var(--color-primary)" }}
           >
             <span className="flex items-center justify-center gap-2">
-              <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white
-                               rounded-full animate-spin" />
+              <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               Checking…
             </span>
           </button>
         ) : isEnrolled ? (
           <button
-            onClick={handleContinueLearning}
-            className="btn-primary w-full py-3 text-sm font-bold rounded-xl mb-3"
-            style={{ backgroundColor: "var(--color-primary)" }}
+            disabled
+            className="w-full py-3 text-sm font-bold rounded-xl mb-3 flex items-center justify-center gap-2"
+            style={{
+              backgroundColor: "rgba(16,185,129,0.1)",
+              color: "#10b981",
+              border: "1px solid rgba(16,185,129,0.3)",
+              cursor: "default",
+            }}
           >
-            Continue Learning
+            <CheckIcon /> Purchased
           </button>
         ) : (
           <button
@@ -235,8 +301,7 @@ const EnrollCard = ({ course, isAuthenticated }) => {
           >
             {purchasing ? (
               <span className="flex items-center justify-center gap-2">
-                <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white
-                                 rounded-full animate-spin" />
+                <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 Creating secure payment…
               </span>
             ) : !isAuthenticated ? (
@@ -247,14 +312,16 @@ const EnrollCard = ({ course, isAuthenticated }) => {
           </button>
         )}
 
-        {/* Preview button — UNCHANGED, exactly as before */}
-        <button
-          onClick={() => navigate(`/courses/${course.slug}/preview`)}
-          className="btn-ghost w-full py-2.5 text-sm font-medium rounded-xl mb-3"
-          style={{ border: "1px solid var(--color-border)" }}
-        >
-          ▶ Preview Course
-        </button>
+        {/* Preview button — hidden once purchased, no reason to preview owned content */}
+        {!isEnrolled && (
+          <button
+            onClick={() => navigate(`/courses/${course.slug}/preview`)}
+            className="btn-ghost w-full py-2.5 text-sm font-medium rounded-xl mb-3"
+            style={{ border: "1px solid var(--color-border)" }}
+          >
+            ▶ Preview Course
+          </button>
+        )}
 
         <p className="text-xs text-center mb-5" style={{ color: "var(--color-text-muted)" }}>
           30-Day Money-Back Guarantee
@@ -580,10 +647,8 @@ const CourseDetail = () => {
             </div>
 
             {/* Mobile price strip */}
-            {/* <div
-              className="lg:hidden flex items-center justify-between px-4 py-3 rounded-xl mb-6"
-              style={{ backgroundColor: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
-            >
+            <div className="lg:hidden flex items-center justify-between px-4 py-3 rounded-xl mb-6"
+              style={{ backgroundColor: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}>
               <div>
                 <span className="text-xl font-bold" style={{ color: "var(--color-text-heading)" }}>
                   {formatPrice(hasDiscount ? course.discountPrice : course.price)}
@@ -595,7 +660,7 @@ const CourseDetail = () => {
                 )}
               </div>
               <MobileBuyButton course={course} isAuthenticated={isAuthenticated} />
-            </div> */}
+            </div>
 
             {/* Desktop sticky card */}
             <div className="hidden lg:block">
